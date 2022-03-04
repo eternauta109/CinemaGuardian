@@ -1,2 +1,2 @@
-# CinemaGuardian
+# CineGuardian
 Created with CodeSandbox
