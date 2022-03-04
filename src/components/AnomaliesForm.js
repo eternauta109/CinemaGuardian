@@ -113,7 +113,6 @@ export default function InputAnomalies({
 
   useEffect(() => {
     console.log(item);
-
     setItem({ ...item, photos: [], comments: [] });
     console.log(item);
   }, [cinemaSelected]);

@@ -9,7 +9,7 @@ import {
   collection,
   getDocs,
   query,
-  where,
+  where
   /* addDoc,
   updateDoc,
   doc,
@@ -21,82 +21,85 @@ const columns = [
   {
     field: "area",
     headerName: "area",
-    width: 60,
+    width: 60
   },
   {
     field: "cinema",
     headerName: "cinema name",
-    description: "This column has a value getter and is not sortable.",
 
-    width: 120,
+    width: 120
   },
   {
     field: "areaCinema",
     headerName: "cinema area",
-    width: 120,
+    width: 120
   },
   {
     field: "problem",
     headerName: "problem",
-    description: "This column has a value getter and is not sortable.",
 
-    width: 200,
+    width: 200
   },
   {
     field: "category",
     headerName: "category",
-    type: "number",
-    width: 120,
+
+    width: 120
   },
   {
     field: "competence",
     headerName: "competence",
-    description: "This column has a value getter and is not sortable.",
 
-    width: 120,
+    width: 120
   },
 
   {
     field: "stDate",
     headerName: "start date",
-    description: "This column has a value getter and is not sortable.",
+
     type: "dateTime",
 
-    width: 200,
+    width: 200
   },
   {
     field: "photos",
-    headerName: "photo",
-    description: "This column has a value getter and is not sortable.",
+    width: 2000,
+    name: "photos",
+    headerName: "photoLink",
     render: (rowData) => (
-      <a href={rowData} target="_blank" style={{ textDecoration: "none" }}>
-        {rowData}
-      </a>
+      <img src={rowData.photos} style={{ width: 40, borderRadius: "50%" }} />
     ),
-    width: 500,
+    options: {
+      customBodyRender: (photos) => {
+        photos.map((v, k) => {
+          return <a href={v}>{k}</a>;
+        });
+      }
+    }
   },
+
   {
     field: "quotation",
     headerName: "quotation",
-    description: "This column has a value getter and is not sortable.",
 
-    width: 100,
-  },
+    type: "number",
+    width: 100
+  }
 ];
 
 const theme = createTheme({
   palette: {
     primary: {
-      main: "#ffac33",
+      main: "#ffac33"
     },
     secondary: {
-      main: "#00e676",
-    },
-  },
+      main: "#00e676"
+    }
+  }
 });
 
 const Home = () => {
-  const { user, lists, setLists, cinemaObj } = useContext(CredentialContext);
+  const { lists, setLists, cinemaObj } = useContext(CredentialContext);
 
   const getListItem = () => {
     console.log("home", cinemaObj);
@@ -117,7 +120,7 @@ const Home = () => {
         });
         let newItem = {
           id: doc.id,
-          ...doc.data(),
+          ...doc.data()
         };
         console.log(newItem);
         setLists((oldArray) => [...oldArray, newItem]);
