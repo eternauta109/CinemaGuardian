@@ -11,7 +11,7 @@ import {
   uploadBytes,
   listAll,
   getDownloadURL,
-  uploadBytesResumable
+  uploadBytesResumable,
 } from "firebase/storage";
 import moment from "moment";
 import { Box, Button, Typography } from "@mui/material";
@@ -36,7 +36,7 @@ function SetCamera({ user, cinema, item, setItem }) {
     zIndex: 1,
     border: "1px solid",
     p: 1,
-    bgcolor: "background.paper"
+    bgcolor: "background.paper",
   };
 
   const onTakePhotoHandler = async (photoUri) => {
@@ -71,7 +71,7 @@ function SetCamera({ user, cinema, item, setItem }) {
     const newObj = {
       name,
       blob: alberdan,
-      photo: photoUri
+      photo: photoUri,
     };
 
     const newImages = [...images];
@@ -93,8 +93,8 @@ function SetCamera({ user, cinema, item, setItem }) {
 
         customMetadata: {
           name: `${obj.name}`,
-          author: `${user.name}`
-        }
+          author: `${user.name}`,
+        },
       };
       const uploadTask = uploadBytesResumable(imageRef, obj.blob, metadata);
       uploadTask.on(
@@ -170,17 +170,17 @@ function SetCamera({ user, cinema, item, setItem }) {
             height: "400",
             width: "640",
             flexDirection: "row",
-            justifyContent: "center"
+            justifyContent: "center",
           }}
         >
           <Camera
-            imageCompression={0.7}
+            imageCompression={0.4}
             isMaxResolution={true}
             isImageMirror={false}
             isSilentMode={false}
             isDisplayStartCameraError={true}
             isFullscreen={false}
-            sizeFactor={0.4}
+            sizeFactor={0.2}
             onTakePhoto={onTakePhotoHandler}
             onCameraStop={() => {
               handleCameraStop();
@@ -203,6 +203,10 @@ function SetCamera({ user, cinema, item, setItem }) {
     setImages([]);
 
     setOpen(false);
+
+    return () => {
+      setOpen(false);
+    };
   }, [item.item_ref]);
 
   return (
@@ -211,14 +215,14 @@ function SetCamera({ user, cinema, item, setItem }) {
         sx={{
           display: "flex",
           flexDirection: "row",
-          justifyContent: "center"
+          justifyContent: "center",
         }}
       >
         <IconButton
           sx={{
             display: "flex",
             flexDirection: "column",
-            justifyContent: "center"
+            justifyContent: "center",
           }}
           onClick={() => {
             setOpen(!open);
@@ -231,13 +235,21 @@ function SetCamera({ user, cinema, item, setItem }) {
         </IconButton>
       </Container>
 
-      <ViewCamera />
+      <Container
+        sx={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "center",
+        }}
+      >
+        <ViewCamera />
+      </Container>
 
       <Container
         sx={{
           display: "flex",
           flexDirection: "row",
-          justifyContent: "center"
+          justifyContent: "center",
         }}
       >
         {images.map((obj, index) => (
