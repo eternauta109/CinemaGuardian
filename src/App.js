@@ -9,6 +9,7 @@ import Container from "@mui/material/Container";
 import Home from "./featurs/Home";
 import Anomalies from "./featurs/Anomalies";
 import NewUser from "./featurs/NewUser";
+
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 export default function App() {
@@ -16,12 +17,12 @@ export default function App() {
   const theme = createTheme({
     palette: {
       primary: {
-        main: "#ffac33",
+        main: "#ff8f00"
       },
       secondary: {
-        main: "#00e676",
-      },
-    },
+        main: "#7cb342"
+      }
+    }
   });
   return (
     <ThemeProvider theme={theme}>
@@ -29,9 +30,8 @@ export default function App() {
         <Container
           sx={{
             borderRadius: 5,
-            bgcolor: "secondary.main",
-            color: "primary.contrastText",
-            p: 2,
+
+            p: 2
           }}
         >
           <Router>

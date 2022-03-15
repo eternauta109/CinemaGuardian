@@ -23,7 +23,7 @@ export const areaSelect = ["area1", "area2", "area3", "area4", "NULL"];
 export const itemInit = {
   category: "",
   cinema: "",
-
+  title: "",
   screens: 0,
   area: "",
   problem: "",
