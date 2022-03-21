@@ -9,6 +9,7 @@ import Container from "@mui/material/Container";
 import Home from "./featurs/Home";
 import Anomalies from "./featurs/Anomalies";
 import NewUser from "./featurs/NewUser";
+import Update from "./featurs/UpDate";
 
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
@@ -17,12 +18,12 @@ export default function App() {
   const theme = createTheme({
     palette: {
       primary: {
-        main: "#ff8f00"
+        main: "#ff8f00",
       },
       secondary: {
-        main: "#7cb342"
-      }
-    }
+        main: "#7cb342",
+      },
+    },
   });
   return (
     <ThemeProvider theme={theme}>
@@ -31,7 +32,7 @@ export default function App() {
           sx={{
             borderRadius: 5,
 
-            p: 2
+            p: 2,
           }}
         >
           <Router>
@@ -41,7 +42,7 @@ export default function App() {
               <Route path="/" element={<SignIn />} />
               <Route path="anomalies" element={<Anomalies />} />
               <Route path="newuser" element={user ? <NewUser /> : <SignIn />} />
-
+              <Route path="update" element={<Update />} />
               <Route path="home" element={user ? <Home /> : <SignIn />} />
               {/*  <Route
               path="anomalies"

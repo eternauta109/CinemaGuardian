@@ -61,13 +61,6 @@ function SetCamera({ user, cinema, item, setItem }) {
         // here the image is a blob
       });
 
-    /* loadXHR(photoUri).then(function (blob) {
-      // here the image is a blob
-      setBlob(blob);
-    }); */
-
-    /* console.log("blob", alberdan); */
-
     const newObj = {
       name,
       blob: alberdan,
@@ -196,13 +189,17 @@ function SetCamera({ user, cinema, item, setItem }) {
   };
 
   const openCamera = () => {
-    setOpen(!open);
+    setOpen(false);
+    console.log(item.photos);
+    if (item.photos.length > 0) {
+      setImages(item.photos);
+    }
   };
 
   useEffect(() => {
     setImages([]);
 
-    setOpen(false);
+    openCamera();
 
     return () => {
       setOpen(false);
@@ -254,7 +251,7 @@ function SetCamera({ user, cinema, item, setItem }) {
       >
         {images.map((obj, index) => (
           <Container key={index} sx={{ width: "150px", paddingRight: "12px" }}>
-            <img alt="cam" src={obj.photo} style={{ width: "100%" }} />
+            <img alt={obj.photo} src={obj.photo} style={{ width: "100%" }} />
             <IconButton
               onClick={() => removePhoto(index)}
               aria-label="delete"

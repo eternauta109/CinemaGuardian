@@ -6,7 +6,7 @@ export const categoryList = [
   "LIFTING SYSTEM",
   "PNEUMATIC MAIL",
   "BUILDING WORKS-ather",
-  "PROCURAMENT"
+  "PROCURAMENT",
 ];
 
 export const userInit = {
@@ -15,13 +15,16 @@ export const userInit = {
   role: "",
   area: "",
   cinema: "",
-  password: ""
+  password: "",
 };
 
 export const areaSelect = ["area1", "area2", "area3", "area4", "NULL"];
 
 export const itemInit = {
   category: "",
+  item_ref: "",
+  created: "",
+  lastUpdate: "",
   cinema: "",
   title: "",
   screens: 0,
@@ -39,7 +42,8 @@ export const itemInit = {
   orderCost: 0.0,
   finalCost: 0.0,
   solved: false,
-  dayWorks: 0
+  stDate: "",
+  dayWorks: 0,
 };
 
 export const roleSelect = ["hm", "am", "fm", "gm", "m"];

@@ -13,19 +13,18 @@ import {
   FormControl,
   FormLabel,
   InputAdornment,
-  IconButton
+  IconButton,
+  Switch,
 } from "@mui/material";
-import { palette } from "@mui/system";
+
 import LoadingButton from "@mui/lab/LoadingButton";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import DatePicker from "@mui/lab/DatePicker";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import AddRoundedIcon from "@mui/icons-material/AddRounded";
-import Switch from "@mui/material/Switch";
+import moment from "moment";
 import SaveIcon from "@mui/icons-material/Save";
-
 import SetCamera from "./SetCamera";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
 import TimeLine from "../components/TimeLine";
 import { categoryList } from "../config/struttura";
 
@@ -33,7 +32,7 @@ const commonStyles = {
   bgcolor: "background.paper",
   borderColor: "text.primary",
   m: 1,
-  border: 1
+  border: 1,
   /* width: '5rem',
   height: '5rem', */
 };
@@ -43,11 +42,12 @@ export default function InputAnomalies({
   item,
   setItem,
   handleSubmit,
-  user
+  user,
+  upadate,
 }) {
   const [solved, setSolved] = useState(false);
-  const [stDate, setStDate] = useState(new Date());
-  const [endDate, setEndDate] = useState(new Date());
+  const [stDate, setStDate] = useState(moment().format("DD/MM/YYYY"));
+  const [endDate, setEndDate] = useState(moment().format("DD/MM/YYYY"));
   const [comment, setComment] = useState();
   const [cinemaSelected, setCinemaSelected] = useState(null);
 
@@ -70,7 +70,8 @@ export default function InputAnomalies({
       [e.target.name]: e.target.value,
       screens: res.screens,
       area: res.area,
-      item_ref: ref_number
+      item_ref: ref_number,
+      stDate: stDate,
     });
   };
 
@@ -82,7 +83,7 @@ export default function InputAnomalies({
     let newComment = {
       name: user.name,
       comment: comment,
-      data: stDate.toLocaleDateString()
+      data: stDate.toLocaleDateString(),
     };
 
     let newArray = item.comments;
@@ -101,9 +102,7 @@ export default function InputAnomalies({
   };
 
   useEffect(() => {
-    console.log(item);
     setItem({ ...item, photos: [], comments: [] });
-    console.log(item);
   }, [cinemaSelected]);
 
   return (
@@ -111,11 +110,11 @@ export default function InputAnomalies({
       sx={{
         borderRadius: 5,
 
-        p: 2
+        p: 2,
       }}
     >
       <Grid container sx={{ mt: 1 }} spacing={1} justify="center">
-        <Grid item xs={6} sm={6}>
+        <Grid item xs={8} sm={4}>
           <FormControl fullWidth>
             <InputLabel id="category">Cinema</InputLabel>
             <Select
@@ -136,16 +135,16 @@ export default function InputAnomalies({
             </Select>
           </FormControl>
         </Grid>
-        <Grid item xs={3} sm={3}>
+        <Grid item xs={4} sm={2}>
           <TextField
-            value={item.item_ref ?? ""}
+            value={item.item_ref}
             fullWidth
             disabled
             label="ref"
             name="ref"
           />
         </Grid>
-        <Grid item xs={3} sm={3}>
+        <Grid item xs={4} sm={2}>
           <TextField
             value={item.screens}
             fullWidth
@@ -154,10 +153,7 @@ export default function InputAnomalies({
             name="screens"
           />
         </Grid>
-      </Grid>
-
-      <Grid container sx={{ mt: 1 }} spacing={1} justify="center">
-        <Grid item xs={6} sm={6}>
+        <Grid item xs={8} sm={4}>
           <TextField
             value={item.area}
             fullWidth
@@ -166,19 +162,45 @@ export default function InputAnomalies({
             name="area"
           />
         </Grid>
-        <Grid item xs={6} sm={6}>
-          <LocalizationProvider dateAdapter={AdapterDateFns}>
-            <DatePicker
-              fullWidth
-              renderInput={(props) => <TextField {...props} />}
-              label="insert date"
-              disabled
-              value={item.stDate ?? stDate}
-              onChange={(newValue) => {
-                setStDate(newValue);
-              }}
-            />
-          </LocalizationProvider>
+
+        <Grid container sx={{ mt: 1 }} spacing={1} justify="center"></Grid>
+
+        <Grid item xs={6} sm={3}>
+          <TextField
+            value={stDate}
+            fullWidth
+            disabled
+            label="created at"
+            name="created"
+          />
+        </Grid>
+
+        <Grid item xs={6} sm={3}>
+          <TextField
+            value={user.name}
+            fullWidth
+            disabled
+            label="created by"
+            name="created"
+          />
+        </Grid>
+        <Grid item xs={6} sm={3}>
+          <TextField
+            value={user.name}
+            fullWidth
+            disabled
+            label="last update"
+            name="updateBy"
+          />
+        </Grid>
+        <Grid item xs={6} sm={3}>
+          <TextField
+            value={item.lastUpdate ? item.lastUpdate : stDate}
+            fullWidth
+            disabled
+            label="date last update"
+            name="lastUpdate"
+          />
         </Grid>
       </Grid>
 
@@ -190,7 +212,7 @@ export default function InputAnomalies({
             value={item.title}
             sx={{ width: 310, m: 2 }}
             inputProps={{
-              maxLength: 30
+              maxLength: 30,
             }}
             helperText="Max 30 char"
             label="title"
@@ -348,7 +370,7 @@ export default function InputAnomalies({
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">€</InputAdornment>
-              )
+              ),
             }}
           />
         </Grid>
@@ -364,7 +386,7 @@ export default function InputAnomalies({
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">€</InputAdornment>
-              )
+              ),
             }}
           />
         </Grid>
@@ -380,7 +402,7 @@ export default function InputAnomalies({
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">€</InputAdornment>
-              )
+              ),
             }}
           />
         </Grid>

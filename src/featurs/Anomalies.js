@@ -1,6 +1,6 @@
 import InputAnomalies from "../components/AnomaliesForm";
 import { useContext, useState, useEffect } from "react";
-
+import { Typography } from "@mui/material";
 import { db } from "../config/firebase_config";
 
 import { doc, setDoc, updateDoc, increment, getDoc } from "firebase/firestore";
@@ -14,7 +14,6 @@ const Anomalies = () => {
   const [item, setItem] = useState({ ...itemInit });
 
   const handleSubmit = async () => {
-    let stDate = new Date().toLocaleString("it");
     console.log("item anomalies", item);
     if (item.category === "" || item.priority === "") {
       return alert("devi selezionare una categoria");
@@ -24,13 +23,15 @@ const Anomalies = () => {
 
     const res = await setDoc(itemRef, {
       ...item,
-      stDate
+
+      created: user.name,
+      lastUpdate: user.name,
     });
 
     const cinemaRefNum_increment = doc(db, "cinema", `${item.cinema}`);
 
     await updateDoc(cinemaRefNum_increment, {
-      rif_num: increment(1)
+      rif_num: increment(1),
     });
     const docSnap = await getDoc(cinemaRefNum_increment);
     console.log("prendo il cinema", docSnap.data().rif_num);
@@ -61,12 +62,14 @@ const Anomalies = () => {
 
   return (
     <>
+      <Typography variant="h4">insert new anomalie</Typography>
       <InputAnomalies
         cinema={cinemaObj}
         item={item}
         setItem={setItem}
         handleSubmit={handleSubmit}
         user={user}
+        update={false}
       />
     </>
   );
