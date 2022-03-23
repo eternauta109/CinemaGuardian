@@ -14,7 +14,7 @@ import {
   FormLabel,
   InputAdornment,
   IconButton,
-  Switch,
+  Switch
 } from "@mui/material";
 
 import LoadingButton from "@mui/lab/LoadingButton";
@@ -25,14 +25,15 @@ import AddRoundedIcon from "@mui/icons-material/AddRounded";
 import moment from "moment";
 import SaveIcon from "@mui/icons-material/Save";
 import SetCamera from "./SetCamera";
-import TimeLine from "../components/TimeLine";
+import TimeLine from "./TimeLine";
+import Slider from "./Slider";
 import { categoryList } from "../config/struttura";
 
 const commonStyles = {
   bgcolor: "background.paper",
   borderColor: "text.primary",
   m: 1,
-  border: 1,
+  border: 1
   /* width: '5rem',
   height: '5rem', */
 };
@@ -43,13 +44,15 @@ export default function InputAnomalies({
   setItem,
   handleSubmit,
   user,
-  upadate,
+  upadate
 }) {
   const [solved, setSolved] = useState(false);
   const [stDate, setStDate] = useState(moment().format("DD/MM/YYYY"));
   const [endDate, setEndDate] = useState(moment().format("DD/MM/YYYY"));
   const [comment, setComment] = useState();
   const [cinemaSelected, setCinemaSelected] = useState(null);
+
+  console.log(" item in anomaliesform", item);
 
   const itemChange = (e) => {
     /* e.preventDefault(); */
@@ -71,7 +74,7 @@ export default function InputAnomalies({
       screens: res.screens,
       area: res.area,
       item_ref: ref_number,
-      stDate: stDate,
+      stDate: stDate
     });
   };
 
@@ -83,7 +86,7 @@ export default function InputAnomalies({
     let newComment = {
       name: user.name,
       comment: comment,
-      data: stDate.toLocaleDateString(),
+      data: stDate
     };
 
     let newArray = item.comments;
@@ -103,6 +106,7 @@ export default function InputAnomalies({
 
   useEffect(() => {
     setItem({ ...item, photos: [], comments: [] });
+    console.log(" item in anomaliesform", item);
   }, [cinemaSelected]);
 
   return (
@@ -110,7 +114,7 @@ export default function InputAnomalies({
       sx={{
         borderRadius: 5,
 
-        p: 2,
+        p: 2
       }}
     >
       <Grid container sx={{ mt: 1 }} spacing={1} justify="center">
@@ -212,7 +216,7 @@ export default function InputAnomalies({
             value={item.title}
             sx={{ width: 310, m: 2 }}
             inputProps={{
-              maxLength: 30,
+              maxLength: 30
             }}
             helperText="Max 30 char"
             label="title"
@@ -353,6 +357,7 @@ export default function InputAnomalies({
           item={item}
           setItem={setItem}
         />
+        <Slider photos={item.photos} />
       </Grid>
 
       <hr />
@@ -370,7 +375,7 @@ export default function InputAnomalies({
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">€</InputAdornment>
-              ),
+              )
             }}
           />
         </Grid>
@@ -386,7 +391,7 @@ export default function InputAnomalies({
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">€</InputAdornment>
-              ),
+              )
             }}
           />
         </Grid>
@@ -402,7 +407,7 @@ export default function InputAnomalies({
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">€</InputAdornment>
-              ),
+              )
             }}
           />
         </Grid>
