@@ -27,7 +27,7 @@ import SaveIcon from "@mui/icons-material/Save";
 import SetCamera from "./SetCamera";
 import TimeLine from "./TimeLine";
 import Slider from "./Slider";
-import { categoryList } from "../config/struttura";
+import { categoryList, itemInit } from "../config/struttura";
 
 const commonStyles = {
   bgcolor: "background.paper",
@@ -74,7 +74,9 @@ export default function InputAnomalies({
       screens: res.screens,
       area: res.area,
       item_ref: ref_number,
-      stDate: stDate
+      stDate: stDate,
+      updateBy: user.name,
+      lastUpdate: stDate
     });
   };
 
@@ -357,7 +359,7 @@ export default function InputAnomalies({
           item={item}
           setItem={setItem}
         />
-        <Slider photos={item.photos} />
+        <Slider item={item} setItem={setItem} />
       </Grid>
 
       <hr />

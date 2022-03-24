@@ -5,6 +5,7 @@ import { db } from "../config/firebase_config";
 import { doc, setDoc, updateDoc, increment, getDoc } from "firebase/firestore";
 import { useEffect, useState, useContext } from "react";
 import { CredentialContext } from "../contex/StoreContext";
+import moment from "moment";
 
 function UpDate() {
   const { state } = useLocation();
@@ -38,7 +39,8 @@ function UpDate() {
     const itemRef = doc(db, "anomalies", `${item.item_ref}`);
     const res = await setDoc(itemRef, {
       ...item,
-      lastUpdate: user.name,
+      lastUpdate: moment().format("DD/MM/YYYY"),
+      updateBy: user.name
     });
     console.log("Document written with ID: ", itemRef.id);
     return res;

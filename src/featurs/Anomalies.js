@@ -24,14 +24,13 @@ const Anomalies = () => {
     const res = await setDoc(itemRef, {
       ...item,
 
-      created: user.name,
-      lastUpdate: user.name,
+      created: user.name
     });
 
     const cinemaRefNum_increment = doc(db, "cinema", `${item.cinema}`);
 
     await updateDoc(cinemaRefNum_increment, {
-      rif_num: increment(1),
+      rif_num: increment(1)
     });
     const docSnap = await getDoc(cinemaRefNum_increment);
     console.log("prendo il cinema", docSnap.data().rif_num);

@@ -338,7 +338,7 @@ export default function UpdateFrom({
           item={item}
           setItem={setItem}
         />
-        <Slider photos={item.photos} />
+        <Slider item={item} setItem={setItem} />
       </Grid>
 
       <hr />

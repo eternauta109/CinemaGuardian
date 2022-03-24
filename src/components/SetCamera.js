@@ -25,6 +25,7 @@ import ClickAwayListener from "@mui/material/ClickAwayListener";
 function SetCamera({ user, cinema, item, setItem }) {
   const [open, setOpen] = useState(false);
   const [images, setImages] = useState([]);
+  const [app, setApp] = useState([]);
 
   /* console.log("photo", user, cinema); */
 
@@ -61,6 +62,7 @@ function SetCamera({ user, cinema, item, setItem }) {
         // here the image is a blob
       });
 
+    upLoadSingle(name, alberdan);
     const newObj = {
       name,
       blob: alberdan,
@@ -72,81 +74,67 @@ function SetCamera({ user, cinema, item, setItem }) {
     setImages(newImages);
   };
 
-  const uploadImages = async () => {
-    const urlArray = [];
-    /* console.log("array images", images);
-    console.log("blob", blob); */
+  const upLoadSingle = async (name, blob) => {
+    const imageRef = ref(storage, name);
+    const metadata = {
+      contentType: "image/jpeg",
 
-    for (const i in images) {
-      let obj = images[i];
-
-      const imageRef = ref(storage, obj.name);
-      const metadata = {
-        contentType: "image/jpeg",
-
-        customMetadata: {
-          name: `${obj.name}`,
-          author: `${user.name}`
+      customMetadata: {
+        name: `${name}`,
+        author: `${user.name}`
+      }
+    };
+    const uploadTask = uploadBytesResumable(imageRef, blob, metadata);
+    await uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        console.log("snapshot", snapshot);
+        // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+        const progress =
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        console.log("Upload is " + progress + "% done");
+        switch (snapshot.state) {
+          case "paused":
+            console.log("Upload is paused");
+            break;
+          case "running":
+            console.log("Upload is running");
+            break;
+          default:
+            break;
         }
-      };
-      const uploadTask = uploadBytesResumable(imageRef, obj.blob, metadata);
-      uploadTask.on(
-        "state_changed",
-        (snapshot) => {
-          console.log("snapshot", snapshot);
-          // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-          const progress =
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          console.log("Upload is " + progress + "% done");
-          switch (snapshot.state) {
-            case "paused":
-              console.log("Upload is paused");
-              break;
-            case "running":
-              console.log("Upload is running");
-              break;
-            default:
-              break;
-          }
-        },
-        (error) => {
-          // A full list of error codes is available at
-          // https://firebase.google.com/docs/storage/web/handle-errors
-          switch (error.code) {
-            case "storage/unauthorized":
-              // User doesn't have permission to access the object
-              break;
-            case "storage/canceled":
-              // User canceled the upload
-              break;
+      },
+      (error) => {
+        // A full list of error codes is available at
+        // https://firebase.google.com/docs/storage/web/handle-errors
+        switch (error.code) {
+          case "storage/unauthorized":
+            // User doesn't have permission to access the object
+            break;
+          case "storage/canceled":
+            // User canceled the upload
+            break;
 
-            // ...
+          // ...
 
-            case "storage/unknown":
-              // Unknown error occurred, inspect error.serverResponse
-              break;
-            default:
-              break;
-          }
-        },
-        () => {
-          // Upload completed successfully, now we can get the download URL
-          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-            urlArray.push(downloadURL);
-          });
+          case "storage/unknown":
+            // Unknown error occurred, inspect error.serverResponse
+            break;
+          default:
+            break;
         }
-      );
-    }
-
-    setImages([]);
-    setItem({ ...item, photos: urlArray });
-  };
-
-  const removePhoto = (index) => {
-    console.log(index);
-    const arrayApp = [...images];
-    arrayApp.splice(index, 1);
-    setImages(arrayApp);
+      },
+      () => {
+        // Upload completed successfully, now we can get the download URL
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          /* urlArray.push(downloadURL); */
+          console.log(downloadURL);
+          let newArray = item.photos;
+          newArray.push({ url: downloadURL, name: name });
+          setItem({ ...item, photos: newArray });
+        });
+      }
+    );
   };
 
   function handleCameraStop() {
@@ -242,47 +230,6 @@ function SetCamera({ user, cinema, item, setItem }) {
       >
         <ViewCamera />
       </Container>
-
-      <Container
-        sx={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "center"
-        }}
-      >
-        {images.length > 0
-          ? images.map((obj, index) => (
-              <Container
-                key={index}
-                sx={{ width: "150px", paddingRight: "12px" }}
-              >
-                <img
-                  alt={obj.photo}
-                  src={obj.photo}
-                  style={{ width: "100%" }}
-                />
-                <IconButton
-                  onClick={() => removePhoto(index)}
-                  aria-label="delete"
-                  size="small"
-                  sx={{ m: -1 }}
-                >
-                  <DeleteIcon fontSize="inherit" />
-                </IconButton>
-              </Container>
-            ))
-          : null}
-      </Container>
-      {images.length ? (
-        <Button
-          onClick={uploadImages}
-          variant="contained"
-          color="success"
-          sx={{ m: 2 }}
-        >
-          UPLOAD
-        </Button>
-      ) : null}
     </Container>
   );
 }
