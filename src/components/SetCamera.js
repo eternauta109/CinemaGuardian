@@ -146,7 +146,7 @@ function SetCamera({ user, cinema, item, setItem }) {
       return (
         <Container
           sx={{
-            p: 2,
+            p: 4,
             m: 2,
             display: "flex",
             height: "400",

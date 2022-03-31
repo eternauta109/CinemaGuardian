@@ -171,7 +171,7 @@ export default function UpdateFrom({
         </Grid>
         <Grid item xs={6} sm={3}>
           <TextField
-            value={user.name}
+            value={item.updateBy ? item.updateBy : user.name}
             fullWidth
             disabled
             label="last update"
@@ -180,7 +180,7 @@ export default function UpdateFrom({
         </Grid>
         <Grid item xs={6} sm={3}>
           <TextField
-            value={upDate}
+            value={item.lastUpdate ? item.lastUpdate : upDate}
             fullWidth
             disabled
             label="date last update"
