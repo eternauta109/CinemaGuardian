@@ -1,15 +1,15 @@
 import "./styles.css";
 
 import { useContext } from "react";
-import SignIn from "./featurs/Login";
+import SignIn from "./features/Login";
 import Navbar from "./components/Navbar";
 import { CredentialContext } from "./contex/StoreContext";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Container from "@mui/material/Container";
-import Home from "./featurs/Home";
-import Anomalies from "./featurs/Anomalies";
-import NewUser from "./featurs/NewUser";
-import Update from "./featurs/UpDate";
+import Home from "./features/Home";
+import Anomalies from "./features/Anomalies";
+import NewUser from "./features/NewUser";
+import Update from "./features/UpDate";
 
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
@@ -18,12 +18,12 @@ export default function App() {
   const theme = createTheme({
     palette: {
       primary: {
-        main: "#ff8f00",
+        main: "#ff8f00"
       },
       secondary: {
-        main: "#7cb342",
-      },
-    },
+        main: "#7cb342"
+      }
+    }
   });
   return (
     <ThemeProvider theme={theme}>
@@ -32,7 +32,7 @@ export default function App() {
           sx={{
             borderRadius: 5,
 
-            p: 2,
+            p: 2
           }}
         >
           <Router>
