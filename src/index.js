@@ -6,12 +6,10 @@ import { Provider } from "react-redux";
 
 import App from "./App";
 
+console.log("store", store);
 const rootElement = document.getElementById("root");
 ReactDOM.render(
   <StrictMode>
-    {/* <StoreContext>
-      <App />
-    </StoreContext> */}
     <Provider store={store}>
       <App />
     </Provider>

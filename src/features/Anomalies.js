@@ -1,56 +1,27 @@
 import InputAnomalies from "../components/AnomaliesForm";
-import { useContext, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Typography } from "@mui/material";
-import { db } from "../config/firebase_config";
-
-import { doc, setDoc, updateDoc, increment, getDoc } from "firebase/firestore";
-
-import { CredentialContext } from "../contex/StoreContext";
+import { addItem } from "../slice/itemSlice";
+import { useNavigate } from "react-router-dom";
 import { itemInit } from "../config/struttura";
 
+import { useSelector, useDispatch } from "react-redux";
+
 const Anomalies = () => {
-  const { user, cinemaObj, setCinemaObj } = useContext(CredentialContext);
-  /*  console.log("anomalies.js user e cinemaObj", user, cinemaObj); */
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const user = useSelector((store) => store.user);
+  const cinemas = useSelector((store) => store.cinemas);
+  console.log("anomalies.js user e cinemaObj", user);
   const [item, setItem] = useState({ ...itemInit });
 
-  const handleSubmit = async () => {
-    console.log("item anomalies", item);
+  const handleSubmit = () => {
     if (item.category === "" || item.priority === "") {
       return alert("devi selezionare una categoria");
     }
 
-    const itemRef = doc(db, "anomalies", `${item.item_ref}`);
-
-    const res = await setDoc(itemRef, {
-      ...item,
-
-      created: user.name
-    });
-
-    const cinemaRefNum_increment = doc(db, "cinema", `${item.cinema}`);
-
-    await updateDoc(cinemaRefNum_increment, {
-      rif_num: increment(1)
-    });
-    const docSnap = await getDoc(cinemaRefNum_increment);
-    console.log("prendo il cinema", docSnap.data().rif_num);
-
-    setCinemaObj(
-      cinemaObj.map((element) =>
-        element.name === item.cinema
-          ? { ...element, rif_num: docSnap.data().rif_num }
-          : element
-      )
-    );
-
-    console.log("cinemobj agg", cinemaObj);
-
-    console.log("Document written with ID: ", itemRef.id);
-    let newComArray = [];
-    let newPhotoArray = [];
-    setItem({ ...itemInit, comments: newComArray, photos: newPhotoArray });
-
-    return res;
+    dispatch(addItem({ item, user }));
+    navigate("/home");
   };
 
   useEffect(() => {
@@ -63,12 +34,12 @@ const Anomalies = () => {
     <>
       <Typography variant="h4">insert new anomalie</Typography>
       <InputAnomalies
-        cinema={cinemaObj}
+        update={false}
+        cinemas={cinemas}
         item={item}
         setItem={setItem}
         handleSubmit={handleSubmit}
         user={user}
-        update={false}
       />
     </>
   );

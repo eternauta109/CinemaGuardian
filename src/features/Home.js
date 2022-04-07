@@ -1,30 +1,21 @@
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { CredentialContext } from "../contex/StoreContext";
-import { useContext, useState, useEffect, useMemo, useCallback } from "react";
-import { db } from "../config/firebase_config";
+import { useEffect, useMemo, useCallback } from "react";
 import PhotoSizeSelectActualOutlinedIcon from "@mui/icons-material/PhotoSizeSelectActualOutlined";
 import ArrowCircleUpIcon from "@mui/icons-material/ArrowCircleUp";
 import { DataGrid, GridActionsCellItem, GridToolbar } from "@mui/x-data-grid";
 import { useNavigate } from "react-router-dom";
-import { Typography, Button, Container, Tooltip } from "@mui/material";
+import { Container, Tooltip } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ListAltIcon from "@mui/icons-material/ListAlt";
+import { useSelector, useDispatch } from "react-redux";
+import { getItems } from "../slice/itemSlice";
 
-import {
-  collection,
-  getDocs,
-  query,
-  where
-  /* addDoc,
-  updateDoc,
-  doc,
-  deleteDoc */
-} from "firebase/firestore";
 import ToExcel from "./ExpToExcel";
 
 const Home = () => {
-  const { lists, setLists, cinemaObj } = useContext(CredentialContext);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const items = useSelector((state) => state.items);
+  const cinemas = useSelector((state) => state.cinemas);
 
   const deleteUser = useCallback(
     (id) => () => {
@@ -212,49 +203,16 @@ const Home = () => {
   );
 
   const ExportToExcelHandle = () => {
-    ToExcel(lists);
+    ToExcel(items);
   };
-
-  const getListItem = () => {
-    console.log("home", cinemaObj);
-
-    cinemaObj.forEach(async (e) => {
-      console.log(e.name);
-      const q = query(
-        collection(db, "anomalies"),
-        where("cinema", "==", `${e.name}`)
-      );
-      const querySnapshot = await getDocs(q);
-
-      querySnapshot.forEach((doc) => {
-        // doc.data() is never undefined for query doc snapshots
-
-        doc.data().photos.forEach((element) => {
-          console.log("element", element);
-        });
-        let newItem = {
-          id: doc.id,
-
-          ...doc.data()
-        };
-        console.log(newItem);
-        setLists((oldArray) => [...oldArray, newItem]);
-
-        /* console.log(doc.id, " => ", doc.data()); */
-      });
-    });
-  };
-
   useEffect(() => {
-    setLists([]);
-    getListItem();
-    console.log("lists", lists);
+    dispatch(getItems({ cinemas }));
   }, []);
 
   return (
     <Container sx={{ height: 600, width: "100%" }}>
       <DataGrid
-        rows={lists}
+        rows={items}
         columns={columns}
         pageSize={10}
         density="comfortable"

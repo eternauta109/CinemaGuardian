@@ -1,23 +1,43 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-
+import { getItems } from "./itemSlice";
 import { db } from "../config/firebase_config";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, query, where } from "firebase/firestore";
 
 export const getCinemas = createAsyncThunk(
   "cinemas/getCinemas",
-  async (data = null) => {
-    const cinemas = [];
-    const allCinema = await getDocs(collection(db, "cinema"))
-      .then((res) => res.json())
-      .then((res) => res);
+  async ({ role, area, cinema }, { dispatch }) => {
+    let cinemas = [];
+    let cinemasSnap;
 
-    let cinemasPromis = await Promise(allCinema);
-    console.log(cinemasPromis);
+    switch (role) {
+      case "fm": //facilities
+      case "am": //area manager
+        const q = query(collection(db, "cinema"), where("area", "==", area));
+        cinemasSnap = await getDocs(q);
 
-    allCinema.forEach((e) => {
-      console.log(e.id, e.data());
+        break;
+
+      case "gm": //ops manager
+        cinemasSnap = await getDocs(collection(db, "cinema"));
+
+        break;
+
+      case "m": //manager
+      case "hm": //head manager
+        console.log("direttore");
+        const qu = query(collection(db, "cinema"), where("name", "==", cinema));
+        cinemasSnap = await getDocs(qu);
+
+        break;
+
+      default:
+        break;
+    }
+
+    cinemasSnap.forEach((e) => {
       cinemas.push(e.data());
     });
+    dispatch(getItems({ cinemas }));
 
     return cinemas;
   }
@@ -26,11 +46,16 @@ export const getCinemas = createAsyncThunk(
 export const cinemasSlice = createSlice({
   name: "cinemas",
   initialState: [],
-  reducers: {},
+  reducers: {
+    /*  addCinemas(state, action) {
+      console.log("reducer", state, action);
+      state.push(action.payload);
+    } */
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getCinemas.pending, (state, action) => {
-        console.log("loading", state);
+        console.log("loading");
       })
       .addCase(getCinemas.fulfilled, (state, action) => {
         state = action.payload;
@@ -40,5 +65,5 @@ export const cinemasSlice = createSlice({
 });
 
 const { actions, reducer } = cinemasSlice;
-export const {} = actions;
+export const { addCinemas } = actions;
 export default reducer;
