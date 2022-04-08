@@ -23,7 +23,7 @@ export const areaSelect = ["area1", "area2", "area3", "area4", "NULL"];
 export const itemInit = {
   category: "",
   item_ref: "",
-  created: "",
+
   lastUpdate: "",
   updateBy: "",
   cinema: "",
@@ -48,3 +48,5 @@ export const itemInit = {
 };
 
 export const roleSelect = ["hm", "am", "fm", "gm", "m"];
+
+export const fornitoriList = ["ottaviani", "relabor"];

@@ -1,4 +1,4 @@
-import React, { useContext, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
@@ -9,22 +9,10 @@ import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { db } from "../config/firebase_config";
-import {
-  collection,
-  getDocs,
-  doc,
-  query,
-  where,
-  getDoc
-  /* addDoc,
-  updateDoc,
-  doc,
-  deleteDoc */
-} from "firebase/firestore";
+
 /* import LoginContext from "../contex/LoginContext" */
-import { CredentialContext } from "../contex/StoreContext";
+import { useDispatch, useSelector } from "react-redux";
+import { getUser } from "../slice/userSlice";
 
 function Copyright(props) {
   return (
@@ -47,82 +35,31 @@ function Copyright(props) {
 // main function
 
 export default function SignIn() {
-  const { setUser, setCinemaObj } = useContext(CredentialContext);
   const password = useRef(null);
   const username = useRef(null);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const user = useSelector((state) => state.user);
 
-  let navigate = useNavigate();
+  /*  let navigate = useNavigate(); */
 
   const handleSubmit = async (event) => {
-    setCinemaObj([]);
     event.preventDefault();
-    /* const data = new FormData(event.currentTarget); 
-    questo è un bel modo di prendere i dai del form
-    */
 
     let passwordValue = password.current.value;
     let usernameValue = username.current.value;
 
-    console.log(passwordValue, usernameValue);
-
     if (!passwordValue || !usernameValue) {
       return alert("inserire i campi");
     }
-
-    const userRef = doc(db, "user", `${usernameValue}`);
-    //risposta della query
-    const userSnap = await getDoc(userRef);
-
-    console.log(userSnap.data());
-
-    if (!userSnap.exists()) {
-      return alert("username error");
-    }
-
-    if (passwordValue !== userSnap.data().password) {
-      return alert("password error");
-    }
-
-    switch (userSnap.data().role) {
-      case "fm": //facilities
-      case "am": //area manager
-        const q = query(
-          collection(db, "cinema"),
-          where("area", "==", `${userSnap.data().area}`)
-        );
-        const cinemasSnap = await getDocs(q);
-        console.log(cinemasSnap);
-        cinemasSnap.forEach((element) => {
-          console.log(element.id, element.data());
-          setCinemaObj((oldArray) => [...oldArray, element.data()]);
-        });
-        console.log("facilitie");
-        break;
-
-      case "gm": //ops manager
-        const allCinema = await getDocs(collection(db, "cinema"));
-        allCinema.forEach((e) => {
-          console.log(e.id, e.data());
-          setCinemaObj((oldArray) => [...oldArray, e.data()]);
-          console.log("ops manager");
-        });
-        break;
-
-      case "m": //manager
-      case "hm": //head manager
-        console.log("direttore");
-        const cinemaRef = doc(db, "cinema", `${userSnap.data().cinema}`);
-        const cinemaSnap = await getDoc(cinemaRef);
-
-        setCinemaObj((oldArray) => [...oldArray, cinemaSnap.data()]);
-        break;
-
-      default:
-        break;
-    }
-    setUser(userSnap.data());
-    navigate("/home");
+    dispatch(getUser({ username: usernameValue, password: passwordValue }));
   };
+
+  useEffect(() => {
+    if (user.name) {
+      navigate("/home");
+    }
+  }, [user]);
 
   return (
     <Container component="main" maxWidth="xs">

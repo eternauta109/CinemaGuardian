@@ -1,10 +1,17 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { usersReducer } from "../reducer/usersReducer.js";
+import cinemasReducer from "../slice/cinemaSlice";
+import userReducer from "../slice/userSlice";
+import itemReducer from "../slice/itemSlice";
+import logger from "redux-logger";
 
-const store = configureStore({
+const initState = [];
+
+export const store = configureStore({
+  initState,
   reducer: {
-    users: usersReducer
-  }
+    cinemas: cinemasReducer,
+    user: userReducer,
+    items: itemReducer
+  },
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger)
 });
-
-export default store;

@@ -1,4 +1,4 @@
-import react, { useContext, useState } from "react";
+import { useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -11,14 +11,14 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-import { CredentialContext } from "../contex/StoreContext";
+
 import { useNavigate } from "react-router-dom";
 import Chip from "@mui/material/Chip";
-import Stack from "@mui/material/Stack";
-import { ThemeProvider, createTheme } from "@mui/material/styles";
+
+import { useSelector } from "react-redux";
 
 const ResponsiveAppBar = () => {
-  const { user } = useContext(CredentialContext);
+  const user = useSelector((store) => store.user);
   /* console.log("navbar", user); */
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
