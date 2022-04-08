@@ -1,4 +1,6 @@
 import { useState } from "react";
+
+import { ThemeProvider, createTheme } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -16,6 +18,12 @@ import { useNavigate } from "react-router-dom";
 import Chip from "@mui/material/Chip";
 
 import { useSelector } from "react-redux";
+
+const theme = createTheme({
+  typography: {
+    fontFamily: ["Rubik Moonrocks", "cursive"].join(","),
+  },
+});
 
 const ResponsiveAppBar = () => {
   const user = useSelector((store) => store.user);
@@ -90,15 +98,16 @@ const ResponsiveAppBar = () => {
     <AppBar position="static" color="primary" sx={{ mb: 2 }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ mr: 2, display: { xs: "none", md: "flex" } }}
-          >
-            CineGuardian
-          </Typography>
-
+          <ThemeProvider theme={theme}>
+            <Typography
+              variant="h6"
+              noWrap
+              component="div"
+              sx={{ mr: 2, display: { xs: "none", md: "flex" } }}
+            >
+              CineGuardian
+            </Typography>
+          </ThemeProvider>
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             <IconButton
               size="large"
@@ -115,17 +124,17 @@ const ResponsiveAppBar = () => {
               anchorEl={anchorElNav}
               anchorOrigin={{
                 vertical: "bottom",
-                horizontal: "left"
+                horizontal: "left",
               }}
               keepMounted
               transformOrigin={{
                 vertical: "top",
-                horizontal: "left"
+                horizontal: "left",
               }}
               open={Boolean(anchorElNav)}
               onClose={handleCloseNavMenu}
               sx={{
-                display: { xs: "block", md: "none" }
+                display: { xs: "block", md: "none" },
               }}
             >
               {pages.map((page) => (
@@ -175,12 +184,12 @@ const ResponsiveAppBar = () => {
               anchorEl={anchorElUser}
               anchorOrigin={{
                 vertical: "top",
-                horizontal: "right"
+                horizontal: "right",
               }}
               keepMounted
               transformOrigin={{
                 vertical: "top",
-                horizontal: "right"
+                horizontal: "right",
               }}
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}

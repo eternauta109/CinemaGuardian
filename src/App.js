@@ -20,12 +20,15 @@ export default function App() {
   const theme = createTheme({
     palette: {
       primary: {
-        main: "#ff8f00"
+        main: "#ff8f00",
       },
       secondary: {
-        main: "#7cb342"
-      }
-    }
+        main: "#7cb342",
+      },
+    },
+    typography: {
+      fontFamily: ["Josefin Sans", "cursive"].join(","),
+    },
   });
   return (
     <ThemeProvider theme={theme}>
@@ -34,7 +37,7 @@ export default function App() {
           sx={{
             borderRadius: 5,
 
-            p: 2
+            p: 2,
           }}
         >
           <Router>

@@ -40,37 +40,31 @@ const Home = () => {
       {
         field: "id",
         headerName: "ID",
-        width: 10,
-        renderHeader: () => (
-          <strong>
-            {"ID "}
-            {/*     <span role="img" aria-label="enjoy">
-            🎂
-          </span> */}
-          </strong>
-        )
+        width: 60,
+        renderHeader: () => <strong>{"ID "}</strong>,
       },
       {
         field: "area",
         headerName: "area",
-        width: 60
+        width: 60,
       },
       {
         field: "cinema",
-        headerName: "cinema name"
-      },
-      {
-        field: "areaCinema",
-        headerName: "cinema area",
-        width: 120
+        headerName: "cinema name",
       },
       {
         field: "title",
         headerName: "title",
         type: "text",
 
-        width: 300
+        width: 300,
       },
+      {
+        field: "areaCinema",
+        headerName: "cinema area",
+        width: 120,
+      },
+
       {
         field: "problem",
         headerName: "details",
@@ -85,19 +79,19 @@ const Home = () => {
             </Tooltip>
           );
         },
-        width: 70
+        width: 70,
       },
       {
         field: "category",
         headerName: "category",
 
-        width: 120
+        width: 120,
       },
       {
         field: "competence",
         headerName: "competence",
 
-        width: 120
+        width: 120,
       },
 
       {
@@ -106,7 +100,7 @@ const Home = () => {
 
         type: "dateTime",
 
-        width: 200
+        width: 200,
       },
       {
         field: "photos",
@@ -121,7 +115,7 @@ const Home = () => {
                 color: "blue",
                 fontSize: 12,
 
-                textAlign: "center"
+                textAlign: "center",
               }}
             >
               {cellValues.value.map((e, k) => {
@@ -136,7 +130,7 @@ const Home = () => {
             </div>
           );
         },
-        width: 150
+        width: 150,
       },
 
       {
@@ -144,7 +138,7 @@ const Home = () => {
         headerName: "quotation",
 
         type: "number",
-        width: 100
+        width: 100,
       },
       {
         field: "solved",
@@ -157,7 +151,7 @@ const Home = () => {
                 color: "blue",
 
                 width: "100%",
-                textAlign: "center"
+                textAlign: "center",
               }}
             >
               {cellValues.values ? (
@@ -169,7 +163,7 @@ const Home = () => {
                     color: "white",
                     borderRadius: "10px",
                     fontSize: 12,
-                    padding: 4
+                    padding: 4,
                   }}
                 >
                   false
@@ -177,7 +171,7 @@ const Home = () => {
               )}
             </div>
           );
-        }
+        },
       },
       {
         field: "actions",
@@ -195,9 +189,9 @@ const Home = () => {
             icon={<DeleteIcon />}
             label="Delete"
             onClick={deleteUser(params.id)}
-          />
-        ]
-      }
+          />,
+        ],
+      },
     ],
     [upDate, deleteUser]
   );
@@ -221,7 +215,7 @@ const Home = () => {
         checkboxSelection
         disableSelectionOnClick
         components={{
-          Toolbar: GridToolbar
+          Toolbar: GridToolbar,
         }}
       />
     </Container>
