@@ -4,6 +4,7 @@ import { Typography } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import { updateItem } from "../slice/itemSlice";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import moment from "moment";
 
@@ -12,6 +13,7 @@ function UpDate() {
   const user = useSelector((state) => state.user);
   const items = useSelector((state) => state.items);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   console.log("state", state);
   const [item, setItem] = useState();
@@ -26,10 +28,11 @@ function UpDate() {
     setItem({
       ...item,
       lastUpdate: moment().format("DD/MM/YYYY"),
-      updateBy: user.name,
+      updateBy: user.name
     });
 
     dispatch(updateItem({ item }));
+    navigate("/home");
   };
 
   useEffect(() => {

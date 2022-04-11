@@ -11,12 +11,11 @@ import Select from "@mui/material/Select";
 import { doc, setDoc, collection, addDoc, docRef } from "firebase/firestore";
 import { userInit, areaSelect, roleSelect } from "../config/struttura";
 
-import { CredentialContext } from "../contex/StoreContext";
+import { useSelector, useDispatch } from "react-redux";
 
 const NewUser = () => {
   const [newUser, setNewUser] = useState("");
-  const { cinemaObj } = useContext(CredentialContext);
-  console.log(cinemaObj);
+  const cinemas = useSelector((state) => state.cinemas);
 
   const handleSubmit = async (e) => {
     console.log(newUser);
@@ -101,7 +100,7 @@ const NewUser = () => {
           label="cinema"
           name="cinema"
         >
-          {cinemaObj.map((e, key) => {
+          {cinemas.map((e, key) => {
             return (
               <MenuItem key={key} value={e}>
                 {e.name}
