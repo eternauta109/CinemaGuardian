@@ -4,8 +4,9 @@ import {
   Typography,
   MenuItem,
   InputLabel,
+  FormLabel,
   Grid,
-  FormControl
+  FormControl,
 } from "@mui/material";
 
 import { fornitoriList } from "../../config/struttura";
@@ -14,7 +15,7 @@ export const Pegaso = ({ item, itemChange }) => {
   return (
     <Grid container sx={{ mt: 1 }} spacing={1} justify="center">
       <Grid item xs={12} sm={12}>
-        <Typography>Pegaso section</Typography>
+        <FormLabel id="timetable">Pegaso Section</FormLabel>
       </Grid>
       <Grid item xs={12} sm={6}>
         <FormControl fullWidth>

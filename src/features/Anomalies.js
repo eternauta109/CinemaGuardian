@@ -32,7 +32,6 @@ const Anomalies = () => {
 
   return (
     <>
-      <Typography variant="h4">insert new anomalie</Typography>
       <InputAnomalies
         update={false}
         cinemas={cinemas}

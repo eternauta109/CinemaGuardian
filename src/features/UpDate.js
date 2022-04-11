@@ -26,7 +26,7 @@ function UpDate() {
     setItem({
       ...item,
       lastUpdate: moment().format("DD/MM/YYYY"),
-      updateBy: user.name
+      updateBy: user.name,
     });
 
     dispatch(updateItem({ item }));
@@ -41,7 +41,6 @@ function UpDate() {
 
   return (
     <div>
-      <Typography variant="h4">Update item {state.id}</Typography>
       {item && (
         <AnomaliesForm
           update={true}

@@ -1,31 +1,20 @@
 import React, { useState, useEffect } from "react";
-import Stack from "@mui/material/Stack";
+
 import IconButton from "@mui/material/IconButton";
-import CameraAltRoundedIcon from "@mui/icons-material/CameraAltRounded";
-import FlipCameraIosRoundedIcon from "@mui/icons-material/FlipCameraIosRounded";
+
 import CameraRoundedIcon from "@mui/icons-material/CameraRounded";
-import DeleteIcon from "@mui/icons-material/Delete";
+
 import { storage } from "../config/firebase_config";
-import {
-  ref,
-  uploadBytes,
-  listAll,
-  getDownloadURL,
-  uploadBytesResumable
-} from "firebase/storage";
+import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
 import moment from "moment";
-import { Box, Button, Typography } from "@mui/material";
-import ImageList from "@mui/material/ImageList";
-import ImageListItem from "@mui/material/ImageListItem";
+
 import Container from "@mui/material/Container";
 import Camera from "react-html5-camera-photo";
 import "react-html5-camera-photo/build/css/index.css";
-import ClickAwayListener from "@mui/material/ClickAwayListener";
 
 function SetCamera({ user, cinema, item, setItem }) {
   const [open, setOpen] = useState(false);
   const [images, setImages] = useState([]);
-  const [app, setApp] = useState([]);
 
   /* console.log("photo", user, cinema); */
 
@@ -37,7 +26,7 @@ function SetCamera({ user, cinema, item, setItem }) {
     zIndex: 1,
     border: "1px solid",
     p: 1,
-    bgcolor: "background.paper"
+    bgcolor: "background.paper",
   };
 
   const onTakePhotoHandler = async (photoUri) => {
@@ -66,7 +55,7 @@ function SetCamera({ user, cinema, item, setItem }) {
     const newObj = {
       name,
       blob: alberdan,
-      photo: photoUri
+      photo: photoUri,
     };
 
     const newImages = [...images];
@@ -81,8 +70,8 @@ function SetCamera({ user, cinema, item, setItem }) {
 
       customMetadata: {
         name: `${name}`,
-        author: `${user.name}`
-      }
+        author: `${user.name}`,
+      },
     };
     const uploadTask = uploadBytesResumable(imageRef, blob, metadata);
     await uploadTask.on(
@@ -152,7 +141,7 @@ function SetCamera({ user, cinema, item, setItem }) {
             height: "400",
             width: "640",
             flexDirection: "row",
-            justifyContent: "center"
+            justifyContent: "center",
           }}
         >
           <Camera
@@ -201,14 +190,14 @@ function SetCamera({ user, cinema, item, setItem }) {
         sx={{
           display: "flex",
           flexDirection: "row",
-          justifyContent: "center"
+          justifyContent: "center",
         }}
       >
         <IconButton
           sx={{
             display: "flex",
             flexDirection: "column",
-            justifyContent: "center"
+            justifyContent: "center",
           }}
           onClick={() => {
             setOpen(!open);
@@ -225,7 +214,7 @@ function SetCamera({ user, cinema, item, setItem }) {
         sx={{
           display: "flex",
           flexDirection: "row",
-          justifyContent: "center"
+          justifyContent: "center",
         }}
       >
         <ViewCamera />

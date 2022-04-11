@@ -4,8 +4,10 @@ import {
   MenuItem,
   InputLabel,
   Grid,
-  FormControl
+  FormControl,
+  Typography,
 } from "@mui/material";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
 
 import moment from "moment";
 
@@ -16,7 +18,7 @@ export const Header = ({
   user,
   setCinemaSelected,
   cinemaSelected,
-  setItem
+  setItem,
 }) => {
   const stDate = moment().format("DD/MM/YYYY");
 
@@ -37,12 +39,26 @@ export const Header = ({
       item_ref: ref_number,
       stDate: stDate,
       updateBy: user.name,
-      lastUpdate: stDate
+      lastUpdate: stDate,
     });
   };
 
+  const theme = createTheme({
+    typography: {
+      fontFamily: ["Rubik Moonrocks", "cursive"].join(","),
+    },
+  });
+
   return (
     <Grid container sx={{ mt: 1 }} spacing={1} justify="center">
+      <ThemeProvider theme={theme}>
+        <Grid item xs={12} sm={12} sx={{ mb: 3 }}>
+          <Typography variant="h6">
+            {update ? `update item ${item.id}` : `insert new anomalie`}
+          </Typography>
+        </Grid>
+      </ThemeProvider>
+
       <Grid item xs={8} sm={4}>
         {!update ? (
           <FormControl fullWidth>

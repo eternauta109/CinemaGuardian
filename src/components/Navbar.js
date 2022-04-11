@@ -1,21 +1,28 @@
-import { useState } from "react";
+import React, { useState } from "react";
 
 import { ThemeProvider, createTheme } from "@mui/material/styles";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import Menu from "@mui/material/Menu";
-import MenuIcon from "@mui/icons-material/Menu";
-import Container from "@mui/material/Container";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import Tooltip from "@mui/material/Tooltip";
-import MenuItem from "@mui/material/MenuItem";
+import {
+  Avatar,
+  Container,
+  Button,
+  Tooltip,
+  MenuItem,
+  AppBar,
+  Box,
+  Tabs,
+  Tab,
+  Toolbar,
+  IconButton,
+  Typography,
+  Menu,
+  Chip,
+} from "@mui/material";
+import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
+import AddTaskIcon from "@mui/icons-material/AddTask";
+import PersonIcon from "@mui/icons-material/Person";
 
+import MenuIcon from "@mui/icons-material/Menu";
 import { useNavigate } from "react-router-dom";
-import Chip from "@mui/material/Chip";
 
 import { useSelector } from "react-redux";
 
@@ -30,6 +37,7 @@ const ResponsiveAppBar = () => {
   /* console.log("navbar", user); */
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
+
   let navigate = useNavigate();
 
   const pages = ["Add Anomaly", "Lists", "User"];
@@ -100,7 +108,7 @@ const ResponsiveAppBar = () => {
         <Toolbar disableGutters>
           <ThemeProvider theme={theme}>
             <Typography
-              variant="h6"
+              variant="h4"
               noWrap
               component="div"
               sx={{ mr: 2, display: { xs: "none", md: "flex" } }}
@@ -108,6 +116,7 @@ const ResponsiveAppBar = () => {
               CineGuardian
             </Typography>
           </ThemeProvider>
+
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             <IconButton
               size="large"
@@ -152,6 +161,7 @@ const ResponsiveAppBar = () => {
               ))}
             </Menu>
           </Box>
+
           <Typography
             variant="h6"
             noWrap
@@ -160,19 +170,30 @@ const ResponsiveAppBar = () => {
           >
             CineGuardian
           </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {pages.map((page) => (
-              <Button
-                key={page}
-                onClick={(handleCloseNavMenu, () => handleClick(page))}
-                sx={{ my: 2, color: "white", display: "block" }}
-              >
-                {page}
-              </Button>
-            ))}
-          </Box>
 
-          <Box sx={{ flexGrow: 0 }}>
+          <MenuItem>
+            <Tab
+              icon={<AddTaskIcon />}
+              label="add item"
+              onClick={() => handleClick("Add Anomaly")}
+            />
+          </MenuItem>
+          <MenuItem>
+            <Tab
+              icon={<FormatListBulletedIcon />}
+              label="Lists"
+              onClick={() => handleClick("Lists")}
+            />
+          </MenuItem>
+          <MenuItem>
+            <Tab
+              icon={<PersonIcon />}
+              label="User"
+              onClick={() => handleClick("User")}
+            />
+          </MenuItem>
+
+          <Box sx={{ flexGrow: 2 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
