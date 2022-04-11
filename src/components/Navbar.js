@@ -15,7 +15,7 @@ import {
   IconButton,
   Typography,
   Menu,
-  Chip,
+  Chip
 } from "@mui/material";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import AddTaskIcon from "@mui/icons-material/AddTask";
@@ -28,8 +28,8 @@ import { useSelector } from "react-redux";
 
 const theme = createTheme({
   typography: {
-    fontFamily: ["Rubik Moonrocks", "cursive"].join(","),
-  },
+    fontFamily: ["Rubik Moonrocks", "cursive"].join(",")
+  }
 });
 
 const ResponsiveAppBar = () => {
@@ -133,17 +133,17 @@ const ResponsiveAppBar = () => {
               anchorEl={anchorElNav}
               anchorOrigin={{
                 vertical: "bottom",
-                horizontal: "left",
+                horizontal: "left"
               }}
               keepMounted
               transformOrigin={{
                 vertical: "top",
-                horizontal: "left",
+                horizontal: "left"
               }}
               open={Boolean(anchorElNav)}
               onClose={handleCloseNavMenu}
               sx={{
-                display: { xs: "block", md: "none" },
+                display: { xs: "block", md: "none" }
               }}
             >
               {pages.map((page) => (
@@ -161,15 +161,16 @@ const ResponsiveAppBar = () => {
               ))}
             </Menu>
           </Box>
-
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}
-          >
-            CineGuardian
-          </Typography>
+          <ThemeProvider theme={theme}>
+            <Typography
+              variant="h6"
+              noWrap
+              component="div"
+              sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}
+            >
+              CineGuardian
+            </Typography>
+          </ThemeProvider>
 
           <MenuItem>
             <Tab
@@ -205,12 +206,12 @@ const ResponsiveAppBar = () => {
               anchorEl={anchorElUser}
               anchorOrigin={{
                 vertical: "top",
-                horizontal: "right",
+                horizontal: "right"
               }}
               keepMounted
               transformOrigin={{
                 vertical: "top",
-                horizontal: "right",
+                horizontal: "right"
               }}
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
