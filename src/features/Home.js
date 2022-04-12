@@ -126,7 +126,7 @@ const Home = () => {
             >
               {cellValues.value.map((e, k) => {
                 return (
-                  <a key={k} href={cellValues.value[k]} target="_blank">
+                  <a key={k} href={cellValues.value[k].url} target="_blank">
                     <PhotoSizeSelectActualOutlinedIcon
                       sx={{ p: 1, color: "primary" }}
                     />
