@@ -135,7 +135,7 @@ export const Header = ({
 
       <Grid item xs={6} sm={3}>
         <TextField
-          value={user.name}
+          value={!update ? user.name : item.createdBy}
           fullWidth
           disabled
           label="created by"
@@ -144,7 +144,7 @@ export const Header = ({
       </Grid>
       <Grid item xs={6} sm={3}>
         <TextField
-          value={item.updateBy ? item.updateBy : user.name}
+          value={user.name}
           fullWidth
           disabled
           label="last update"

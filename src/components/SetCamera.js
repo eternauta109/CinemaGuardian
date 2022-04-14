@@ -12,7 +12,7 @@ import Container from "@mui/material/Container";
 import Camera from "react-html5-camera-photo";
 import "react-html5-camera-photo/build/css/index.css";
 
-function SetCamera({ user, cinema, item, setItem }) {
+function SetCamera({ user, item, setItem }) {
   const [open, setOpen] = useState(false);
   const [images, setImages] = useState([]);
 
@@ -29,7 +29,7 @@ function SetCamera({ user, cinema, item, setItem }) {
       return alert("al massimo puoi memorizzare 3 photo");
     }
     const snapTime = moment().format("MMMM Do YYYY h:mm:ss a");
-    const name = `${cinema.name}/${item.item_ref}/${item.item_ref}-${snapTime}.jpg`;
+    const name = `${item.cinema}/${item.item_ref}/${item.item_ref}-${snapTime}.jpg`;
 
     const alberdan = await fetch(photoUri)
       .then(function (response) {
@@ -109,8 +109,8 @@ function SetCamera({ user, cinema, item, setItem }) {
           console.log(downloadURL);
 
           if (item.photos) {
-            let newArray = item.photos;
-            newArray.push({ url: downloadURL, name: name });
+            let newArray = [...item.photos, { url: downloadURL, name: name }];
+
             setItem({ ...item, photos: newArray });
           } else {
             setItem({ ...item, photos: [{ url: downloadURL, name: name }] });

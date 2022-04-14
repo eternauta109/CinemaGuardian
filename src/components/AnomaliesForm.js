@@ -120,7 +120,7 @@ export default function InputAnomalies({
                 variant="contained"
                 size="large"
               >
-                ADD ITEM
+                {update ? "UPDATE" : "ADD ITEM"}
               </LoadingButton>
             </Grid>
           </Grid>

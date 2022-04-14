@@ -42,7 +42,7 @@ export const Priority = ({ item, itemChange }) => {
             onChange={itemChange}
             aria-labelledby="capexLabel"
             name="capex"
-            value={item.capex}
+            value={item.capex ? item.capex : "Capex"}
           >
             <FormControlLabel value="Capex" control={<Radio />} label="Capex" />
             <FormControlLabel value="Opex" control={<Radio />} label="Opex" />

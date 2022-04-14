@@ -5,15 +5,23 @@ import { collection, getDocs, query, where } from "firebase/firestore";
 
 export const getCinemas = createAsyncThunk(
   "cinemas/getCinemas",
-  async ({ role, area, cinema }, { dispatch }) => {
+  async ({ role, area, cinema, facilityArea }, { dispatch }) => {
     let cinemas = [];
     let cinemasSnap;
 
     switch (role) {
       case "fm": //facilities
-      case "am": //area manager
-        const q = query(collection(db, "cinema"), where("area", "==", area));
+        const q = query(
+          collection(db, "cinema"),
+          where("MaintenanceArea", "==", facilityArea)
+        );
         cinemasSnap = await getDocs(q);
+
+        break;
+
+      case "am": //area manager
+        const qam = query(collection(db, "cinema"), where("area", "==", area));
+        cinemasSnap = await getDocs(qam);
 
         break;
 

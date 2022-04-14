@@ -22,7 +22,12 @@ export const getUser = createAsyncThunk(
     const user = userSnap.data();
 
     dispatch(
-      getCinemas({ role: user.role, area: user.area, cinema: user.cinema })
+      getCinemas({
+        role: user.role,
+        area: user.area,
+        cinema: user.cinema,
+        facilityArea: user.facilityArea
+      })
     );
 
     return user;

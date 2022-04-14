@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { Container, Tooltip } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ListAltIcon from "@mui/icons-material/ListAlt";
+import InsertLinkIcon from "@mui/icons-material/InsertLink";
 import { useSelector, useDispatch } from "react-redux";
 import { getItems } from "../slice/itemSlice";
 
@@ -112,9 +113,10 @@ const Home = () => {
         field: "photos",
 
         name: "photos",
-        headerName: "photoLink",
+        headerName: "photos",
 
         renderCell: (cellValues) => {
+          /* console.log("cell values", cellValues.value); */
           return (
             <div
               style={{
@@ -124,15 +126,49 @@ const Home = () => {
                 textAlign: "center"
               }}
             >
-              {cellValues.value.map((e, k) => {
-                return (
-                  <a key={k} href={cellValues.value[k].url} target="_blank">
-                    <PhotoSizeSelectActualOutlinedIcon
-                      sx={{ p: 1, color: "primary" }}
-                    />
-                  </a>
-                );
-              })}
+              {cellValues.value
+                ? cellValues.value.map((e, k) => {
+                    return (
+                      <a key={k} href={cellValues.value[k].url} target="_blank">
+                        <PhotoSizeSelectActualOutlinedIcon
+                          sx={{ p: 1, color: "primary" }}
+                        />
+                      </a>
+                    );
+                  })
+                : null}
+            </div>
+          );
+        },
+        width: 150
+      },
+
+      {
+        field: "links",
+
+        name: "links",
+        headerName: "links",
+
+        renderCell: (cellValues) => {
+          /* console.log("cell values", cellValues.value); */
+          return (
+            <div
+              style={{
+                color: "blue",
+                fontSize: 12,
+
+                textAlign: "center"
+              }}
+            >
+              {cellValues.value
+                ? cellValues.value.map((e, k) => {
+                    return (
+                      <a key={k} href={cellValues.value[k]} target="_blank">
+                        <InsertLinkIcon sx={{ p: 1, color: "primary" }} />
+                      </a>
+                    );
+                  })
+                : null}
             </div>
           );
         },
