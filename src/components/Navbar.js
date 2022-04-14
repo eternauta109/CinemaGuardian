@@ -4,12 +4,10 @@ import { ThemeProvider, createTheme } from "@mui/material/styles";
 import {
   Avatar,
   Container,
-  Button,
   Tooltip,
   MenuItem,
   AppBar,
   Box,
-  Tabs,
   Tab,
   Toolbar,
   IconButton,
@@ -40,7 +38,33 @@ const ResponsiveAppBar = () => {
 
   let navigate = useNavigate();
 
-  const pages = ["Add Anomaly", "Lists", "User"];
+  const Pages = () => {
+    return (
+      <>
+        <MenuItem>
+          <Tab
+            icon={<AddTaskIcon />}
+            label="add item"
+            onClick={() => handleClick("Add Anomaly")}
+          />
+        </MenuItem>
+        <MenuItem>
+          <Tab
+            icon={<FormatListBulletedIcon />}
+            label="Lists"
+            onClick={() => handleClick("Lists")}
+          />
+        </MenuItem>
+        <MenuItem>
+          <Tab
+            icon={<PersonIcon />}
+            label="User"
+            onClick={() => handleClick("User")}
+          />
+        </MenuItem>
+      </>
+    );
+  };
 
   let settings = [`name: fabio`, `cinema: parco`, `direttore`];
 
@@ -76,6 +100,8 @@ const ResponsiveAppBar = () => {
 
   const handleClick = (page) => {
     /* console.log(page); */
+
+    handleCloseNavMenu();
     switch (page) {
       case "Add Anomaly":
         navigate("/anomalies");
@@ -116,7 +142,6 @@ const ResponsiveAppBar = () => {
               CineGuardian
             </Typography>
           </ThemeProvider>
-
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             <IconButton
               size="large"
@@ -146,19 +171,8 @@ const ResponsiveAppBar = () => {
                 display: { xs: "block", md: "none" }
               }}
             >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center" value={page}>
-                    <Button
-                      key={page}
-                      onClick={() => handleClick(page)}
-                      sx={{ color: "blue" }}
-                    >
-                      {page}
-                    </Button>
-                  </Typography>
-                </MenuItem>
-              ))}
+              {/* qui va pages */}
+              <Pages />
             </Menu>
           </Box>
           <ThemeProvider theme={theme}>
@@ -179,21 +193,20 @@ const ResponsiveAppBar = () => {
               onClick={() => handleClick("Add Anomaly")}
             />
           </MenuItem>
-          <MenuItem>
+          <MenuItem sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             <Tab
               icon={<FormatListBulletedIcon />}
               label="Lists"
               onClick={() => handleClick("Lists")}
             />
           </MenuItem>
-          <MenuItem>
+          <MenuItem sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             <Tab
               icon={<PersonIcon />}
               label="User"
               onClick={() => handleClick("User")}
             />
           </MenuItem>
-
           <Box sx={{ flexGrow: 2 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>

@@ -1,6 +1,16 @@
 import { TextField, Grid, InputAdornment } from "@mui/material";
 
-export const Quotation = ({ itemChange }) => {
+export const Quotation = ({ itemChange, item, setItem }) => {
+  const finalChange = (e) => {
+    const total = e.target.value;
+    setItem({
+      ...item,
+      quotation: total,
+      orderCost: total,
+      finalCost: total
+    });
+  };
+
   return (
     <Grid container sx={{ mt: 1 }} spacing={1} justify="center">
       <Grid item xs={4} sm={4}>
@@ -8,6 +18,7 @@ export const Quotation = ({ itemChange }) => {
           label="Quotation"
           type="number"
           variant="standard"
+          value={item.quotation}
           onChange={itemChange}
           name="quotation"
           id="standard-size-small"
@@ -22,6 +33,7 @@ export const Quotation = ({ itemChange }) => {
           label="orderCost"
           type="number"
           variant="standard"
+          value={item.orderCost}
           onChange={itemChange}
           name="orderCost"
           id="standard-size-small"
@@ -36,7 +48,8 @@ export const Quotation = ({ itemChange }) => {
           label="finalCost"
           type="number"
           variant="standard"
-          onChange={itemChange}
+          value={item.finalCost}
+          onChange={finalChange}
           name="finalCost"
           id="standard-size-small"
           sx={{ m: 1 }}

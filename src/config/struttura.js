@@ -32,11 +32,9 @@ export const itemInit = {
   area: "",
   problem: "",
   areaCinema: "",
-  comments: [],
-  cinema_comment: [],
-  facility_comment: [],
+
   priority: "",
-  photos: [],
+
   competence: "",
   capex: "Capex",
   quotation: 0.0,

@@ -16,7 +16,6 @@ export const Title = ({ item, itemChange }) => {
         <TextField
           onChange={itemChange}
           value={item.title}
-          sx={{ width: 310, m: 2 }}
           inputProps={{
             maxLength: 30
           }}

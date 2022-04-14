@@ -21,6 +21,7 @@ function Slider({ item, setItem }) {
         console.log("file deleted", k);
         const app = item.photos;
         app.splice(k, 1);
+
         setItem({ ...item, photos: app });
       })
       .catch((error) => {
@@ -30,28 +31,26 @@ function Slider({ item, setItem }) {
 
   return (
     <Stack spacing={2}>
-      {item.photos[0] && (
-        <ImageList sx={{ height: 220 }} cols={3} rowHeight={164}>
-          {item.photos.map((e, k) => (
-            <ImageListItem key={k}>
-              <img
-                src={`${e.url}?w=164&h=164&fit=crop&auto=format`}
-                srcSet={`${e.url}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
-                alt={e}
-                loading="lazy"
-              />
-              <IconButton
-                onClick={() => removePhoto(e.name, k)}
-                aria-label="delete"
-                size="small"
-                sx={{ m: 0 }}
-              >
-                <DeleteIcon fontSize="inherit" />
-              </IconButton>
-            </ImageListItem>
-          ))}
-        </ImageList>
-      )}
+      <ImageList sx={{ height: 220 }} cols={3} rowHeight={164}>
+        {item.photos.map((e, k) => (
+          <ImageListItem key={k}>
+            <img
+              src={`${e.url}?w=164&h=164&fit=crop&auto=format`}
+              srcSet={`${e.url}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+              alt={e}
+              loading="lazy"
+            />
+            <IconButton
+              onClick={() => removePhoto(e.name, k)}
+              aria-label="delete"
+              size="small"
+              sx={{ m: 0 }}
+            >
+              <DeleteIcon fontSize="inherit" />
+            </IconButton>
+          </ImageListItem>
+        ))}
+      </ImageList>
     </Stack>
   );
 }

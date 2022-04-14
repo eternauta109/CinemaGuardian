@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import LoadingButton from "@mui/lab/LoadingButton";
 import SaveIcon from "@mui/icons-material/Save";
 import Box from "@mui/material/Box";
@@ -8,7 +8,7 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import { doc, setDoc, collection, addDoc, docRef } from "firebase/firestore";
+import { doc, setDoc } from "firebase/firestore";
 import { userInit, areaSelect, roleSelect } from "../config/struttura";
 
 import { useSelector, useDispatch } from "react-redux";
@@ -18,7 +18,7 @@ const NewUser = () => {
   const cinemas = useSelector((state) => state.cinemas);
 
   const handleSubmit = async (e) => {
-    console.log(newUser);
+    /*  console.log(newUser); */
     await setDoc(doc(db, "user", `${newUser.name}`), {
       ...newUser
     });
@@ -28,7 +28,7 @@ const NewUser = () => {
   const handleChange = (e) => {
     /* console.log(e.target); */
     setNewUser({ ...newUser, [e.target.name]: e.target.value });
-    console.log(newUser);
+    /* console.log(newUser); */
   };
   return (
     <Box

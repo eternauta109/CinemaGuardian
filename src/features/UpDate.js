@@ -1,6 +1,6 @@
 import { useLocation } from "react-router-dom";
 import AnomaliesForm from "../components/AnomaliesForm";
-import { Typography } from "@mui/material";
+
 import { useSelector, useDispatch } from "react-redux";
 import { updateItem } from "../slice/itemSlice";
 import { useEffect, useState } from "react";
@@ -37,7 +37,7 @@ function UpDate() {
 
   useEffect(() => {
     getItemFromLists();
-    console.log("update", item);
+    console.log("update in update", item);
     /* getItem(state.id); */
     return () => {};
   }, []);

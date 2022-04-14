@@ -18,17 +18,6 @@ function SetCamera({ user, cinema, item, setItem }) {
 
   /* console.log("photo", user, cinema); */
 
-  const styles = {
-    position: "absolute",
-    top: 28,
-    right: 0,
-    left: 0,
-    zIndex: 1,
-    border: "1px solid",
-    p: 1,
-    bgcolor: "background.paper",
-  };
-
   const onTakePhotoHandler = async (photoUri) => {
     //metto la foto in array locale per visulizzarle
     if (!item.item_ref) {
@@ -55,7 +44,7 @@ function SetCamera({ user, cinema, item, setItem }) {
     const newObj = {
       name,
       blob: alberdan,
-      photo: photoUri,
+      photo: photoUri
     };
 
     const newImages = [...images];
@@ -70,8 +59,8 @@ function SetCamera({ user, cinema, item, setItem }) {
 
       customMetadata: {
         name: `${name}`,
-        author: `${user.name}`,
-      },
+        author: `${user.name}`
+      }
     };
     const uploadTask = uploadBytesResumable(imageRef, blob, metadata);
     await uploadTask.on(
@@ -118,9 +107,14 @@ function SetCamera({ user, cinema, item, setItem }) {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           /* urlArray.push(downloadURL); */
           console.log(downloadURL);
-          let newArray = item.photos;
-          newArray.push({ url: downloadURL, name: name });
-          setItem({ ...item, photos: newArray });
+
+          if (item.photos) {
+            let newArray = item.photos;
+            newArray.push({ url: downloadURL, name: name });
+            setItem({ ...item, photos: newArray });
+          } else {
+            setItem({ ...item, photos: [{ url: downloadURL, name: name }] });
+          }
         });
       }
     );
@@ -141,7 +135,7 @@ function SetCamera({ user, cinema, item, setItem }) {
             height: "400",
             width: "640",
             flexDirection: "row",
-            justifyContent: "center",
+            justifyContent: "center"
           }}
         >
           <Camera
@@ -168,8 +162,8 @@ function SetCamera({ user, cinema, item, setItem }) {
 
   const openCamera = () => {
     setOpen(false);
-    console.log(item.photos);
-    if (item.photos.length > 0) {
+    /* console.log(item.photos); */
+    if (item.photos > 0) {
       setImages(item.photos);
     }
   };
@@ -190,14 +184,15 @@ function SetCamera({ user, cinema, item, setItem }) {
         sx={{
           display: "flex",
           flexDirection: "row",
-          justifyContent: "center",
+          justifyContent: "center"
         }}
       >
         <IconButton
+          color="primary"
           sx={{
             display: "flex",
             flexDirection: "column",
-            justifyContent: "center",
+            justifyContent: "center"
           }}
           onClick={() => {
             setOpen(!open);
@@ -214,7 +209,7 @@ function SetCamera({ user, cinema, item, setItem }) {
         sx={{
           display: "flex",
           flexDirection: "row",
-          justifyContent: "center",
+          justifyContent: "center"
         }}
       >
         <ViewCamera />

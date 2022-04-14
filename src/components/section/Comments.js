@@ -17,8 +17,14 @@ export const Comments = ({ item, setItem, user }) => {
       comment: comment,
       data: moment().format("DD/MM/YYYY")
     };
-    const newArray = [...item.comments, newComment];
-    setItem({ ...item, comments: newArray });
+
+    if (item.comments) {
+      const newArray = [...item.comments, newComment];
+      setItem({ ...item, comments: newArray });
+    } else {
+      setItem({ ...item, comments: [newComment] });
+    }
+
     setComment("");
   };
 

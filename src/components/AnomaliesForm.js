@@ -15,6 +15,8 @@ import Quotation from "./section/Quotation";
 import Solved from "./section/Solved";
 import Priority from "./section/Priority";
 import Comments from "./section/Comments";
+import PhotoLink from "./section/PhotoLink";
+import LinksSlider from "./section/LinksSlider";
 
 export default function InputAnomalies({
   update,
@@ -29,9 +31,7 @@ export default function InputAnomalies({
   console.log(" item in anomaliesform", item);
 
   const itemChange = (e) => {
-    /* e.preventDefault(); */
-    /* console.log("item change", e.target.name, e.target.value); */
-    console.log("iten in anomalies", item);
+    console.log("itemChange in anomalies", item);
     setItem({ ...item, [e.target.name]: e.target.value });
   };
 
@@ -53,59 +53,79 @@ export default function InputAnomalies({
         setCinemaSelected={setCinemaSelected}
       />
 
-      <hr />
+      {item.cinema && (
+        <>
+          <hr />
 
-      <Title item={item} itemChange={itemChange} />
+          <Title item={item} itemChange={itemChange} />
 
-      <hr />
+          <hr />
 
-      <Comments item={item} setItem={setItem} user={user} />
+          <Comments item={item} setItem={setItem} user={user} />
 
-      <hr />
+          <hr />
 
-      <Priority item={item} itemChange={itemChange} />
+          <Priority item={item} itemChange={itemChange} />
 
-      <hr />
+          <hr />
 
-      <Grid container sx={{ mt: 4 }} spacing={1} justify="center">
-        <SetCamera
-          user={user}
-          cinema={cinemaSelected}
-          item={item}
-          setItem={setItem}
-        />
-        <Slider item={item} setItem={setItem} />
-      </Grid>
+          <Grid container sx={{ mt: 1 }} spacing={1} justify="center">
+            <Grid item xs={12} sm={12}>
+              <SetCamera
+                user={user}
+                cinema={cinemaSelected}
+                item={item}
+                setItem={setItem}
+              />
+            </Grid>
 
-      <hr />
+            <Grid item xs={12} sm={12}>
+              {item.photos ? <Slider item={item} setItem={setItem} /> : null}
+            </Grid>
+          </Grid>
 
-      <Pegaso item={item} itemChange={itemChange} />
+          <hr />
+          <Grid container sx={{ mt: 1 }} spacing={1} justify="center">
+            <Grid item xs={12} sm={12}>
+              <PhotoLink item={item} setItem={setItem} />
+            </Grid>
 
-      <hr />
+            <Grid item xs={12} sm={12}>
+              {item.links ? <LinksSlider links={item.links} /> : null}
+            </Grid>
+          </Grid>
 
-      <Quotation itemChange={itemChange} />
+          <hr />
 
-      <hr />
+          <Pegaso item={item} itemChange={itemChange} />
 
-      <Solved item={item} setItem={setItem} />
+          <hr />
 
-      <hr />
+          <Quotation item={item} setItem={setItem} itemChange={itemChange} />
 
-      <Grid container sx={{ mt: 4 }} spacing={1} justify="center">
-        <Grid item xs={12}>
-          <LoadingButton
-            color="secondary"
-            onClick={handleSubmit}
-            /* loading={loading} */
-            loadingPosition="start"
-            startIcon={<SaveIcon />}
-            variant="contained"
-            size="large"
-          >
-            ADD ITEM
-          </LoadingButton>
-        </Grid>
-      </Grid>
+          <hr />
+
+          <Solved item={item} setItem={setItem} />
+
+          <hr />
+
+          <Grid container sx={{ mt: 4 }} spacing={1} justify="center">
+            <Grid item xs={12}>
+              <LoadingButton
+                color="secondary"
+                onClick={handleSubmit}
+                /* loading={loading} */
+                loadingPosition="start"
+                startIcon={<SaveIcon />}
+                variant="contained"
+                size="large"
+              >
+                ADD ITEM
+              </LoadingButton>
+            </Grid>
+          </Grid>
+        </>
+      )}
     </Container>
   );
 }

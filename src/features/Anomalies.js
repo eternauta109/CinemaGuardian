@@ -1,9 +1,8 @@
 import InputAnomalies from "../components/AnomaliesForm";
 import { useState, useEffect } from "react";
-import { Typography } from "@mui/material";
+
 import { addItem } from "../slice/itemSlice";
 import { useNavigate } from "react-router-dom";
-import { itemInit } from "../config/struttura";
 
 import { useSelector, useDispatch } from "react-redux";
 
@@ -12,8 +11,8 @@ const Anomalies = () => {
   const navigate = useNavigate();
   const user = useSelector((store) => store.user);
   const cinemas = useSelector((store) => store.cinemas);
-  console.log("anomalies.js user e cinemaObj", user);
-  const [item, setItem] = useState({ ...itemInit });
+  /*  console.log("anomalies.js user e cinemaObj", user); */
+  const [item, setItem] = useState({ item: {} });
 
   const handleSubmit = () => {
     if (item.category === "" || item.priority === "") {
@@ -27,7 +26,7 @@ const Anomalies = () => {
   useEffect(() => {
     /* let azzeraComments = [];
     let newArrayApp = []; */
-    setItem({ ...itemInit, comments: [], photos: [] });
+    setItem({ item: {} });
   }, [setItem]);
 
   return (

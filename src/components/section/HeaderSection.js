@@ -5,7 +5,7 @@ import {
   InputLabel,
   Grid,
   FormControl,
-  Typography,
+  Typography
 } from "@mui/material";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 
@@ -18,18 +18,18 @@ export const Header = ({
   user,
   setCinemaSelected,
   cinemaSelected,
-  setItem,
+  setItem
 }) => {
   const stDate = moment().format("DD/MM/YYYY");
 
   const cinemaSelect = (e) => {
     const res = cinemas.find(({ name }) => name === `${e.target.value}`);
     setCinemaSelected(res);
-    console.log(res);
+
     const numb = (res.rif_num + 1).toString();
-    console.log("numb", numb);
+
     const ref_number = `${res.abbr}-${numb}`;
-    console.log("res", cinemaSelected);
+
     setItem({
       ...item,
       [e.target.name]: e.target.value,
@@ -39,14 +39,14 @@ export const Header = ({
       item_ref: ref_number,
       stDate: stDate,
       updateBy: user.name,
-      lastUpdate: stDate,
+      lastUpdate: stDate
     });
   };
 
   const theme = createTheme({
     typography: {
-      fontFamily: ["Rubik Moonrocks", "cursive"].join(","),
-    },
+      fontFamily: ["Rubik Moonrocks", "cursive"].join(",")
+    }
   });
 
   return (
@@ -82,7 +82,7 @@ export const Header = ({
           </FormControl>
         ) : (
           <TextField
-            value={item.cinema}
+            value={item.cinema ?? ""}
             fullWidth
             disabled
             label="cinema"
@@ -92,7 +92,8 @@ export const Header = ({
       </Grid>
       <Grid item xs={4} sm={2}>
         <TextField
-          value={item.item_ref}
+          value={item.item_ref || ""}
+          InputLabelProps={{ shrink: item.item_ref ? true : false }}
           fullWidth
           disabled
           label="ref"
@@ -102,6 +103,7 @@ export const Header = ({
       <Grid item xs={4} sm={2}>
         <TextField
           value={item.screens}
+          InputLabelProps={{ shrink: item.screens ? true : false }}
           fullWidth
           disabled
           label="screens"
@@ -111,6 +113,7 @@ export const Header = ({
       <Grid item xs={8} sm={4}>
         <TextField
           value={item.area}
+          InputLabelProps={{ shrink: item.area ? true : false }}
           fullWidth
           disabled
           label="area"
@@ -141,7 +144,7 @@ export const Header = ({
       </Grid>
       <Grid item xs={6} sm={3}>
         <TextField
-          value={user.name}
+          value={item.updateBy ? item.updateBy : user.name}
           fullWidth
           disabled
           label="last update"
