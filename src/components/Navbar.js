@@ -186,7 +186,7 @@ const ResponsiveAppBar = () => {
             </Typography>
           </ThemeProvider>
 
-          <MenuItem>
+          <MenuItem sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             <Tab
               icon={<AddTaskIcon />}
               label="add item"
