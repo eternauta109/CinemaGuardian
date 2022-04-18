@@ -8,7 +8,7 @@ import {
 
 export const LinksSlider = ({ links }) => {
   return (
-    <Grid sx={{ mt: 1 }} spacing={1}>
+    <Grid container sx={{ mt: 1 }} spacing={1}>
       <List
         sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
         component="nav"

@@ -58,8 +58,8 @@ const ResponsiveAppBar = () => {
         <MenuItem>
           <Tab
             icon={<PersonIcon />}
-            label="User"
-            onClick={() => handleClick("User")}
+            label="DashBoard"
+            onClick={() => handleClick("DashBoard")}
           />
         </MenuItem>
       </>
@@ -111,8 +111,8 @@ const ResponsiveAppBar = () => {
         navigate("/home");
         break;
 
-      case "User":
-        navigate("/newuser");
+      case "DashBoard":
+        navigate("/dashboard");
         break;
 
       default:

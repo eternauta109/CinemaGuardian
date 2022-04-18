@@ -7,8 +7,11 @@ import { Container, Tooltip } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ListAltIcon from "@mui/icons-material/ListAlt";
 import InsertLinkIcon from "@mui/icons-material/InsertLink";
+import PendingTwoToneIcon from "@mui/icons-material/PendingTwoTone";
+import CheckCircleTwoToneIcon from "@mui/icons-material/CheckCircleTwoTone";
 import { useSelector, useDispatch } from "react-redux";
 import { getItems } from "../slice/itemSlice";
+import moment from "moment";
 
 import ToExcel from "./ExpToExcel";
 
@@ -18,10 +21,12 @@ const Home = () => {
   const items = useSelector((state) => state.items);
   const cinemas = useSelector((state) => state.cinemas);
 
-  const deleteUser = useCallback(
+  const removeItem = useCallback(
     (id) => () => {
+      /* console.log(id.row); */
+      const element = id.row;
       setTimeout(() => {
-        console.log(id);
+        navigate("/removeitem", { state: { ...element } });
       });
     },
     []
@@ -73,7 +78,7 @@ const Home = () => {
         type: "text",
         renderCell: (cellValues) => {
           return (
-            <Tooltip title={cellValues.value}>
+            <Tooltip title={cellValues.value ? cellValues.value : ""}>
               <div style={{ itemAlign: "center" }}>
                 <ListAltIcon />
               </div>
@@ -109,6 +114,18 @@ const Home = () => {
 
         width: 200
       },
+      {
+        headerName: "day work",
+
+        /* type: "dateTime", */
+
+        renderCell: (value) => {
+          return <div>{moment(value.row.stDate, "DD/MM/YYYY").fromNow()}</div>;
+        },
+
+        width: 100
+      },
+
       {
         field: "photos",
 
@@ -196,20 +213,10 @@ const Home = () => {
                 textAlign: "center"
               }}
             >
-              {cellValues.values ? (
-                <span>true</span>
+              {cellValues.value ? (
+                <CheckCircleTwoToneIcon sx={{ p: 1, color: "green" }} />
               ) : (
-                <span
-                  style={{
-                    background: "red",
-                    color: "white",
-                    borderRadius: "10px",
-                    fontSize: 12,
-                    padding: 4
-                  }}
-                >
-                  false
-                </span>
+                <PendingTwoToneIcon sx={{ p: 1, color: "red" }} />
               )}
             </div>
           );
@@ -225,17 +232,17 @@ const Home = () => {
             icon={<ArrowCircleUpIcon />}
             label="update"
             onClick={upDate(params.id)}
-            showInMenu
           />,
           <GridActionsCellItem
             icon={<DeleteIcon />}
             label="Delete"
-            onClick={deleteUser(params.id)}
+            onClick={removeItem(params)}
+            showInMenu
           />
         ]
       }
     ],
-    [upDate, deleteUser]
+    [upDate, removeItem]
   );
 
   const ExportToExcelHandle = () => {

@@ -1,7 +1,14 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { getItems } from "./itemSlice";
 import { db } from "../config/firebase_config";
-import { collection, getDocs, query, where } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  query,
+  where,
+  setDoc,
+  doc
+} from "firebase/firestore";
 
 export const getCinemas = createAsyncThunk(
   "cinemas/getCinemas",
@@ -48,6 +55,17 @@ export const getCinemas = createAsyncThunk(
     dispatch(getItems({ cinemas }));
 
     return cinemas;
+  }
+);
+
+export const addCinema = createAsyncThunk(
+  "cinema/newCinema",
+  async ({ newCinema }) => {
+    const cinemaSnap = await setDoc(doc(db, "cinema", `${newCinema.name}`), {
+      ...newCinema,
+      rif_num: 0
+    });
+    return cinemaSnap;
   }
 );
 

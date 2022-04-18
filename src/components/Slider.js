@@ -30,7 +30,7 @@ function Slider({ item, setItem }) {
   };
 
   return (
-    <Stack spacing={2}>
+    <Stack container spacing={2}>
       <ImageList sx={{ height: 220 }} cols={3} rowHeight={164}>
         {item.photos.map((e, k) => (
           <ImageListItem key={k}>

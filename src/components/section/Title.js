@@ -15,7 +15,7 @@ export const Title = ({ item, itemChange }) => {
       <Grid item xs={12} sm={12}>
         <TextField
           onChange={itemChange}
-          value={item.title}
+          value={item.title || ""}
           inputProps={{
             maxLength: 30
           }}

@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 import { db } from "../config/firebase_config";
 import { getCinemas } from "./cinemaSlice";
-import { getDoc, doc } from "firebase/firestore";
+import { getDoc, doc, setDoc } from "firebase/firestore";
 
 export const getUser = createAsyncThunk(
   "user/getUser",
@@ -34,15 +34,17 @@ export const getUser = createAsyncThunk(
   }
 );
 
+export const addUser = createAsyncThunk("user/newUser", async ({ newUser }) => {
+  const userSnap = await setDoc(doc(db, "user", `${newUser.name}`), {
+    ...newUser
+  });
+  return userSnap;
+});
+
 export const userSlice = createSlice({
   name: "user",
   initialState: [],
-  reducers: {
-    addUser(state, action) {
-      console.log("reducer", state, action);
-      state.push(action.payload);
-    }
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(getUser.pending, (state, action) => {
@@ -51,10 +53,14 @@ export const userSlice = createSlice({
       .addCase(getUser.fulfilled, (state, action) => {
         state = action.payload;
         return state;
+      })
+      .addCase(addUser.fulfilled, (state, action) => {
+        console.log("reducer", state, action);
+        state.push(action.payload);
       });
   }
 });
 
 const { actions, reducer } = userSlice;
-export const { addUser } = actions;
+
 export default reducer;

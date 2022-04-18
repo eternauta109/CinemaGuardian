@@ -102,7 +102,7 @@ export const Header = ({
       </Grid>
       <Grid item xs={4} sm={2}>
         <TextField
-          value={item.screens}
+          value={item.screens || ""}
           InputLabelProps={{ shrink: item.screens ? true : false }}
           fullWidth
           disabled
@@ -112,7 +112,7 @@ export const Header = ({
       </Grid>
       <Grid item xs={8} sm={4}>
         <TextField
-          value={item.area}
+          value={item.area || ""}
           InputLabelProps={{ shrink: item.area ? true : false }}
           fullWidth
           disabled

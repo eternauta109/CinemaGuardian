@@ -12,7 +12,7 @@ const Anomalies = () => {
   const user = useSelector((store) => store.user);
   const cinemas = useSelector((store) => store.cinemas);
   /*  console.log("anomalies.js user e cinemaObj", user); */
-  const [item, setItem] = useState({ item: {} });
+  const [item, setItem] = useState({});
 
   const handleSubmit = () => {
     if (item.category === "" || item.priority === "") {
@@ -26,7 +26,7 @@ const Anomalies = () => {
   useEffect(() => {
     /* let azzeraComments = [];
     let newArrayApp = []; */
-    setItem({ item: {} });
+    setItem({});
   }, [setItem]);
 
   return (

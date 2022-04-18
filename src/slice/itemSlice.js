@@ -4,7 +4,7 @@ import { db } from "../config/firebase_config";
 import {
   collection,
   getDocs,
-  getDoc,
+  deleteDoc,
   query,
   where,
   doc,
@@ -12,6 +12,8 @@ import {
   updateDoc,
   increment
 } from "firebase/firestore";
+import { storage } from "../config/firebase_config";
+import { ref, deleteObject, uploadBytesResumable } from "firebase/storage";
 
 export const getItems = createAsyncThunk(
   "items/getItems",
@@ -34,6 +36,26 @@ export const getItems = createAsyncThunk(
     }
 
     return items;
+  }
+);
+
+export const deleteItem = createAsyncThunk(
+  "items/removeItem",
+  async ({ id, photos }) => {
+    if (photos) {
+      photos.map((e) => {
+        const photoRef = ref(storage, e.name);
+        deleteObject(photoRef)
+          .then(() => {
+            alert("file erased");
+          })
+          .catch((error) => {
+            alert("an error is coming: ", error);
+          });
+      });
+    }
+    const erase = await deleteDoc(doc(db, "anomalies", id));
+    return erase;
   }
 );
 
@@ -94,6 +116,11 @@ export const itemsSlice = createSlice({
         console.log("loading");
       })
       .addCase(addItem.fulfilled, (state, action) => {
+        state = action.payload;
+        console.log("state additem", state);
+        return state;
+      })
+      .addCase(deleteItem.fulfilled, (state, action) => {
         state = action.payload;
         console.log("state additem", state);
         return state;

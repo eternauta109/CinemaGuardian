@@ -1,28 +1,31 @@
 import React, { useState } from "react";
 import LoadingButton from "@mui/lab/LoadingButton";
 import SaveIcon from "@mui/icons-material/Save";
-import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
-import { db } from "../config/firebase_config";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
-import { doc, setDoc } from "firebase/firestore";
-import { userInit, areaSelect, roleSelect } from "../config/struttura";
+
+import {
+  TextField,
+  FormControl,
+  MenuItem,
+  Box,
+  Typography,
+  InputLabel,
+  Select
+} from "@mui/material";
+
+import { areaSelect, roleSelect } from "../../config/struttura";
 
 import { useSelector, useDispatch } from "react-redux";
 
+import { addUser } from "../../slice/userSlice";
+
 const NewUser = () => {
-  const [newUser, setNewUser] = useState("");
+  const [newUser, setNewUser] = useState({});
+  const dispatch = useDispatch();
   const cinemas = useSelector((state) => state.cinemas);
 
   const handleSubmit = async (e) => {
-    /*  console.log(newUser); */
-    await setDoc(doc(db, "user", `${newUser.name}`), {
-      ...newUser
-    });
-    setNewUser(userInit);
+    console.log(newUser);
+    dispatch(addUser({ newUser }));
   };
 
   const handleChange = (e) => {
@@ -34,21 +37,22 @@ const NewUser = () => {
     <Box
       component="form"
       sx={{
-        "& > :not(style)": { m: 1, width: "25ch" }
+        "& > :not(style)": { m: 2, width: "25ch" }
       }}
       noValidate
       autoComplete="off"
     >
+      <Typography variant="h5">new user</Typography>
       <TextField
         name="name"
         label="Name"
-        value={newUser.name}
+        value={newUser.name || ""}
         onChange={handleChange}
       />
       <TextField
         name="email"
         label="email"
-        value={newUser.email}
+        value={newUser.email || ""}
         onChange={handleChange}
       />
       <FormControl>
@@ -114,7 +118,7 @@ const NewUser = () => {
         name="password"
         id="password"
         label="password"
-        value={newUser.password}
+        value={newUser.password || ""}
         onChange={handleChange}
       />
 
