@@ -30,8 +30,12 @@ const NewUser = () => {
 
   const handleChange = (e) => {
     /* console.log(e.target); */
-    setNewUser({ ...newUser, [e.target.name]: e.target.value });
-    /* console.log(newUser); */
+    if (e.target.name === "cinema") {
+      setNewUser({ ...newUser, cinema: e.target.value.name });
+    } else {
+      setNewUser({ ...newUser, [e.target.name]: e.target.value });
+    }
+    console.log(newUser);
   };
   return (
     <Box
@@ -98,8 +102,8 @@ const NewUser = () => {
         <InputLabel htmlFor="cinema">Cinema</InputLabel>
         <Select
           onChange={(e) => handleChange(e)}
-          value={newUser.cinema ?? ""}
           labelId="cinema"
+          defaultValue="newUser.cinema || "
           id="cinemaSelect"
           label="cinema"
           name="cinema"

@@ -44,10 +44,16 @@ const Home = () => {
   const columns = useMemo(
     () => [
       {
+        field: "priority",
+        headerName: "priority",
+        align: "center",
+        width: 120
+      },
+      {
         field: "id",
-        headerName: "ID",
+        headerName: "id",
         width: 60,
-        renderHeader: () => <strong>{"ID "}</strong>
+        renderHeader: () => <p>{"ID "}</p>
       },
       {
         field: "area",
@@ -87,12 +93,7 @@ const Home = () => {
         },
         width: 70
       },
-      {
-        field: "priority",
-        headerName: "priority",
-        align: "center",
-        width: 120
-      },
+
       {
         field: "category",
         headerName: "category",

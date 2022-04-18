@@ -10,6 +10,7 @@ export const Solved = ({ item, setItem }) => {
   const solvedChange = (e, value) => {
     /* e.preventDefault(); */
     /* setItem({ ...item, solved: !item.solved}); */
+
     setSolved(e.target.checked);
 
     setItem({ ...item, endDate: endDate, solved: value });

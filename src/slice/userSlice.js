@@ -55,8 +55,7 @@ export const userSlice = createSlice({
         return state;
       })
       .addCase(addUser.fulfilled, (state, action) => {
-        console.log("reducer", state, action);
-        state.push(action.payload);
+        /*  state.push(action.payload); */
       });
   }
 });
