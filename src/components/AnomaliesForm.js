@@ -17,6 +17,7 @@ import Priority from "./section/Priority";
 import Comments from "./section/Comments";
 import PhotoLink from "./section/PhotoLink";
 import LinksSlider from "./section/LinksSlider";
+import moment from "moment";
 
 export default function InputAnomalies({
   update,
@@ -31,8 +32,12 @@ export default function InputAnomalies({
   console.log(" item in anomaliesform", item);
 
   const itemChange = (e) => {
-    console.log("itemChange in anomalies", item);
-    setItem({ ...item, [e.target.name]: e.target.value });
+    setItem({
+      ...item,
+      [e.target.name]: e.target.value
+    });
+
+    console.log("item in anomalies form on change", item);
   };
 
   return (
@@ -97,7 +102,7 @@ export default function InputAnomalies({
 
           <hr />
 
-          <Pegaso item={item} itemChange={itemChange} />
+          <Pegaso item={item} itemChange={itemChange} setItem={setItem} />
 
           <hr />
 

@@ -113,15 +113,22 @@ const Home = () => {
 
         type: "dateTime",
 
-        width: 200
+        width: 150
+      },
+      {
+        field: "endDate",
+        headerName: "endDate",
+
+        type: "dateTime",
+        width: 150
       },
       {
         headerName: "day work",
-
+        field: "dayWork",
         /* type: "dateTime", */
 
         renderCell: (value) => {
-          return <div>{moment(value.row.stDate, "DD/MM/YYYY").fromNow()}</div>;
+          return <p>{moment(value.row.stDate, "DD/MM/YYYY").fromNow()}</p>;
         },
 
         width: 100
@@ -147,7 +154,11 @@ const Home = () => {
               {cellValues.value
                 ? cellValues.value.map((e, k) => {
                     return (
-                      <a key={k} href={cellValues.value[k].url} target="_blank">
+                      <a
+                        key={k}
+                        href={cellValues.value[k].url}
+                        target={cellValues.value[k].name}
+                      >
                         <PhotoSizeSelectActualOutlinedIcon
                           sx={{ p: 1, color: "primary" }}
                         />
@@ -200,6 +211,7 @@ const Home = () => {
         type: "number",
         width: 100
       },
+
       {
         field: "solved",
         headerName: "solved",

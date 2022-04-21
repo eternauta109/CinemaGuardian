@@ -30,7 +30,7 @@ export const PhotoLink = ({ item, setItem }) => {
         <TextField
           onChange={linkChange}
           fullWidth
-          value={link}
+          value={link || ""}
           label="egnyte photo link"
           name="link"
         />
