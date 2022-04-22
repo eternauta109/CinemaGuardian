@@ -13,7 +13,7 @@ export const store = configureStore({
     cinemas: cinemasReducer,
     user: userReducer,
     items: itemReducer,
-    supplier: supplierReducer
+    suppliers: supplierReducer
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger)
 });
