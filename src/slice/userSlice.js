@@ -12,11 +12,11 @@ export const getUser = createAsyncThunk(
     const userSnap = await getDoc(userRef);
 
     if (!userSnap.exists()) {
-      return console.log("username error");
+      return alert("username error");
     }
 
     if (password !== userSnap.data().password) {
-      return console.log("password error");
+      return alert("password error");
     }
 
     const user = userSnap.data();

@@ -9,6 +9,9 @@ import {
 } from "@mui/material";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 
+import { useDispatch } from "react-redux";
+import { getSuppliers } from "../../slice/supplierSlice";
+
 import moment from "moment";
 
 export const Header = ({
@@ -22,6 +25,8 @@ export const Header = ({
 }) => {
   const stDate = moment().format("DD/MM/YYYY");
 
+  const dispatch = useDispatch();
+
   const cinemaSelect = (e) => {
     const res = cinemas.find(({ name }) => name === `${e.target.value}`);
     setCinemaSelected(res);
@@ -29,6 +34,10 @@ export const Header = ({
     const numb = (res.rif_num + 1).toString();
 
     const ref_number = `${res.abbr}-${numb}`;
+
+    console.log("header ref.area", res.area);
+
+    dispatch(getSuppliers({ area: res.area }));
 
     setItem({
       ...item,
@@ -65,7 +74,7 @@ export const Header = ({
             <InputLabel id="category">Cinema</InputLabel>
             <Select
               onChange={(e) => cinemaSelect(e)}
-              value={item.cinema ?? ""}
+              value={item.cinema || ""}
               labelId="cinema"
               id="cinemaSelect"
               label="cinema"
@@ -82,7 +91,7 @@ export const Header = ({
           </FormControl>
         ) : (
           <TextField
-            value={item.cinema ?? ""}
+            value={item.cinema || ""}
             fullWidth
             disabled
             label="cinema"

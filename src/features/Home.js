@@ -122,17 +122,6 @@ const Home = () => {
         type: "dateTime",
         width: 150
       },
-      {
-        headerName: "day work",
-        field: "dayWork",
-        /* type: "dateTime", */
-
-        renderCell: (value) => {
-          return <p>{moment(value.row.stDate, "DD/MM/YYYY").fromNow()}</p>;
-        },
-
-        width: 100
-      },
 
       {
         field: "photos",
@@ -235,6 +224,18 @@ const Home = () => {
           );
         }
       },
+
+      {
+        headerName: "day work",
+        field: "dayWork",
+        /* type: "dateTime", */
+
+        renderCell: (value) => {
+          return <p>{moment(value.row.stDate, "DD/MM/YYYY").fromNow()}</p>;
+        },
+
+        width: 100
+      },
       {
         field: "actions",
         headerName: "actions",
@@ -261,6 +262,7 @@ const Home = () => {
   const ExportToExcelHandle = () => {
     ToExcel(items);
   };
+
   useEffect(() => {
     dispatch(getItems({ cinemas }));
   }, []);

@@ -13,12 +13,15 @@ import moment from "moment";
 
 import { useState } from "react";
 
+import { useSelector } from "react-redux";
+
 import { fornitoriList } from "../../config/struttura";
 
 export const Pegaso = ({ item, itemChange, setItem }) => {
   const [orderStr, setString] = useState();
-  const mesi = ["gennaio", "febbraio", "marzo"];
 
+  const suppliers = useSelector((store) => store.Supplier);
+  console.log("supplier", suppliers);
   moment.locale();
 
   let parse = moment(item.stDate, "DD/MM/YYYY");
@@ -47,13 +50,14 @@ export const Pegaso = ({ item, itemChange, setItem }) => {
             label="Competence"
             name="competence"
           >
-            {fornitoriList.map((e, key) => {
-              return (
-                <MenuItem key={key} value={e}>
-                  {e}
-                </MenuItem>
-              );
-            })}
+            {suppliers &&
+              suppliers.map((e, key) => {
+                return (
+                  <MenuItem key={key} value={e.name}>
+                    {e}
+                  </MenuItem>
+                );
+              })}
           </Select>
         </FormControl>
       </Grid>

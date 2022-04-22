@@ -24,13 +24,23 @@ const NewCinema = () => {
 
   const handleSubmit = async (e) => {
     dispatch(addCinema({ newCinema }));
+    console.log(newCinema);
   };
 
   const handleChange = (e) => {
-    /* console.log(e.target); */
-    setNewCinema({ ...newCinema, [e.target.name]: e.target.value });
-    /* console.log(newUser); */
+    e.preventDefault();
+    console.log(e.target.value);
+
+    if (e.target.type === "number") {
+      setNewCinema({
+        ...newCinema,
+        [e.target.name]: e.target.value * 1
+      });
+    } else {
+      setNewCinema({ ...newCinema, [e.target.name]: e.target.value });
+    }
   };
+
   return (
     <Box
       component="form"

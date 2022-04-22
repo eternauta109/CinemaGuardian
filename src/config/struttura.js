@@ -18,7 +18,9 @@ export const userInit = {
   password: ""
 };
 
-export const areaSelect = ["area1", "area2", "area3", "area4", "NULL"];
+export const MaintenanceA = [1, 2, 3, "all"];
+
+export const areaSelect = ["area1", "area2", "area3", "area4", "null"];
 
 export const itemInit = {
   category: "",

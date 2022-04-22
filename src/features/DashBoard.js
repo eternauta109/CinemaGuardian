@@ -8,6 +8,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Box, ButtonBase, Typography, styled } from "@mui/material";
 import NewUser from "./dashboardElements/NewUser";
 import NewCinema from "./dashboardElements/NewCinema";
+import NewSupplier from "./dashboardElements/NewSupplier";
 
 const DashBoard = () => {
   const [param, setParam] = useState();
@@ -111,7 +112,7 @@ const DashBoard = () => {
         return <NewCinema />;
 
       default:
-        return null;
+        return <NewSupplier />;
     }
   };
 
