@@ -6,7 +6,8 @@ import {
   InputLabel,
   FormLabel,
   Grid,
-  FormControl
+  FormControl,
+  Autocomplete
 } from "@mui/material";
 
 import moment from "moment";
@@ -17,12 +18,21 @@ import { useSelector } from "react-redux";
 
 export const Pegaso = ({ item, itemChange, setItem }) => {
   const [orderStr, setString] = useState();
+  const [value, setValue] = useState();
+  /* const [inputValue, setInputValue] = useState(); */
 
   const suppliers = useSelector((store) => store.suppliers);
-  console.log("supplier", suppliers);
+
   moment.locale();
 
   let parse = moment(item.stDate, "DD/MM/YYYY");
+
+  const onChangeSelect = (e, newValue) => {
+    setItem({
+      ...item,
+      competence: newValue.name
+    });
+  };
 
   const onClickEvent = () => {
     let str = `${item.priority || "..."}-${item.item_ref || "..."}-${
@@ -38,13 +48,27 @@ export const Pegaso = ({ item, itemChange, setItem }) => {
         <FormLabel id="timetable">Pegaso Section</FormLabel>
       </Grid>
       <Grid item xs={12} sm={6}>
-        <FormControl fullWidth>
+        <Autocomplete
+          disablePortal
+          id="combo-box-demo"
+          options={suppliers || []}
+          getOptionLabel={(option) => option.name}
+          sx={{ width: 300 }}
+          value={value}
+          onChange={(e, newValue) => {
+            setValue(value);
+            onChangeSelect(e, newValue);
+          }}
+          renderInput={(params) => <TextField {...params} label="suppliers" />}
+        />
+
+        {/*  <FormControl fullWidth>
           <InputLabel id="category">Competence</InputLabel>
           <Select
             onChange={(e) => itemChange(e)}
             value={item.competence ?? ""}
-            labelId="competence"
-            id="competenceSelect"
+              labelId="competence"
+              id="competenceSelect"
             label="Competence"
             name="competence"
           >
@@ -57,7 +81,7 @@ export const Pegaso = ({ item, itemChange, setItem }) => {
                 );
               })}
           </Select>
-        </FormControl>
+        </FormControl> */}
       </Grid>
       <Grid item xs={12} sm={6}>
         <TextField

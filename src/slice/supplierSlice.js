@@ -14,14 +14,14 @@ import {
 export const getSuppliers = createAsyncThunk(
   "suppliers/getSuppliers",
   async ({ area }) => {
-    console.log("rea", area);
+    /* console.log("rea", area); */
     let supplier = [];
 
     const q = query(collection(db, "supplier"), where("area", "==", area));
     const supplierSnap = await getDocs(q);
 
     supplierSnap.forEach((e) => {
-      console.log("e", e.data());
+      /* console.log("e", e.data()); */
       const newElement = { ...e.data() };
       supplier = [...supplier, newElement];
     });
