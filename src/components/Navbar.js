@@ -203,8 +203,8 @@ const ResponsiveAppBar = () => {
           <MenuItem sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             <Tab
               icon={<PersonIcon />}
-              label="User"
-              onClick={() => handleClick("User")}
+              label="DashBoard"
+              onClick={() => handleClick("DashBoard")}
             />
           </MenuItem>
           <Box sx={{ flexGrow: 2 }}>

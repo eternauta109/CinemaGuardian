@@ -48,7 +48,8 @@ export const Header = ({
       item_ref: ref_number,
       stDate: stDate,
       updateBy: user.name,
-      lastUpdate: stDate
+      lastUpdate: stDate,
+      capex: "Capex"
     });
   };
 

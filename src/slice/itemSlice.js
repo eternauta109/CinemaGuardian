@@ -12,14 +12,16 @@ import {
   updateDoc,
   increment
 } from "firebase/firestore";
+
+import moment from "moment";
+
 import { storage } from "../config/firebase_config";
-import { ref, deleteObject, uploadBytesResumable } from "firebase/storage";
+import { ref, deleteObject } from "firebase/storage";
 
 export const getItems = createAsyncThunk(
   "items/getItems",
   async ({ cinemas }) => {
     let items = [];
-    console.log("itemSlice cinemas", cinemas);
 
     for (let index = 0; index < cinemas.length; index++) {
       const cinema = cinemas[index];
@@ -30,7 +32,15 @@ export const getItems = createAsyncThunk(
       );
       const itemsSnap = await getDocs(q);
       itemsSnap.forEach((e) => {
-        const newElement = { id: e.id, ...e.data() };
+        var given = moment(e.data().stDate, "DD/MM/YYYY");
+        var current = moment().startOf("day");
+
+        //Difference in number of days
+        var timeLapse = moment.duration(given.diff(current)).asDays();
+
+        console.log("moment in slice", timeLapse);
+
+        const newElement = { id: e.id, ...e.data(), dayWorks: timeLapse };
         items = [...items, newElement];
       });
     }

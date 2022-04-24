@@ -13,6 +13,9 @@ import {
 export const Priority = ({ item, itemChange }) => {
   return (
     <Grid container sx={{ mt: 1 }} spacing={1} justify="center">
+      <Grid item xs={12} sm={12}>
+        <FormLabel>Priority</FormLabel>
+      </Grid>
       <Grid item xs={12} sm={3}>
         <FormControl fullWidth>
           <InputLabel id="priority">Priority</InputLabel>

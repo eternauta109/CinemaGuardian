@@ -39,7 +39,6 @@ export const getCinemas = createAsyncThunk(
 
       case "m": //manager
       case "hm": //head manager
-        console.log("direttore");
         const qu = query(collection(db, "cinema"), where("name", "==", cinema));
         cinemasSnap = await getDocs(qu);
 

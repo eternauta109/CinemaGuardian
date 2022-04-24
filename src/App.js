@@ -7,6 +7,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Container from "@mui/material/Container";
 import Home from "./features/Home";
 import Anomalies from "./features/Anomalies";
+import Lists from "./features/Lists";
 
 import Update from "./features/UpDate";
 import RemoveItem from "./features/RemoveItem";
@@ -50,8 +51,9 @@ export default function App() {
 
               <Route path="update" element={<Update />} />
               <Route path="removeitem" element={<RemoveItem />} />
+              <Route path="lists" element={<Lists />} />
               <Route path="dashboard" element={<DashBoard />} />
-              <Route path="home" element={user.name ? <Home /> : <SignIn />} />
+              <Route path="home" element={user.name ? <Lists /> : <SignIn />} />
               <Route
                 path="anomalies"
                 element={user ? <Anomalies /> : <SignIn />}

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { TextField, Grid, IconButton } from "@mui/material";
+import { TextField, Grid, IconButton, FormLabel } from "@mui/material";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import moment from "moment";
 import TimeLine from "../TimeLine";
@@ -30,6 +30,9 @@ export const Comments = ({ item, setItem, user }) => {
 
   return (
     <div>
+      <Grid item xs={12} sm={12}>
+        <FormLabel>Comments</FormLabel>
+      </Grid>
       <Grid container sx={{ mt: 1 }} spacing={1} justify="center">
         <Grid item xs={12} sm={12}>
           <TimeLine item={item} />

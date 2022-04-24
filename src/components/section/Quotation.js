@@ -1,4 +1,4 @@
-import { TextField, Grid, InputAdornment } from "@mui/material";
+import { TextField, Grid, InputAdornment, FormLabel } from "@mui/material";
 
 export const Quotation = ({ itemChange, item, setItem }) => {
   const finalChange = (e) => {
@@ -13,6 +13,10 @@ export const Quotation = ({ itemChange, item, setItem }) => {
 
   return (
     <Grid container sx={{ mt: 1 }} spacing={1} justify="center">
+      <Grid item xs={12} sm={12}>
+        <FormLabel>Cost</FormLabel>
+      </Grid>
+
       <Grid item xs={4} sm={4}>
         <TextField
           label="Quotation"
