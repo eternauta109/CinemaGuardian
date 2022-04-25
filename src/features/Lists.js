@@ -17,6 +17,8 @@ import ListAltIcon from "@mui/icons-material/ListAlt";
 import ArrowCircleUpIcon from "@mui/icons-material/ArrowCircleUp";
 import DeleteIcon from "@mui/icons-material/Delete";
 
+import Charts from "../components/Charts";
+
 import { AgGridReact } from "ag-grid-react";
 import { useSelector, useDispatch } from "react-redux";
 import { getItems } from "../slice/itemSlice";
@@ -29,8 +31,8 @@ const Lists = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const gridRef = useRef();
-  const containerStyle = useMemo(() => ({ width: "100%", height: 600 }), []);
-  const gridStyle = useMemo(() => ({ height: 600, width: "100%" }), []);
+  const containerStyle = useMemo(() => ({ width: "100%", height: "400" }), []);
+  const gridStyle = useMemo(() => ({ height: "400px", width: "100%" }), []);
 
   const defaultColDef = useMemo(() => {
     return {
@@ -381,6 +383,7 @@ const Lists = () => {
       <div style={{ margin: "10px 0" }}>
         <button onClick={onBtnExport}>Download CSV export file</button>
       </div>
+      <Charts items={items} />
     </div>
   );
 };

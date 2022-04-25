@@ -5,9 +5,15 @@ export const Quotation = ({ itemChange, item, setItem }) => {
     const total = e.target.value;
     setItem({
       ...item,
-      quotation: total,
-      orderCost: total,
-      finalCost: total
+      quotation: Number(total),
+      orderCost: Number(total),
+      finalCost: Number(total)
+    });
+  };
+  const onNumberChange = (e) => {
+    setItem({
+      ...item,
+      [e.target.name]: Number(e.target.value)
     });
   };
 
@@ -22,8 +28,8 @@ export const Quotation = ({ itemChange, item, setItem }) => {
           label="Quotation"
           type="number"
           variant="standard"
-          value={item.quotation}
-          onChange={itemChange}
+          value={Number(item.quotation)}
+          onChange={onNumberChange}
           name="quotation"
           id="standard-size-small"
           sx={{ m: 1 }}
@@ -37,8 +43,8 @@ export const Quotation = ({ itemChange, item, setItem }) => {
           label="orderCost"
           type="number"
           variant="standard"
-          value={item.orderCost}
-          onChange={itemChange}
+          value={Number(item.orderCost)}
+          onChange={onNumberChange}
           name="orderCost"
           id="standard-size-small"
           sx={{ m: 1 }}
@@ -52,7 +58,7 @@ export const Quotation = ({ itemChange, item, setItem }) => {
           label="finalCost"
           type="number"
           variant="standard"
-          value={item.finalCost}
+          value={Number(item.finalCost)}
           onChange={finalChange}
           name="finalCost"
           id="standard-size-small"
