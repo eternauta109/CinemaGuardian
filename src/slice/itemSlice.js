@@ -52,6 +52,7 @@ export const getItems = createAsyncThunk(
 export const deleteItem = createAsyncThunk(
   "items/removeItem",
   async ({ id, photos }) => {
+    console.log("id delete", id);
     if (photos) {
       photos.map((e) => {
         const photoRef = ref(storage, e.name);
@@ -62,6 +63,7 @@ export const deleteItem = createAsyncThunk(
           .catch((error) => {
             alert("an error is coming: ", error);
           });
+        return e;
       });
     }
     const erase = await deleteDoc(doc(db, "anomalies", id));
@@ -73,7 +75,9 @@ export const addItem = createAsyncThunk(
   "items/addItems",
   async ({ item, user }, { dispatch }) => {
     const itemRef = doc(db, "anomalies", `${item.item_ref}`);
-
+    if (!item.category || !item.priority) {
+      return alert("devi selezionare una categoria");
+    }
     const res = await setDoc(itemRef, {
       ...item
     });
@@ -88,7 +92,7 @@ export const addItem = createAsyncThunk(
       getCinemas({ role: user.role, area: user.area, cinema: user.cinema })
     );
 
-    alert("Document written with ID: ", itemRef.id);
+    alert(`Document written with ID:  ${itemRef.id}`);
 
     return res;
   }
@@ -97,14 +101,11 @@ export const addItem = createAsyncThunk(
 export const updateItem = createAsyncThunk(
   "items/updateItems",
   async ({ item }, { dispatch }) => {
-    if (item.category === "" || item.priority === "") {
-      return alert("devi selezionare una categoria");
-    }
     const itemRef = doc(db, "anomalies", `${item.item_ref}`);
     const res = await setDoc(itemRef, {
       ...item
     });
-    alert("Document update with ID: ", itemRef.id);
+    alert(`Document update with ID:  ${itemRef.id}`);
     return res;
   }
 );

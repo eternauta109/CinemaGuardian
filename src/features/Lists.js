@@ -258,7 +258,7 @@ const Lists = () => {
         >
           <ArrowCircleUpIcon />
         </IconButton>
-        <IconButton onClick={upDate(params.data)} aria-label="delete">
+        <IconButton onClick={removeItem(params.data)} aria-label="delete">
           <DeleteIcon />
         </IconButton>
       </div>
@@ -266,11 +266,11 @@ const Lists = () => {
   };
 
   const removeItem = useCallback(
-    (id) => () => {
+    (el) => () => {
       /* console.log(id.row); */
-      const element = id.row;
+
       setTimeout(() => {
-        navigate("/removeitem", { state: { ...element } });
+        navigate("/removeitem", { state: { ...el } });
       });
     },
     []
