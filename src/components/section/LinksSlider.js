@@ -21,12 +21,16 @@ export const LinksSlider = ({ links }) => {
       >
         {links.map((e, k) => {
           return (
-            <ListItemButton key={k} component="a" href={`${e}`} target="_blank">
-              <ListItemText primary={e} />
-            </ListItemButton>
-            /*  <Link k={k} href={`${e}`} underline="hover" target="_blank">
-              {e}
-            </Link> */
+            <Grid item xs={12} sm={12}>
+              <ListItemButton
+                key={k}
+                component="a"
+                href={`${e}`}
+                target="_blank"
+              >
+                <ListItemText primary={e} />
+              </ListItemButton>
+            </Grid>
           );
         })}
       </List>

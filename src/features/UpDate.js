@@ -15,7 +15,7 @@ function UpDate() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  console.log("state", state);
+  /* console.log("state", state); */
   const [item, setItem] = useState();
 
   const getItemFromLists = async () => {

@@ -66,7 +66,7 @@ function SetCamera({ user, item, setItem }) {
     await uploadTask.on(
       "state_changed",
       (snapshot) => {
-        console.log("snapshot", snapshot);
+        /* console.log("snapshot", snapshot); */
         // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
         const progress =
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100;

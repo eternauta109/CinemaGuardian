@@ -10,10 +10,10 @@ import { storage } from "../config/firebase_config";
 import { ref, deleteObject } from "firebase/storage";
 
 function Slider({ item, setItem }) {
-  console.log("item in proiva", item.photos);
+  /* console.log("item in proiva", item.photos); */
 
   const removePhoto = (e, k) => {
-    console.log("e", e);
+    /* console.log("e", e); */
     const desertRef = ref(storage, `${e.name}`);
     // Delete the file
     deleteObject(desertRef)
@@ -21,11 +21,11 @@ function Slider({ item, setItem }) {
         let app = item.photos.filter((value) => {
           return value.name !== e.name;
         });
-        console.log("app", app);
+        /* console.log("app", app); */
         setItem({ ...item, photos: app });
       })
       .catch((error) => {
-        console.log(error);
+        alert(error);
       });
   };
 

@@ -24,7 +24,7 @@ const NewUser = () => {
   const cinemas = useSelector((state) => state.cinemas);
 
   const handleSubmit = async (e) => {
-    console.log(newUser);
+    /* console.log(newUser); */
     dispatch(addUser({ newUser }));
   };
 
@@ -35,7 +35,7 @@ const NewUser = () => {
     } else {
       setNewUser({ ...newUser, [e.target.name]: e.target.value });
     }
-    console.log(newUser);
+    /* console.log(newUser); */
   };
   return (
     <Box

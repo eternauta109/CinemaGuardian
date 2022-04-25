@@ -24,12 +24,12 @@ const NewCinema = () => {
 
   const handleSubmit = async (e) => {
     dispatch(addCinema({ newCinema }));
-    console.log(newCinema);
+    /* console.log(newCinema); */
   };
 
   const handleChange = (e) => {
     e.preventDefault();
-    console.log(e.target.value);
+    /* console.log(e.target.value); */
 
     if (e.target.type === "number") {
       setNewCinema({

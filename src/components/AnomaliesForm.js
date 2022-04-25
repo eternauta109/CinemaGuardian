@@ -29,7 +29,7 @@ export default function InputAnomalies({
 }) {
   const [cinemaSelected, setCinemaSelected] = useState(null);
 
-  console.log(" item in anomaliesform", item);
+  /*  console.log(" item in anomaliesform", item); */
 
   const itemChange = (e) => {
     setItem({

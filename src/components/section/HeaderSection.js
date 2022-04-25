@@ -35,7 +35,7 @@ export const Header = ({
 
     const ref_number = `${res.abbr}-${numb}`;
 
-    console.log("header ref.area", res.area);
+    /* console.log("header ref.area", res.area); */
 
     dispatch(getSuppliers({ area: res.area }));
 
@@ -49,7 +49,8 @@ export const Header = ({
       stDate: stDate,
       updateBy: user.name,
       lastUpdate: stDate,
-      capex: "Capex"
+      capex: "Capex",
+      inProgress: true
     });
   };
 

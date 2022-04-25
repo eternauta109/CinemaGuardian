@@ -1,8 +1,8 @@
 import { useLocation } from "react-router-dom";
 
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { deleteItem } from "../slice/itemSlice";
-import { useEffect, useState } from "react";
+
 import { useNavigate } from "react-router-dom";
 
 import { Typography, Button, Box } from "@mui/material";
@@ -13,19 +13,12 @@ function RemoveItem() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  console.log("state", state);
+  /* console.log("state", state); */
 
   const onDelete = async () => {
     dispatch(deleteItem({ id: state.id, photos: state.photos }));
     navigate("/home");
   };
-
-  useEffect(() => {
-    /* getItemFromLists(); */
-    console.log("update in update", state);
-    /* getItem(state.id); */
-    return () => {};
-  }, []);
 
   return (
     <Box container sx={{ mt: 4 }} spacing={2} justifyItems="center">

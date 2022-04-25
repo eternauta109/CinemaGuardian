@@ -103,7 +103,7 @@ const DashBoard = () => {
   }));
 
   const FormSelect = () => {
-    console.log(param);
+    /*  console.log(param); */
     switch (param) {
       case "user":
         return <NewUser />;

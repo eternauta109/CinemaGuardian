@@ -29,8 +29,8 @@ const Lists = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const gridRef = useRef();
-  const containerStyle = useMemo(() => ({ width: "100%", height: 400 }), []);
-  const gridStyle = useMemo(() => ({ height: 400, width: "100%" }), []);
+  const containerStyle = useMemo(() => ({ width: "100%", height: 600 }), []);
+  const gridStyle = useMemo(() => ({ height: 600, width: "100%" }), []);
 
   const defaultColDef = useMemo(() => {
     return {
@@ -52,7 +52,6 @@ const Lists = () => {
   }, []);
 
   function MyRenderer(params) {
-    console.log(params.data);
     return <span> {params.value}</span>;
   }
 
@@ -132,7 +131,7 @@ const Lists = () => {
   };
 
   const approvedRenderer = (params) => {
-    console.log("inprogress params", params.data.inProgress);
+    /*   console.log("inprogress params", params.data.inProgress); */
     return (
       <div
         style={{
@@ -234,7 +233,18 @@ const Lists = () => {
         );
 
       default:
-        return <div>{params.value}</div>;
+        return (
+          <div
+            style={{
+              backgroundColor: "green",
+              color: "white",
+              borderRadius: "20%"
+            }}
+          >
+            {" "}
+            {params.value}
+          </div>
+        );
     }
   };
 
@@ -352,7 +362,7 @@ const Lists = () => {
 
   useEffect(() => {
     dispatch(getItems({ cinemas }));
-    console.log(items);
+    /*  console.log(items); */
   }, []);
 
   return (

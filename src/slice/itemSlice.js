@@ -38,7 +38,7 @@ export const getItems = createAsyncThunk(
         //Difference in number of days
         var timeLapse = moment.duration(given.diff(current)).asDays();
 
-        console.log("moment in slice", timeLapse);
+        /* console.log("moment in slice", timeLapse); */
 
         const newElement = { id: e.id, ...e.data(), dayWorks: timeLapse };
         items = [...items, newElement];
@@ -88,7 +88,7 @@ export const addItem = createAsyncThunk(
       getCinemas({ role: user.role, area: user.area, cinema: user.cinema })
     );
 
-    console.log("Document written with ID: ", itemRef.id);
+    alert("Document written with ID: ", itemRef.id);
 
     return res;
   }
@@ -104,7 +104,7 @@ export const updateItem = createAsyncThunk(
     const res = await setDoc(itemRef, {
       ...item
     });
-    console.log("Document written with ID: ", itemRef.id);
+    alert("Document update with ID: ", itemRef.id);
     return res;
   }
 );
@@ -116,23 +116,23 @@ export const itemsSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getItems.pending, (state, action) => {
-        console.log("loading");
+        /* console.log("loading"); */
       })
       .addCase(getItems.fulfilled, (state, action) => {
         state = action.payload;
         return state;
       })
       .addCase(addItem.pending, (state, action) => {
-        console.log("loading");
+        /*  console.log("loading"); */
       })
       .addCase(addItem.fulfilled, (state, action) => {
         state = action.payload;
-        console.log("state additem", state);
+        /*  console.log("state additem", state); */
         return state;
       })
       .addCase(deleteItem.fulfilled, (state, action) => {
         state = action.payload;
-        console.log("state additem", state);
+        /*  console.log("state additem", state); */
         return state;
       });
   }

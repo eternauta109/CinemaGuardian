@@ -25,7 +25,7 @@ export const getSuppliers = createAsyncThunk(
       const newElement = { ...e.data() };
       supplier = [...supplier, newElement];
     });
-    console.log(supplier);
+    /*  console.log(supplier); */
     return supplier;
   }
 );
@@ -33,7 +33,7 @@ export const getSuppliers = createAsyncThunk(
 export const addSupplier = createAsyncThunk(
   "suppliers/newSupplier",
   async ({ newSupp }) => {
-    console.log(newSupp);
+    /*   console.log(newSupp); */
     const userSnap = await setDoc(doc(db, "supplier", `${newSupp.name}`), {
       ...newSupp
     });
@@ -48,7 +48,7 @@ export const suppliersSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getSuppliers.pending, (state, action) => {
-        console.log("loading");
+        /*   console.log("loading"); */
       })
       .addCase(getSuppliers.fulfilled, (state, action) => {
         state = action.payload;
@@ -57,7 +57,7 @@ export const suppliersSlice = createSlice({
       .addCase(addSupplier.fulfilled, (state, action) => {
         /*  state.push(action.payload); */
         state = action.payload;
-        console.log("state additem", state);
+        /*    console.log("state additem", state); */
         return state;
       });
   }

@@ -16,76 +16,72 @@ import {
 } from "@mui/material";
 
 export const Solved = ({ item, setItem, user }) => {
-  const [state, setState] = useState({
-    inProgress: item.stateItem ? item.stateItem.inProgress : true,
-    approved: item.stateItem ? item.stateItem.approved : false,
-    closed: item.stateItem ? item.stateItem.closed : false
-  });
   const [endDate, setEndDate] = useState(moment().format("DD/MM/YYYY"));
-  const { inProgress, approved, closed } = state;
 
-  const handleChange = (e) => {
-    /* e.preventDefault(); */
-    /* setItem({ ...item, solved: !item.solved}); */
+  const approvedChange = (e) => {
+    if (e.target.checked) {
+      setItem({
+        ...item,
+        approved: e.target.checked,
+        approvedBy: `${user.name}`
+      });
+    } else {
+      const { approvedBy, ...newobj } = item;
+      return setItem({ ...newobj, approved: e.target.checked });
+    }
 
-    /* console.log(e.target.name); */
-    setState({
-      ...state,
-      [e.target.name]: e.target.checked
+    setItem({
+      ...item,
+      approved: e.target.checked,
+      approvedBy: `${user.name}`
     });
+  };
 
-    console.log(state);
+  const inprogressChange = (e) => {
+    setItem({
+      ...item,
+      inProgress: e.target.checked
+    });
+  };
 
-    switch (e.target.name) {
-      case "approved":
-        return setItem({
-          ...item,
-          approvedBy: `${user.name}`
-        });
-      case "closed":
-        console.log("cheked", state.closed);
-        if (state.closed) {
-          const { endDate, ...newobj } = item;
-          return setItem(newobj);
-        } else {
-          return setItem({
-            ...item,
-            endDate
-          });
-        }
-
-      default:
-        break;
+  const closedChange = (e) => {
+    /* console.log("aaaa", e.target.checked); */
+    if (e.target.checked) {
+      setItem({
+        ...item,
+        closed: e.target.checked,
+        inProgress: false,
+        endDate
+      });
+      /* console.log("aaaa", e.target.checked); */
+    } else {
+      const { endDate, ...newobj } = item;
+      return setItem({ ...newobj, closed: e.target.checked });
     }
   };
 
   const ShowApproved = () => {
     if (user.role === "am" || user.role === "fm" || user.role === "gm") {
-      console.log("abi", user.role);
+      /* console.log("abi", user.role); */
       return (
-        <Checkbox checked={approved} onChange={handleChange} name="approved" />
+        <Checkbox
+          checked={item.approved}
+          onChange={approvedChange}
+          name="approved"
+        />
       );
     } else {
-      console.log("non abi", user.role);
+      /* console.log("non abi", user.role); */
       return (
         <Checkbox
           disabled
-          checked={approved}
-          onChange={handleChange}
+          checked={item.approved}
+          onChange={approvedChange}
           name="approved"
         />
       );
     }
   };
-
-  useEffect(() => {
-    setItem({
-      ...item,
-      inProgress: state.inProgress,
-      approved: state.approved,
-      closed: state.closed
-    });
-  }, [state]);
 
   return (
     <Grid container sx={{ mt: 1 }} spacing={1} justify="center">
@@ -100,8 +96,8 @@ export const Solved = ({ item, setItem, user }) => {
             <FormControlLabel
               control={
                 <Checkbox
-                  checked={inProgress}
-                  onChange={handleChange}
+                  checked={item.inProgress}
+                  onChange={inprogressChange}
                   name="inProgress"
                 />
               }
@@ -112,8 +108,8 @@ export const Solved = ({ item, setItem, user }) => {
             <FormControlLabel
               control={
                 <Checkbox
-                  checked={closed}
-                  onChange={handleChange}
+                  checked={item.closed}
+                  onChange={closedChange}
                   name="closed"
                 />
               }
