@@ -322,7 +322,7 @@ const Lists = () => {
       filter: "agDateColumnFilter",
       sortable: true
     },
-    { field: "dayWorks", editable: false },
+    { field: "dayWorks", editable: false, sortable: true },
     { field: "category", editable: false, sortable: true },
     {
       field: "competence",

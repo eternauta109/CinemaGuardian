@@ -36,7 +36,7 @@ export const getItems = createAsyncThunk(
         var current = moment().startOf("day");
 
         //Difference in number of days
-        var timeLapse = moment.duration(given.diff(current)).asDays();
+        var timeLapse = moment.duration(current.diff(given)).asDays();
 
         /* console.log("moment in slice", timeLapse); */
 
