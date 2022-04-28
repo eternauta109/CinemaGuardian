@@ -8,6 +8,7 @@ import Container from "@mui/material/Container";
 import Home from "./features/Home";
 import Anomalies from "./features/Anomalies";
 import Lists from "./features/Lists";
+import ListsPrime from "./features/ListsPrime";
 
 import Update from "./features/UpDate";
 import RemoveItem from "./features/RemoveItem";
@@ -38,7 +39,7 @@ export default function App() {
         <Container
           sx={{
             borderRadius: 5,
-
+            width: "100%",
             p: 2
           }}
         >
@@ -51,9 +52,10 @@ export default function App() {
 
               <Route path="update" element={<Update />} />
               <Route path="removeitem" element={<RemoveItem />} />
-              <Route path="lists" element={<Lists />} />
+              {/* <Route path="lists" element={<Lists />} /> */}
+              <Route path="home" element={<ListsPrime />} />
               <Route path="dashboard" element={<DashBoard />} />
-              <Route path="home" element={user.name ? <Lists /> : <SignIn />} />
+              {/*   <Route path="home" element={user.name ? <Lists /> : <SignIn />} /> */}
               <Route
                 path="anomalies"
                 element={user ? <Anomalies /> : <SignIn />}
