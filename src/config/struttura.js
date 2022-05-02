@@ -9,6 +9,10 @@ export const categoryList = [
   "PROCURAMENT"
 ];
 
+export const capex = ["Capex", "Opex"];
+
+export const priority = ["P1", "P2", "P3", "P4", "P5", "P6"];
+
 export const userInit = {
   name: "",
   email: "",

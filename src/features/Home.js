@@ -13,8 +13,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { getItems } from "../slice/itemSlice";
 import moment from "moment";
 
-import ToExcel from "./ExpToExcel";
-
 const Home = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();

@@ -20,6 +20,10 @@ function RemoveItem() {
     navigate("/home");
   };
 
+  const reject = () => {
+    navigate("/home");
+  };
+
   return (
     <Box container sx={{ mt: 4 }} spacing={2} justifyItems="center">
       <Typography>
@@ -30,7 +34,12 @@ function RemoveItem() {
         <Button variant="contained" color="success" onClick={onDelete}>
           yes
         </Button>
-        <Button sx={{ ml: 2 }} variant="contained" color="error">
+        <Button
+          sx={{ ml: 2 }}
+          variant="contained"
+          color="error"
+          onClick={reject}
+        >
           no
         </Button>
       </Box>

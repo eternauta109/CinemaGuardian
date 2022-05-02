@@ -1,9 +1,80 @@
-import React from "react";
+import React, { useState } from "react";
+import { Chart } from "primereact/chart";
+import { priority } from "../config/struttura";
 
-import { Stack, Typography } from "@mui/material";
+const Charts = ({ items }) => {
+  //count p1
+
+  const COLORS = [
+    "#4dc9f6",
+    "#f67019",
+    "#f53794",
+    "#537bc4",
+    "#acc236",
+    "#166a8f",
+    "#00a950",
+    "#58595b",
+    "#8549ba"
+  ];
+
+  let res = items.reduce(function (obj, v) {
+    // increment or set the property
+    // `(obj[v.status] || 0)` returns the property value if defined
+    // or 0 ( since `undefined` is a falsy value
+    obj[v.priority] = (obj[v.priority] || 0) + 1;
+    // return the updated object
+    return obj;
+    // set the initial value as an object
+  }, {});
+
+  let label1 = [];
+  let data1 = [];
+
+  for (const [labels, data] of Object.entries(res)) {
+    console.log(`${labels}: ${data}`);
+    label1.push(`${labels}`);
+    data1.push(data);
+  }
+
+  const chartData1 = {
+    labels: label1,
+    datasets: [
+      {
+        data: data1,
+        backgroundColor: COLORS
+      }
+    ]
+  };
+
+  const [lightOptions1] = useState({
+    plugins: {
+      legend: {
+        labels: {
+          color: "#495057"
+        },
+        title: {
+          display: true,
+          text: "priority count"
+        }
+      }
+    }
+  });
+
+  return (
+    <div className="card flex justify-content-center mt-6">
+      <Chart
+        type="pie"
+        data={chartData1}
+        options={lightOptions1}
+        style={{ position: "relative", width: "40%" }}
+      />
+    </div>
+  );
+};
+/* import { Stack, Typography } from "@mui/material";
 /* import { cloneDeep } from "lodash";
 import * as agCharts from "ag-charts-community"; */
-import { AgChartsReact } from "ag-charts-react";
+/* import { AgChartsReact } from "ag-charts-react";
 
 function Charts({ items }) {
   console.log("item in proiva", items);
@@ -52,9 +123,9 @@ function Charts({ items }) {
         yKey: "finalCost"
       }
     ]
-  };
+  }; */
 
-  /* const options = {
+/* const options = {
     data: items,
     series: [
       {
@@ -65,7 +136,7 @@ function Charts({ items }) {
     ]
   }; */
 
-  /* const options = {
+/* const options = {
     data: [
       { value: 56.9 },
       { value: 22.5 },
@@ -82,7 +153,7 @@ function Charts({ items }) {
     ]
   }; */
 
-  return (
+/* return (
     <Stack container spacing={2} sx={{ mt: 3 }}>
       <Typography>Priority analisys</Typography>
       <AgChartsReact options={options} />
@@ -90,6 +161,6 @@ function Charts({ items }) {
       <AgChartsReact options={options2} />
     </Stack>
   );
-}
+} */
 
 export default Charts;

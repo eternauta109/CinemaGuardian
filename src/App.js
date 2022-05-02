@@ -5,10 +5,11 @@ import Navbar from "./components/Navbar";
 
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Container from "@mui/material/Container";
-import Home from "./features/Home";
+/* import Home from "./features/Home"; */
 import Anomalies from "./features/Anomalies";
-import Lists from "./features/Lists";
+/* import Lists from "./features/Lists"; */
 import ListsPrime from "./features/ListsPrime";
+import HomeLists from "./features/HomePrime";
 
 import Update from "./features/UpDate";
 import RemoveItem from "./features/RemoveItem";
