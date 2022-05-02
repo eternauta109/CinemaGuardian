@@ -353,10 +353,11 @@ const Listsprime = () => {
               return (
                 <a
                   key={k}
-                  href={params.value[k].url}
-                  target={params.value[k].name}
+                  href={arrayApp[k].url}
+                  target={arrayApp[k].name}
+                  rel="noreferrer"
                 >
-                  <i clasName="pi pi-image" />
+                  <i className="pi pi-image" />
                 </a>
               );
             })
