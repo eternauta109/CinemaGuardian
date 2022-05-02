@@ -9,7 +9,6 @@ import Container from "@mui/material/Container";
 import Anomalies from "./features/Anomalies";
 /* import Lists from "./features/Lists"; */
 import ListsPrime from "./features/ListsPrime";
-import HomeLists from "./features/HomePrime";
 
 import Update from "./features/UpDate";
 import RemoveItem from "./features/RemoveItem";
@@ -38,6 +37,7 @@ export default function App() {
     <ThemeProvider theme={theme}>
       <div className="App">
         <Container
+          maxWidth={false}
           sx={{
             borderRadius: 5,
             width: "100%",

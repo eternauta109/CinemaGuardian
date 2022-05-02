@@ -391,11 +391,6 @@ const Listsprime = () => {
     );
   };
 
-  /* <a key={k} href={arrayApp[k]} target="_blank" rel="noreferrer">
-                  ss
-                  <i clasName="pi pi-external-link" />
-                </a> */
-
   //STATUS
 
   const inProgressBodyTemplate = (rowData) => {
