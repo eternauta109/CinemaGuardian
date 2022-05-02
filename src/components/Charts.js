@@ -31,7 +31,7 @@ const Charts = ({ items }) => {
   let data1 = [];
 
   for (const [labels, data] of Object.entries(res)) {
-    console.log(`${labels}: ${data}`);
+   /*  console.log(`${labels}: ${data}`); */
     label1.push(`${labels}`);
     data1.push(data);
   }
