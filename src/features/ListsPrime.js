@@ -15,10 +15,12 @@ import { MultiSelect } from "primereact/multiselect";
 import { HeaderTable } from "./datatable/HeaderTable";
 import { columns } from "./datatable/ColumnsData";
 import { TriStateCheckbox } from "primereact/tristatecheckbox";
+import { Calendar } from "primereact/calendar";
 
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 import "primereact/resources/primereact.min.css";
 import "primeflex/primeflex.css";
+import "primeicons/primeicons.css";
 
 //internal import
 import Charts from "../components/Charts";
@@ -96,7 +98,15 @@ const Listsprime = () => {
       },
       inProgress: { value: null, matchMode: FilterMatchMode.EQUALS },
       approved: { value: null, matchMode: FilterMatchMode.EQUALS },
-      closed: { value: null, matchMode: FilterMatchMode.EQUALS }
+      closed: { value: null, matchMode: FilterMatchMode.EQUALS },
+      endDate: {
+        operator: FilterOperator.AND,
+        constraints: [{ value: null, matchMode: FilterMatchMode.DATE_IS }]
+      },
+      stDate: {
+        operator: FilterOperator.AND,
+        constraints: [{ value: null, matchMode: FilterMatchMode.DATE_IS }]
+      }
     });
     setGlobalFilterValue1("");
     setFilteredData([]);
@@ -450,25 +460,68 @@ const Listsprime = () => {
       />
     );
   };
+  // DATE
+
+  const formatDate = (value) => {
+    console.log(value);
+    return value.toLocaleDateString("it-IT", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric"
+    });
+  };
+
+  const endDateBodyTemplate = (rowData) => {
+    return rowData.endDate;
+  };
+
+  const endDateFilterTemplate = (options) => {
+    return (
+      <Calendar
+        value={options.value}
+        onChange={(e) => options.filterCallback(e.value, options.index)}
+        dateFormat="DD/MM/YYYY"
+        placeholder="DD/MM/YYYY"
+        mask="99/99/9999"
+      />
+    );
+  };
+
+  const stDateBodyTemplate = (rowData) => {
+    return rowData.stDate;
+  };
+
+  const stDateFilterTemplate = (options) => {
+    return (
+      <Calendar
+        value={options.value}
+        onChange={(e) => options.filterCallback(e.value, options.index)}
+        dateFormat="DD/MM/YYYY"
+        placeholder="DD/MM/YYYY"
+        mask="99/99/9999"
+      />
+    );
+  };
 
   //ACTION
   const actionBodyTemplate = (params) => {
     return (
       <div>
-        <Button style={{ backgroundColor: "green", margin: 2 }}>
+        <Button
+          onClick={upDate(params.id)}
+          style={{ backgroundColor: "green", margin: 2 }}
+        >
           <i
-            onClick={upDate(params.id)}
             color="primary"
             aria-label="add to shopping cart"
             className="pi pi-upload"
           />
         </Button>
-        <Button style={{ backgroundColor: "violet", margin: 2 }}>
-          <i
-            onClick={removeItem(params)}
-            aria-label="delete"
-            className="pi pi-exclamation-triangle"
-          />
+        <Button
+          onClick={removeItem(params)}
+          style={{ backgroundColor: "red", margin: 2 }}
+        >
+          <i aria-label="delete" className="pi pi-exclamation-triangle" />
         </Button>
       </div>
     );
@@ -660,6 +713,32 @@ const Listsprime = () => {
             style={{ minWidth: "7rem" }}
           />
         );
+      case "endDate":
+        return (
+          <Column
+            key={col.field}
+            header="endDate"
+            filterField="endDate"
+            dataType="date"
+            body={endDateBodyTemplate}
+            style={{ minWidth: "7rem" }}
+            filter
+            filterElement={endDateFilterTemplate}
+          />
+        );
+      case "stDate":
+        return (
+          <Column
+            key={col.field}
+            header="stDate"
+            filterField="stDate"
+            dataType="date"
+            body={stDateBodyTemplate}
+            style={{ minWidth: "7rem" }}
+            filter
+            filterElement={stDateFilterTemplate}
+          />
+        );
 
       default:
         return (
@@ -688,11 +767,13 @@ const Listsprime = () => {
   };
 
   const reduceCinemaArray = () => {
-    const reduceCinemas = cinemas.map((e) => {
-      return e.name;
-    });
-    /* console.log(reduceCinemas); */
-    setCinemaInMultiSelect(reduceCinemas);
+    if (cinemas) {
+      const reduceCinemas = cinemas.map((e) => {
+        return e.name;
+      });
+      /* console.log(reduceCinemas); */
+      setCinemaInMultiSelect(reduceCinemas);
+    }
   };
 
   useEffect(() => {

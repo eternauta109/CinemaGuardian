@@ -4,12 +4,10 @@ import SignIn from "./features/Login";
 import Navbar from "./components/Navbar";
 
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Container from "@mui/material/Container";
-/* import Home from "./features/Home"; */
-import Anomalies from "./features/Anomalies";
-/* import Lists from "./features/Lists"; */
-import ListsPrime from "./features/ListsPrime";
 
+import Container from "@mui/material/Container";
+import Anomalies from "./features/Anomalies";
+import ListsPrime from "./features/ListsPrime";
 import Update from "./features/UpDate";
 import RemoveItem from "./features/RemoveItem";
 import DashBoard from "./features/DashBoard";

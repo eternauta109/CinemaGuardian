@@ -1,11 +1,152 @@
+import { ListItemSecondaryAction } from "@material-ui/core";
+import Enumerable from "linq";
 import React, { useState } from "react";
-import { Chart } from "primereact/chart";
+import {
+  PieChart,
+  Pie,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+  BarChart,
+  Bar,
+  Cell,
+  Label,
+  XAxis,
+  YAxis,
+  CartesianGrid
+} from "recharts";
 import { priority } from "../config/struttura";
 
-const Charts = ({ items }) => {
-  //count p1
+const COLORS = [
+  "#4dc9f6",
+  "#f67019",
+  "#f53794",
+  "#537bc4",
+  "#acc236",
+  "#166a8f",
+  "#00a950",
+  "#58595b",
+  "#8549ba"
+];
 
-  const COLORS = [
+const Charts = ({ items }) => {
+  console.log(items);
+
+  var cinemaRes = Enumerable.from(items)
+    .groupBy((g) => g.cinema)
+    .select((s) => ({
+      cinema: s.key(),
+      quotation: s.sum((m) => (m.quotation ? Number(m.quotation) : null)),
+      orderCost: s.sum((m) => (m.orderCost ? Number(m.orderCost) : null)),
+      finalCost: s.sum((m) => (m.finalCost ? Number(m.finalCost) : null)),
+      count: s.count(),
+      p1: s.count((m) => m.priority === "P1"),
+      p2: s.count((m) => m.priority === "P2"),
+      p3: s.count((m) => m.priority === "P3"),
+      p4: s.count((m) => m.priority === "P4"),
+      p5: s.count((m) => m.priority === "P5"),
+      p6: s.count((m) => m.priority === "P6"),
+      resoltP1: s.count((m) => m.priority === "P1" && m.closed === true),
+      resoltP2: s.count((m) => m.priority === "P2" && m.closed === true)
+      /*  orderId: s.key(),
+      max: s.max((m) => m.cost),
+      min: s.min((m) => m.cost),
+      avg: s.average((m) => m.cost),
+      count: s.count(),
+      sum: s.sum((s) => s.cost) */
+    }))
+    .toArray();
+
+  console.log(cinemaRes);
+
+  return (
+    <div>
+      <PieChart width={730} height={400}>
+        <Tooltip />
+        <Pie
+          data={items}
+          dataKey="quotation"
+          nameKey="cinema"
+          cx="20%"
+          cy="50%"
+          innerRadius={60}
+          outerRadius={100}
+          fill="#8884d8"
+          label
+        />
+
+        <Pie
+          data={items}
+          dataKey="finalCost"
+          nameKey="cinema"
+          cx="50%"
+          cy="50%"
+          outerRadius={25}
+          fill="#8884d8"
+          label
+        />
+        <Pie
+          data={items}
+          dataKey="orderCost"
+          nameKey="cinema"
+          cx="80%"
+          cy="50%"
+          innerRadius={60}
+          outerRadius={80}
+          fill="#82ca9d"
+          label
+        />
+
+        {/*  <Pie data={data02} dataKey="value" nameKey="name" cx="50%" cy="50%" innerRadius={60} outerRadius={80} fill="#82ca9d" label /> */}
+      </PieChart>
+
+      <BarChart width={730} height={250} data={cinemaRes}>
+        <CartesianGrid strokeDasharray="3 3" />
+        <XAxis dataKey="cinema">
+          <Label value="cost for cinema" offset={2} position="insideBottom" />
+        </XAxis>
+        <YAxis />
+        <Tooltip />
+        <Legend />
+        <Bar dataKey="quotation" fill="#8884d8" />
+        <Bar dataKey="orderCost" fill="#82ca9d" />
+        <Bar dataKey="finalCost" fill="orange" />
+      </BarChart>
+
+      <BarChart width={730} height={250} data={cinemaRes}>
+        <CartesianGrid strokeDasharray="3 3" />
+        <XAxis dataKey="cinema" />
+        <YAxis />
+        <Tooltip />
+        <Legend />
+        <Bar dataKey="p1" fill="#8884d8" />
+        <Bar dataKey="p2" fill="#82ca9d" />
+        <Bar dataKey="p3" fill="orange" />
+        <Bar dataKey="p4" fill="#4dc9f6" />
+        <Bar dataKey="p5" fill="#58595b" />
+        <Bar dataKey="p6" fill="#8549ba" />
+      </BarChart>
+
+      <BarChart width={730} height={250} data={cinemaRes}>
+        <CartesianGrid strokeDasharray="3 3" />
+        <XAxis dataKey="cinema" />
+        <YAxis />
+        <Tooltip />
+        <Legend />
+        <Bar dataKey="p1" fill="red" />
+        <Bar dataKey="resoltP1" fill="green" />
+        <Bar dataKey="p2" fill="orange" />
+        <Bar dataKey="resoltP2" fill="green" />
+      </BarChart>
+    </div>
+  );
+};
+
+export default Charts;
+
+//count p1
+
+/* const COLORS = [
     "#4dc9f6",
     "#f67019",
     "#f53794",
@@ -15,9 +156,9 @@ const Charts = ({ items }) => {
     "#00a950",
     "#58595b",
     "#8549ba"
-  ];
+  ]; */
 
-  let res = items.reduce(function (obj, v) {
+/* let res = items.reduce(function (obj, v) {
     // increment or set the property
     // `(obj[v.status] || 0)` returns the property value if defined
     // or 0 ( since `undefined` is a falsy value
@@ -25,13 +166,13 @@ const Charts = ({ items }) => {
     // return the updated object
     return obj;
     // set the initial value as an object
-  }, {});
+  }, {}); */
 
-  let label1 = [];
+/*  let label1 = [];
   let data1 = [];
 
   for (const [labels, data] of Object.entries(res)) {
-   /*  console.log(`${labels}: ${data}`); */
+     console.log(`${labels}: ${data}`);
     label1.push(`${labels}`);
     data1.push(data);
   }
@@ -69,8 +210,8 @@ const Charts = ({ items }) => {
         style={{ position: "relative", width: "40%" }}
       />
     </div>
-  );
-};
+  ); */
+
 /* import { Stack, Typography } from "@mui/material";
 /* import { cloneDeep } from "lodash";
 import * as agCharts from "ag-charts-community"; */
@@ -162,5 +303,3 @@ function Charts({ items }) {
     </Stack>
   );
 } */
-
-export default Charts;
