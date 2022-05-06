@@ -8,6 +8,8 @@ import {
   Legend,
   ResponsiveContainer,
   BarChart,
+  RadialBar,
+  RadialBarChart,
   Bar,
   Cell,
   Label,
@@ -18,15 +20,15 @@ import {
 import { priority } from "../config/struttura";
 
 const COLORS = [
-  "#4dc9f6",
-  "#f67019",
-  "#f53794",
-  "#537bc4",
-  "#acc236",
-  "#166a8f",
-  "#00a950",
-  "#58595b",
-  "#8549ba"
+  "#DFFF00",
+  "#FFBF00",
+  "#FF7F50",
+  "#DE3163",
+  "#9FE2BF",
+  "#40E0D0",
+  "#6495ED",
+  "#CCCCFF",
+  "#5F9EA0"
 ];
 
 const Charts = ({ items }) => {
@@ -57,12 +59,34 @@ const Charts = ({ items }) => {
     }))
     .toArray();
 
-  console.log(cinemaRes);
+  var priorityRes = Enumerable.from(items)
+    .groupBy((g) => g.priority)
+    .select((s) => ({
+      priority: s.key(),
+      quotation: s.sum((m) => (m.quotation ? Number(m.quotation) : null)),
+      orderCost: s.sum((m) => (m.orderCost ? Number(m.orderCost) : null)),
+      finalCost: s.sum((m) => (m.finalCost ? Number(m.finalCost) : null)),
+      count: s.count(),
+
+      resolved: s.count((m) => m.priority === s.key() && m.closed === true)
+      /*  orderId: s.key(),
+      max: s.max((m) => m.cost),
+      min: s.min((m) => m.cost),
+      avg: s.average((m) => m.cost),
+      count: s.count(),
+      sum: s.sum((s) => s.cost) */
+    }))
+    .toArray();
+
+  console.log(priorityRes);
 
   return (
-    <div>
-      <PieChart width={730} height={400}>
+    <div style={{ marginTop: "20px" }}>
+      <h4>total cost</h4>
+      <PieChart width={800} height={400}>
+        <h5>quotation</h5>
         <Tooltip />
+
         <Pie
           data={items}
           dataKey="quotation"
@@ -73,7 +97,11 @@ const Charts = ({ items }) => {
           outerRadius={100}
           fill="#8884d8"
           label
-        />
+        >
+          {items.map((entry, index) => (
+            <Cell key={`cell-${index}`} fill={COLORS[index]} />
+          ))}
+        </Pie>
 
         <Pie
           data={items}
@@ -84,7 +112,11 @@ const Charts = ({ items }) => {
           outerRadius={25}
           fill="#8884d8"
           label
-        />
+        >
+          {items.map((entry, index) => (
+            <Cell key={`cell-${index}`} fill={COLORS[index]} />
+          ))}
+        </Pie>
         <Pie
           data={items}
           dataKey="orderCost"
@@ -95,211 +127,88 @@ const Charts = ({ items }) => {
           outerRadius={80}
           fill="#82ca9d"
           label
-        />
+        >
+          {items.map((entry, index) => (
+            <Cell key={`cell-${index}`} fill={COLORS[index]} />
+          ))}
+        </Pie>
 
         {/*  <Pie data={data02} dataKey="value" nameKey="name" cx="50%" cy="50%" innerRadius={60} outerRadius={80} fill="#82ca9d" label /> */}
       </PieChart>
+      <div style={{ marginTop: "20px" }}>
+        <h4>cost comparation</h4>
+        <BarChart width={730} height={250} data={cinemaRes}>
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="cinema" />
 
-      <BarChart width={730} height={250} data={cinemaRes}>
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="cinema">
-          <Label value="cost for cinema" offset={2} position="insideBottom" />
-        </XAxis>
-        <YAxis />
-        <Tooltip />
-        <Legend />
-        <Bar dataKey="quotation" fill="#8884d8" />
-        <Bar dataKey="orderCost" fill="#82ca9d" />
-        <Bar dataKey="finalCost" fill="orange" />
-      </BarChart>
+          <YAxis />
+          <Tooltip />
+          <Legend />
+          <Bar dataKey="quotation" fill="#8884d8" />
+          <Bar dataKey="orderCost" fill="#82ca9d" />
+          <Bar dataKey="finalCost" fill="orange" />
+        </BarChart>
+      </div>
+      <div style={{ marginTop: "20px" }}>
+        <h4>priority analisys</h4>
+        <BarChart width={730} height={250} data={cinemaRes}>
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="cinema" />
+          <YAxis />
+          <Tooltip />
+          <Legend />
+          <Bar dataKey="p1" fill="#8884d8" />
+          <Bar dataKey="p2" fill="#82ca9d" />
+          <Bar dataKey="p3" fill="orange" />
+          <Bar dataKey="p4" fill="#4dc9f6" />
+          <Bar dataKey="p5" fill="#58595b" />
+          <Bar dataKey="p6" fill="#8549ba" />
+        </BarChart>
+      </div>
+      <div style={{ marginTop: "20px" }}>
+        <h4>p1-p2 comparation resolved for cinema</h4>
+        <BarChart width={730} height={250} data={cinemaRes}>
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="cinema" />
+          <YAxis />
+          <Tooltip />
+          <Legend />
+          <Bar dataKey="p1" fill="red" />
+          <Bar dataKey="resoltP1" fill="green" />
+          <Bar dataKey="p2" fill="orange" />
+          <Bar dataKey="resoltP2" fill="green" />
+        </BarChart>
+      </div>
 
-      <BarChart width={730} height={250} data={cinemaRes}>
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="cinema" />
-        <YAxis />
-        <Tooltip />
-        <Legend />
-        <Bar dataKey="p1" fill="#8884d8" />
-        <Bar dataKey="p2" fill="#82ca9d" />
-        <Bar dataKey="p3" fill="orange" />
-        <Bar dataKey="p4" fill="#4dc9f6" />
-        <Bar dataKey="p5" fill="#58595b" />
-        <Bar dataKey="p6" fill="#8549ba" />
-      </BarChart>
+      <RadialBarChart
+        width={730}
+        height={250}
+        innerRadius="10%"
+        outerRadius="80%"
+        data={priorityRes}
+        startAngle={180}
+        endAngle={0}
+      >
+        <RadialBar
+          minAngle={15}
+          label={{ fill: "#666", position: "insideStart" }}
+          background
+          clockWise={true}
+          dataKey="resolved"
+        />
 
-      <BarChart width={730} height={250} data={cinemaRes}>
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="cinema" />
-        <YAxis />
+        <Legend
+          iconSize={10}
+          width={120}
+          height={140}
+          layout="vertical"
+          verticalAlign="middle"
+          align="right"
+        />
         <Tooltip />
-        <Legend />
-        <Bar dataKey="p1" fill="red" />
-        <Bar dataKey="resoltP1" fill="green" />
-        <Bar dataKey="p2" fill="orange" />
-        <Bar dataKey="resoltP2" fill="green" />
-      </BarChart>
+      </RadialBarChart>
     </div>
   );
 };
 
 export default Charts;
-
-//count p1
-
-/* const COLORS = [
-    "#4dc9f6",
-    "#f67019",
-    "#f53794",
-    "#537bc4",
-    "#acc236",
-    "#166a8f",
-    "#00a950",
-    "#58595b",
-    "#8549ba"
-  ]; */
-
-/* let res = items.reduce(function (obj, v) {
-    // increment or set the property
-    // `(obj[v.status] || 0)` returns the property value if defined
-    // or 0 ( since `undefined` is a falsy value
-    obj[v.priority] = (obj[v.priority] || 0) + 1;
-    // return the updated object
-    return obj;
-    // set the initial value as an object
-  }, {}); */
-
-/*  let label1 = [];
-  let data1 = [];
-
-  for (const [labels, data] of Object.entries(res)) {
-     console.log(`${labels}: ${data}`);
-    label1.push(`${labels}`);
-    data1.push(data);
-  }
-
-  const chartData1 = {
-    labels: label1,
-    datasets: [
-      {
-        data: data1,
-        backgroundColor: COLORS
-      }
-    ]
-  };
-
-  const [lightOptions1] = useState({
-    plugins: {
-      legend: {
-        labels: {
-          color: "#495057"
-        },
-        title: {
-          display: true,
-          text: "priority count"
-        }
-      }
-    }
-  });
-
-  return (
-    <div className="card flex justify-content-center mt-6">
-      <Chart
-        type="pie"
-        data={chartData1}
-        options={lightOptions1}
-        style={{ position: "relative", width: "40%" }}
-      />
-    </div>
-  ); */
-
-/* import { Stack, Typography } from "@mui/material";
-/* import { cloneDeep } from "lodash";
-import * as agCharts from "ag-charts-community"; */
-/* import { AgChartsReact } from "ag-charts-react";
-
-function Charts({ items }) {
-  console.log("item in proiva", items);
-
-  const countp1 = items.filter((item) => item.priority === "P1").length;
-  const countp2 = items.filter((item) => item.priority === "P2").length;
-  const countp3 = items.filter((item) => item.priority === "P3").length;
-  const countp4 = items.filter((item) => item.priority === "P4").length;
-  const countp5 = items.filter((item) => item.priority === "P5").length;
-  const countp6 = items.filter((item) => item.priority === "P6").length;
-
-  const options = {
-    data: [
-      { label: "P1", value: countp1 },
-      { label: "P2", value: countp2 },
-      { label: "P3", value: countp3 },
-      { label: "P4", value: countp4 },
-      { label: "P5", value: countp5 },
-      { label: "P6", value: countp6 }
-    ],
-    series: [
-      {
-        type: "pie",
-        angleKey: "value",
-        labelKey: "label"
-      }
-    ]
-  };
-
-  const options2 = {
-    data: items,
-    series: [
-      {
-        type: "column",
-        xKey: "cinema",
-        yKey: "quotation"
-      },
-      {
-        type: "column",
-        xKey: "cinema",
-        yKey: "orderCost"
-      },
-      {
-        type: "column",
-        xKey: "cinema",
-        yKey: "finalCost"
-      }
-    ]
-  }; */
-
-/* const options = {
-    data: items,
-    series: [
-      {
-        type: "pie",
-        angleKey: "quotation",
-        labelKey: "cinema"
-      }
-    ]
-  }; */
-
-/* const options = {
-    data: [
-      { value: 56.9 },
-      { value: 22.5 },
-      { value: 6.8 },
-      { value: 8.5 },
-      { value: 2.6 },
-      { value: 1.9 }
-    ],
-    series: [
-      {
-        type: "pie",
-        angleKey: "value"
-      }
-    ]
-  }; */
-
-/* return (
-    <Stack container spacing={2} sx={{ mt: 3 }}>
-      <Typography>Priority analisys</Typography>
-      <AgChartsReact options={options} />
-      <Typography>Cost analisys</Typography>
-      <AgChartsReact options={options2} />
-    </Stack>
-  );
-} */
