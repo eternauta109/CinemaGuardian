@@ -41,7 +41,6 @@ const Listsprime = () => {
     { name: "limena" }
   ]; */
 
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const dt = useRef(null);
   const [selectedItems, setSelectedItems] = useState([]);
@@ -49,7 +48,6 @@ const Listsprime = () => {
   const [filters1, setFilters1] = useState(null);
   const [globalFilterValue1, setGlobalFilterValue1] = useState("");
   const [selectedColumns, setSelectedColumns] = useState(columns);
-  const [cinemaInMultiSelect, setCinemaInMultiSelect] = useState([]);
 
   //FILTER
 
@@ -228,7 +226,9 @@ const Listsprime = () => {
       <MultiSelect
         value={options.value}
         filter
-        options={cinemaInMultiSelect}
+        options={cinemas.map((e) => {
+          return e.name;
+        })}
         itemTemplate={cinemaItemTemplate}
         onChange={(e) => {
           options.filterApplyCallback(e.value);
@@ -460,6 +460,7 @@ const Listsprime = () => {
       />
     );
   };
+
   // DATE
 
   const formatDate = (value) => {
@@ -766,21 +767,10 @@ const Listsprime = () => {
     return items;
   };
 
-  const reduceCinemaArray = () => {
-    if (cinemas) {
-      const reduceCinemas = cinemas.map((e) => {
-        return e.name;
-      });
-      /* console.log(reduceCinemas); */
-      setCinemaInMultiSelect(reduceCinemas);
-    }
-  };
-
   useEffect(() => {
-    dispatch(getItems({ cinemas }));
+    /*   dispatch(getItems({ cinemas })); */
     ultimateData();
     initFilters1();
-    reduceCinemaArray();
   }, []);
 
   return (
@@ -829,6 +819,7 @@ const Listsprime = () => {
           {columnComponents}
           <Column header="action" body={actionBodyTemplate} />
         </DataTable>
+
         <Charts items={ultimateData()} />
       </div>
     </div>
