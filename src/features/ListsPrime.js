@@ -41,6 +41,7 @@ const Listsprime = () => {
     { name: "limena" }
   ]; */
 
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const dt = useRef(null);
   const [selectedItems, setSelectedItems] = useState([]);
@@ -768,7 +769,7 @@ const Listsprime = () => {
   };
 
   useEffect(() => {
-    /*   dispatch(getItems({ cinemas })); */
+    dispatch(getItems({ cinemas }));
     ultimateData();
     initFilters1();
   }, []);

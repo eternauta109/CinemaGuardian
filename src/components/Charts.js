@@ -8,6 +8,11 @@ import {
   Legend,
   ResponsiveContainer,
   BarChart,
+  RadarChart,
+  Radar,
+  PolarAngleAxis,
+  PolarGrid,
+  PolarRadiusAxis,
   RadialBar,
   RadialBarChart,
   Bar,
@@ -32,6 +37,7 @@ const COLORS = [
 ];
 
 const Charts = ({ items }) => {
+  const [maxCount, setMaxCount] = useState(0);
   console.log(items);
 
   var cinemaRes = Enumerable.from(items)
@@ -66,9 +72,19 @@ const Charts = ({ items }) => {
       quotation: s.sum((m) => (m.quotation ? Number(m.quotation) : null)),
       orderCost: s.sum((m) => (m.orderCost ? Number(m.orderCost) : null)),
       finalCost: s.sum((m) => (m.finalCost ? Number(m.finalCost) : null)),
+      quotationTodo: s.sum((m) =>
+        m.quotation && !m.closed ? Number(m.quotation) : null
+      ),
+      orderCostTodo: s.sum((m) =>
+        m.orderCost && !m.closed ? Number(m.orderCost) : null
+      ),
+      finalCostTodo: s.sum((m) =>
+        m.finalCost && !m.closed ? Number(m.finalCost) : null
+      ),
       count: s.count(),
 
-      resolved: s.count((m) => m.priority === s.key() && m.closed === true)
+      resolved: s.count((m) => m.priority === s.key() && m.closed === true),
+      todo: s.count((m) => m.priority === s.key() && m.inProgress === true)
       /*  orderId: s.key(),
       max: s.max((m) => m.cost),
       min: s.min((m) => m.cost),
@@ -78,12 +94,19 @@ const Charts = ({ items }) => {
     }))
     .toArray();
 
+  const findTheCount = (array) => {
+    array.forEach((e) => {
+      if (e.count > maxCount) {
+        setMaxCount(e.count);
+      }
+    });
+  };
   console.log(priorityRes);
 
   return (
     <div style={{ marginTop: "20px" }}>
       <h4>total cost</h4>
-      <PieChart width={800} height={400}>
+      <PieChart width={800} height={350}>
         <h5>quotation</h5>
         <Tooltip />
 
@@ -94,10 +117,11 @@ const Charts = ({ items }) => {
           cx="20%"
           cy="50%"
           innerRadius={60}
-          outerRadius={100}
+          outerRadius={80}
           fill="#8884d8"
           label
         >
+          <Label value="quotation" offset={0} position="center" />
           {items.map((entry, index) => (
             <Cell key={`cell-${index}`} fill={COLORS[index]} />
           ))}
@@ -109,10 +133,12 @@ const Charts = ({ items }) => {
           nameKey="cinema"
           cx="50%"
           cy="50%"
-          outerRadius={25}
+          innerRadius={60}
+          outerRadius={80}
           fill="#8884d8"
           label
         >
+          <Label value="final cost" offset={0} position="center" />
           {items.map((entry, index) => (
             <Cell key={`cell-${index}`} fill={COLORS[index]} />
           ))}
@@ -128,6 +154,7 @@ const Charts = ({ items }) => {
           fill="#82ca9d"
           label
         >
+          <Label value="order cost" offset={0} position="center" />
           {items.map((entry, index) => (
             <Cell key={`cell-${index}`} fill={COLORS[index]} />
           ))}
@@ -166,47 +193,62 @@ const Charts = ({ items }) => {
         </BarChart>
       </div>
       <div style={{ marginTop: "20px" }}>
-        <h4>p1-p2 comparation resolved for cinema</h4>
-        <BarChart width={730} height={250} data={cinemaRes}>
+        <h4>priority resolved comparation</h4>
+        <RadarChart
+          outerRadius={90}
+          width={730}
+          height={250}
+          data={priorityRes}
+        >
+          <Tooltip />
+          <PolarGrid />
+          <PolarAngleAxis dataKey="priority" />
+          <PolarRadiusAxis angle={30} domain={[0, { maxCount }]} />
+          <Radar
+            name="resolved"
+            dataKey="resolved"
+            stroke="#8884d8"
+            fill="#8884d8"
+            fillOpacity={0.6}
+          />
+          <Radar
+            name="todo"
+            dataKey="todo"
+            stroke="#82ca9d"
+            fill="#82ca9d"
+            fillOpacity={0.6}
+          />
+          <Legend />
+        </RadarChart>
+      </div>
+
+      <div style={{ marginTop: "20px" }}>
+        <h4>priority total cost </h4>
+        <BarChart width={730} height={250} data={priorityRes}>
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="cinema" />
+          <XAxis dataKey="priority" />
           <YAxis />
           <Tooltip />
           <Legend />
-          <Bar dataKey="p1" fill="red" />
-          <Bar dataKey="resoltP1" fill="green" />
-          <Bar dataKey="p2" fill="orange" />
-          <Bar dataKey="resoltP2" fill="green" />
+          <Bar dataKey="quotation" fill="#8884d8" />
+          <Bar dataKey="orderCost" fill="#82ca9d" />
+          <Bar dataKey="finalCost" fill="orange" />
         </BarChart>
       </div>
 
-      <RadialBarChart
-        width={730}
-        height={250}
-        innerRadius="10%"
-        outerRadius="80%"
-        data={priorityRes}
-        startAngle={180}
-        endAngle={0}
-      >
-        <RadialBar
-          minAngle={15}
-          label={{ fill: "#666", position: "insideStart" }}
-          background
-          clockWise={true}
-          dataKey="resolved"
-        />
-
-        <Legend
-          iconSize={10}
-          width={120}
-          height={140}
-          layout="vertical"
-          verticalAlign="middle"
-          align="right"
-        />
-        <Tooltip />
-      </RadialBarChart>
+      <div style={{ marginTop: "20px" }}>
+        <h4>priority to do cost </h4>
+        <BarChart width={730} height={250} data={priorityRes}>
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="priority" />
+          <YAxis />
+          <Tooltip />
+          <Legend />
+          <Bar dataKey="quotationTodo" fill="#8884d8" />
+          <Bar dataKey="orderCostTodo" fill="#82ca9d" />
+          <Bar dataKey="finalCostTodo" fill="orange" />
+        </BarChart>
+      </div>
     </div>
   );
 };

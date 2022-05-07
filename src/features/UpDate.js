@@ -30,7 +30,7 @@ function UpDate() {
       lastUpdate: moment().format("DD/MM/YYYY"),
       updateBy: user.name
     });
-
+    console.log("item in up date", item);
     dispatch(updateItem({ item }));
     navigate("/home");
   };
