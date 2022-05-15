@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { getItems } from "./itemSlice";
+
 import { db } from "../config/firebase_config";
 import {
   collection,
@@ -12,22 +12,25 @@ import {
 
 export const getCinemas = createAsyncThunk(
   "cinemas/getCinemas",
-  async ({ role, area, cinema, facilityArea }, { dispatch }) => {
+  async ({ user }) => {
     let cinemas = [];
     let cinemasSnap;
 
-    switch (role) {
+    switch (user.role) {
       case "fm": //facilities
         const q = query(
           collection(db, "cinema"),
-          where("MaintenanceArea", "==", facilityArea)
+          where("MaintenanceArea", "==", user.facilityArea)
         );
         cinemasSnap = await getDocs(q);
 
         break;
 
       case "am": //area manager
-        const qam = query(collection(db, "cinema"), where("area", "==", area));
+        const qam = query(
+          collection(db, "cinema"),
+          where("area", "==", user.area)
+        );
         cinemasSnap = await getDocs(qam);
 
         break;
@@ -39,7 +42,10 @@ export const getCinemas = createAsyncThunk(
 
       case "m": //manager
       case "hm": //head manager
-        const qu = query(collection(db, "cinema"), where("name", "==", cinema));
+        const qu = query(
+          collection(db, "cinema"),
+          where("name", "==", user.cinema)
+        );
         cinemasSnap = await getDocs(qu);
 
         break;
@@ -51,7 +57,6 @@ export const getCinemas = createAsyncThunk(
     cinemasSnap.forEach((e) => {
       cinemas.push(e.data());
     });
-    dispatch(getItems({ cinemas }));
 
     return cinemas;
   }

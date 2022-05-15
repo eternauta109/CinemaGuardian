@@ -15,5 +15,5 @@ export const store = configureStore({
     items: itemReducer,
     suppliers: supplierReducer
   },
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger)
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware()
 });

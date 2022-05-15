@@ -6,7 +6,7 @@ import { Column } from "primereact/column";
 
 const FooterSection = ({ ultimateData }) => {
   //FOOTER
-
+  console.log("ultimateData", ultimateData);
   const formatCurrency = (value) => {
     return value.toLocaleString("it-IT", {
       style: "currency",

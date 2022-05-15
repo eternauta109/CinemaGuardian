@@ -38,7 +38,7 @@ const COLORS = [
 
 const Charts = ({ items }) => {
   const [maxCount, setMaxCount] = useState(0);
-  console.log(items);
+  console.log("items in charts", items);
 
   var cinemaRes = Enumerable.from(items)
     .groupBy((g) => g.cinema)

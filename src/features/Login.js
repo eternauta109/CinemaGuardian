@@ -13,6 +13,7 @@ import Container from "@mui/material/Container";
 /* import LoginContext from "../contex/LoginContext" */
 import { useDispatch, useSelector } from "react-redux";
 import { getUser } from "../slice/userSlice";
+import { getCinemas } from "../slice/cinemaSlice";
 
 function Copyright(props) {
   return (
@@ -57,9 +58,9 @@ export default function SignIn() {
 
   useEffect(() => {
     if (user.name) {
-      navigate("/home");
+      dispatch(getCinemas({ user })).then(navigate("/home"));
     }
-  }, [user]);
+  }, [dispatch, user]);
 
   return (
     <Container component="main" maxWidth="xs">

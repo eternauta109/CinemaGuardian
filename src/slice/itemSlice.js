@@ -88,9 +88,7 @@ export const addItem = createAsyncThunk(
       rif_num: increment(1)
     });
 
-    dispatch(
-      getCinemas({ role: user.role, area: user.area, cinema: user.cinema })
-    );
+    dispatch(getCinemas({ user }));
 
     alert(`Document written with ID:  ${itemRef.id}`);
 

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useCallback } from "react";
 
 import { useSelector, useDispatch } from "react-redux";
 import { getItems } from "../slice/itemSlice";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 //primeReact
 import { classNames } from "primereact/utils";
@@ -30,8 +30,12 @@ import { priority, areaSelect, capex, categoryList } from "../config/struttura";
 //FUNCTION
 
 const Listsprime = () => {
-  const items = useSelector((state) => state.items);
+  /*  const items = useSelector((state) => state.items); */
+
   const cinemas = useSelector((state) => state.cinemas);
+
+  /*  console.log("items in listprim", items); */
+  console.log("cinema in listprim", cinemas);
 
   /*  const cinemas = [
     { name: "nola" },
@@ -44,6 +48,7 @@ const Listsprime = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const dt = useRef(null);
+  const [itemsForTable, setItemsForTable] = useState([]);
   const [selectedItems, setSelectedItems] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [filters1, setFilters1] = useState(null);
@@ -465,7 +470,7 @@ const Listsprime = () => {
   // DATE
 
   const formatDate = (value) => {
-    console.log(value);
+    /* console.log(value); */
     return value.toLocaleDateString("it-IT", {
       day: "2-digit",
       month: "2-digit",
@@ -490,7 +495,7 @@ const Listsprime = () => {
   };
 
   const stDateBodyTemplate = (rowData) => {
-    return rowData.stDate;
+    return formatDate(rowData.stDate);
   };
 
   const stDateFilterTemplate = (options) => {
@@ -757,71 +762,101 @@ const Listsprime = () => {
 
   //PREPARE TO FUNCTION
 
-  const ultimateData = () => {
+  const getNewDataString = (stringDate) => {
+    let stDateArrayToSplit = stringDate.split("/");
+    return new Date(
+      `${stDateArrayToSplit[2]}/${stDateArrayToSplit[1]}/${stDateArrayToSplit[0]}`
+    );
+  };
+
+  const parsingItems = (data) => {
+    console.log("data", data);
+    console.log("olaola", data);
+    return data.map((d) => {
+      let newObj = { ...d, stDate: getNewDataString(d.stDate) };
+      return newObj;
+    });
+  };
+
+  const ultimateData = (data) => {
     /* console.log(filteredData, selectedItems, items); */
     if (filteredData.length > 0) {
       return filteredData;
     } else if (selectedItems.length > 0) {
       return selectedItems;
     }
-
-    return items;
+    return itemsForTable ? itemsForTable : [];
+    /*  console.log("itemsForTable in listPrme", itemsForTable); */
   };
 
   useEffect(() => {
-    dispatch(getItems({ cinemas }));
-    ultimateData();
+    try {
+      dispatch(getItems({ cinemas }))
+        .then((res) => {
+          setItemsForTable(parsingItems(res.payload));
+        })
+        .then(ultimateData());
+    } catch (error) {
+      alert("errore sul use effect di listPrime:", error);
+    }
+
     initFilters1();
-  }, []);
+  }, [dispatch, cinemas]);
 
   return (
     <div>
       <Tooltip target=".export-buttons>button" position="bottom" />
       <div className="card">
-        <DataTable
-          ref={dt}
-          showGridlines
-          paginator
-          rows={10}
-          resizableColumns
-          columnResizeMode="expand"
-          filterDisplay="menu"
-          globalFilterFields={[
-            "cinema",
-            "priority",
-            "problem",
-            "title",
-            "area",
-            "capex"
-          ]}
-          header={HeaderTable({
-            globalFilterValue1,
-            setGlobalFilterValue1,
-            initFilters1,
-            setFilters1,
-            filters1,
-            setSelectedColumns,
-            selectedColumns,
-            ultimateData
-          })}
-          emptyMessage="No items found."
-          filters={filters1}
-          dataKey="id"
-          footerColumnGroup={FooterSection({ ultimateData })}
-          value={items}
-          onValueChange={(e) => setFilteredData(e)}
-          selectionMode="checkbox"
-          responsiveLayout="scroll"
-          selection={selectedItems}
-          onSelectionChange={(e) => setSelectedItems(e.value)}
-        >
-          <Column selectionMode="multiple" headerStyle={{ width: "3em" }} />
+        {ultimateData && (
+          <DataTable
+            ref={dt}
+            showGridlines
+            paginator
+            rows={10}
+            resizableColumns
+            columnResizeMode="expand"
+            filterDisplay="menu"
+            globalFilterFields={[
+              "cinema",
+              "priority",
+              "problem",
+              "title",
+              "area",
+              "capex"
+            ]}
+            header={HeaderTable({
+              globalFilterValue1,
+              setGlobalFilterValue1,
+              initFilters1,
+              setFilters1,
+              filters1,
+              setSelectedColumns,
+              selectedColumns,
+              ultimateData
+            })}
+            emptyMessage="No items found."
+            filters={filters1}
+            dataKey="id"
+            footerColumnGroup={FooterSection({ ultimateData })}
+            value={itemsForTable}
+            onValueChange={(e) => setFilteredData(e)}
+            selectionMode="checkbox"
+            responsiveLayout="scroll"
+            selection={selectedItems}
+            onSelectionChange={(e) => setSelectedItems(e.value)}
+          >
+            <Column selectionMode="multiple" headerStyle={{ width: "3em" }} />
 
-          {columnComponents}
-          <Column header="action" body={actionBodyTemplate} />
-        </DataTable>
+            {columnComponents}
+            <Column header="action" body={actionBodyTemplate} />
+          </DataTable>
+        )}
 
-        <Charts items={ultimateData()} />
+        {itemsForTable.length > 0 ? (
+          <Charts items={ultimateData()} />
+        ) : (
+          <div>Loading Data</div>
+        )}
       </div>
     </div>
   );

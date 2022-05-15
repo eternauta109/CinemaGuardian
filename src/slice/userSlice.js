@@ -1,12 +1,12 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 import { db } from "../config/firebase_config";
-import { getCinemas } from "./cinemaSlice";
+
 import { getDoc, doc, setDoc } from "firebase/firestore";
 
 export const getUser = createAsyncThunk(
   "user/getUser",
-  async ({ username, password }, { dispatch }) => {
+  async ({ username, password }) => {
     const userRef = doc(db, "user", username);
     //risposta della query
     const userSnap = await getDoc(userRef);
@@ -21,16 +21,13 @@ export const getUser = createAsyncThunk(
 
     const user = userSnap.data();
 
-    dispatch(
-      getCinemas({
-        role: user.role,
-        area: user.area,
-        cinema: user.cinema,
-        facilityArea: user.facilityArea
-      })
-    );
-
-    return user;
+    return {
+      email: user.email,
+      name: user.name,
+      area: user.area,
+      cinema: user.cinema,
+      role: user.role
+    };
   }
 );
 
@@ -52,6 +49,7 @@ export const userSlice = createSlice({
       })
       .addCase(getUser.fulfilled, (state, action) => {
         state = action.payload;
+        console.log("stato di user", state);
         return state;
       })
       .addCase(addUser.fulfilled, (state, action) => {
