@@ -7,6 +7,7 @@ import {
   FormControl,
   Typography
 } from "@mui/material";
+import { useEffect } from "react";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 
 import { useDispatch } from "react-redux";
@@ -30,15 +31,9 @@ export const Header = ({
   const cinemaSelect = (e) => {
     const res = cinemas.find(({ name }) => name === `${e.target.value}`);
     setCinemaSelected(res);
-
     const numb = (res.rif_num + 1).toString();
-
     const ref_number = `${res.abbr}-${numb}`;
-
-    /* console.log("header ref.area", res.area); */
-
-    dispatch(getSuppliers({ area: res.area }));
-
+    console.log("header ref.area", res, e.target);
     setItem({
       ...item,
       [e.target.name]: e.target.value,
@@ -59,6 +54,17 @@ export const Header = ({
       fontFamily: ["Rubik Moonrocks", "cursive"].join(",")
     }
   });
+
+  useEffect(() => {
+    if (update) {
+      dispatch(getSuppliers({ area: item.area }));
+      setItem({
+        ...item,
+        updateBy: user.name,
+        lastUpdate: stDate
+      });
+    }
+  }, []);
 
   return (
     <Grid container sx={{ mt: 1 }} spacing={1} justify="center">
@@ -164,7 +170,8 @@ export const Header = ({
       </Grid>
       <Grid item xs={6} sm={3}>
         <TextField
-          value={item.lastUpdate ? item.lastUpdate : stDate}
+          value={update ? stDate : item.lastUpdate}
+          InputLabelProps={{ shrink: item.lastUpdate ? true : false }}
           fullWidth
           disabled
           label="date last update"

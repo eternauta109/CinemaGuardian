@@ -23,21 +23,18 @@ function UpDate() {
 
     setItem(finder);
   };
+  const momento = moment().format("DD/MM/YYYY");
+  console.log("momento", momento);
 
-  const handleSubmit = async () => {
-    setItem({
-      ...item,
-      lastUpdate: moment().format("DD/MM/YYYY"),
-      updateBy: user.name
-    });
-    console.log("item in up date", item);
+  const handleSubmit = () => {
+    console.log("item in up dateAAAA", item);
     dispatch(updateItem({ item }));
     navigate("/home");
   };
 
   useEffect(() => {
     getItemFromLists();
-    console.log("update in update", item);
+    /* console.log("update in update", item); */
     /* getItem(state.id); */
     return () => {};
   }, []);

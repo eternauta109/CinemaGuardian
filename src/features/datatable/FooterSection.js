@@ -6,7 +6,7 @@ import { Column } from "primereact/column";
 
 const FooterSection = ({ ultimateData }) => {
   //FOOTER
-  console.log("ultimateData", ultimateData);
+  /* console.log("ultimateData", ultimateData); */
   const formatCurrency = (value) => {
     return value.toLocaleString("it-IT", {
       style: "currency",
@@ -54,7 +54,7 @@ const FooterSection = ({ ultimateData }) => {
       <Row>
         <Column
           footer="Totals:"
-          colSpan={19}
+          colSpan={20}
           footerStyle={{ textAlign: "right" }}
         />
         <Column footer={quotationTotal} />

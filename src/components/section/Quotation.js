@@ -15,6 +15,7 @@ export const Quotation = ({ itemChange, item, setItem }) => {
       ...item,
       [e.target.name]: Number(e.target.value)
     });
+    console.log(item);
   };
 
   return (

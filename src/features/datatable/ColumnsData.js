@@ -52,9 +52,14 @@ export const columns = [
     header: "stDate"
   },
   {
+    field: "lastUpdate",
+    header: "lastUpdate"
+  },
+  {
     field: "endDate",
     header: "endDate"
   },
+
   {
     field: "inProgress",
     header: "inProgress"

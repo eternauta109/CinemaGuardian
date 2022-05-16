@@ -35,7 +35,7 @@ const Listsprime = () => {
   const cinemas = useSelector((state) => state.cinemas);
 
   /*  console.log("items in listprim", items); */
-  console.log("cinema in listprim", cinemas);
+  /* console.log("cinema in listprim", cinemas); */
 
   /*  const cinemas = [
     { name: "nola" },
@@ -108,6 +108,10 @@ const Listsprime = () => {
         constraints: [{ value: null, matchMode: FilterMatchMode.DATE_IS }]
       },
       stDate: {
+        operator: FilterOperator.AND,
+        constraints: [{ value: null, matchMode: FilterMatchMode.DATE_IS }]
+      },
+      lastUpdate: {
         operator: FilterOperator.AND,
         constraints: [{ value: null, matchMode: FilterMatchMode.DATE_IS }]
       }
@@ -479,7 +483,9 @@ const Listsprime = () => {
   };
 
   const endDateBodyTemplate = (rowData) => {
-    return rowData.endDate;
+    if (rowData.endDate) {
+      return formatDate(rowData.endDate);
+    }
   };
 
   const endDateFilterTemplate = (options) => {
@@ -494,8 +500,28 @@ const Listsprime = () => {
     );
   };
 
+  const lastUpdateBodyTemplate = (rowData) => {
+    if (rowData.lastUpdate) {
+      return formatDate(rowData.lastUpdate);
+    }
+  };
+
+  const lastUpdateFilterTemplate = (options) => {
+    return (
+      <Calendar
+        value={options.value}
+        onChange={(e) => options.filterCallback(e.value, options.index)}
+        dateFormat="DD/MM/YYYY"
+        placeholder="DD/MM/YYYY"
+        mask="99/99/9999"
+      />
+    );
+  };
+
   const stDateBodyTemplate = (rowData) => {
-    return formatDate(rowData.stDate);
+    if (rowData.stDate) {
+      return formatDate(rowData.stDate);
+    }
   };
 
   const stDateFilterTemplate = (options) => {
@@ -746,7 +772,19 @@ const Listsprime = () => {
             filterElement={stDateFilterTemplate}
           />
         );
-
+      case "lastUpdate":
+        return (
+          <Column
+            key={col.field}
+            header="lastUpdate"
+            filterField="lastUpdate"
+            dataType="date"
+            body={lastUpdateBodyTemplate}
+            style={{ minWidth: "7rem" }}
+            filter
+            filterElement={lastUpdateFilterTemplate}
+          />
+        );
       default:
         return (
           <Column
@@ -763,17 +801,26 @@ const Listsprime = () => {
   //PREPARE TO FUNCTION
 
   const getNewDataString = (stringDate) => {
-    let stDateArrayToSplit = stringDate.split("/");
-    return new Date(
-      `${stDateArrayToSplit[2]}/${stDateArrayToSplit[1]}/${stDateArrayToSplit[0]}`
-    );
+    /* console.log(stringDate); */
+    if (stringDate) {
+      let stDateArrayToSplit = stringDate.split("/");
+      return new Date(
+        `${stDateArrayToSplit[2]}/${stDateArrayToSplit[1]}/${stDateArrayToSplit[0]}`
+      );
+    }
   };
 
   const parsingItems = (data) => {
-    console.log("data", data);
-    console.log("olaola", data);
+    /*  console.log("data in parsinf data", data); */
+
     return data.map((d) => {
-      let newObj = { ...d, stDate: getNewDataString(d.stDate) };
+      let newObj = {
+        ...d,
+        stDate: d.stDate ? getNewDataString(d.stDate) : null,
+        endDate: d.endDate ? getNewDataString(d.endDate) : null,
+        lastUpdate: d.lastUpdate ? getNewDataString(d.lastUpdate) : null
+      };
+      /* console.log(newObj); */
       return newObj;
     });
   };

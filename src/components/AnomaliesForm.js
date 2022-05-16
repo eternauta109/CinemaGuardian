@@ -17,7 +17,6 @@ import Priority from "./section/Priority";
 import Comments from "./section/Comments";
 import PhotoLink from "./section/PhotoLink";
 import LinksSlider from "./section/LinksSlider";
-import moment from "moment";
 
 export default function InputAnomalies({
   update,

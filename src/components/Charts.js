@@ -38,7 +38,7 @@ const COLORS = [
 
 const Charts = ({ items }) => {
   const [maxCount, setMaxCount] = useState(0);
-  console.log("items in charts", items);
+  /* console.log("items in charts", items); */
 
   var cinemaRes = Enumerable.from(items)
     .groupBy((g) => g.cinema)
@@ -101,7 +101,7 @@ const Charts = ({ items }) => {
       }
     });
   };
-  console.log(priorityRes);
+  /* console.log(priorityRes); */
 
   return (
     <div style={{ marginTop: "20px" }}>

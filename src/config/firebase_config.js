@@ -18,9 +18,6 @@ const firebaseConfig = {
   measurementId: "G-Y60F0NEV62"
 };
 
-
-
-
 /* const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_KEY,
   authDomain: process.env.REACT_APP_FIREBASE_DOMAIN,
@@ -36,8 +33,6 @@ const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 console.log(analytics);
 
-
 export const storage = getStorage(app);
 
 export const db = getFirestore(app);
-

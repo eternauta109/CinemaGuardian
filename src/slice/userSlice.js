@@ -25,6 +25,7 @@ export const getUser = createAsyncThunk(
       email: user.email,
       name: user.name,
       area: user.area,
+      facilityArea: user.facilityArea,
       cinema: user.cinema,
       role: user.role
     };
@@ -49,7 +50,7 @@ export const userSlice = createSlice({
       })
       .addCase(getUser.fulfilled, (state, action) => {
         state = action.payload;
-        console.log("stato di user", state);
+        /* console.log("stato di user", state); */
         return state;
       })
       .addCase(addUser.fulfilled, (state, action) => {

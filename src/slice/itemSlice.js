@@ -98,7 +98,8 @@ export const addItem = createAsyncThunk(
 
 export const updateItem = createAsyncThunk(
   "items/updateItems",
-  async ({ item }, { dispatch }) => {
+  async ({ item }) => {
+    console.log(item);
     const itemRef = doc(db, "anomalies", `${item.item_ref}`);
     const res = await setDoc(itemRef, {
       ...item
