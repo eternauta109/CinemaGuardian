@@ -5,9 +5,9 @@ import {
   InputLabel,
   Grid,
   FormControl,
-  Typography
+  Typography,
 } from "@mui/material";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 
 import { useDispatch } from "react-redux";
@@ -15,44 +15,44 @@ import { getSuppliers } from "../../slice/supplierSlice";
 
 import moment from "moment";
 
-export const Header = ({
-  update,
-  item,
-  cinemas,
-  user,
-  setCinemaSelected,
-  cinemaSelected,
-  setItem
-}) => {
+export const Header = ({ update, item, cinemas, user, setItem }) => {
   const stDate = moment().format("DD/MM/YYYY");
-
+  const [cinemaSelected, setCinemaSelected] = useState("");
   const dispatch = useDispatch();
 
-  const cinemaSelect = (e) => {
+  const cinemaSelectOnChange = (e) => {
+    console.log("e", e.target);
     const res = cinemas.find(({ name }) => name === `${e.target.value}`);
-    setCinemaSelected(res);
+    console.log("res", res);
+    setCinemaSelected(e.target.value);
     const numb = (res.rif_num + 1).toString();
     const ref_number = `${res.abbr}-${numb}`;
-    console.log("header ref.area", res, e.target);
-    setItem({
-      ...item,
-      [e.target.name]: e.target.value,
-      screens: res.screens,
-      area: res.area,
-      createdBy: user.name,
-      item_ref: ref_number,
-      stDate: stDate,
-      updateBy: user.name,
-      lastUpdate: stDate,
-      capex: "Capex",
-      inProgress: true
-    });
+
+    dispatch(getSuppliers({ area: res.area }));
+
+    try {
+      setItem({
+        ...item,
+        cinema: [e.target.value][0] ? [e.target.value][0] : "",
+        screens: res.screens ? res.screens : "",
+        area: res.area ? res.area : "",
+        createdBy: user.name ? user.name : "",
+        item_ref: ref_number ? ref_number : "",
+        stDate: stDate ? stDate : "",
+        updateBy: user.name ? user.name : "",
+        lastUpdate: stDate ? stDate : "",
+        capex: "Capex",
+        inProgress: true,
+      });
+    } catch (error) {
+      console.log("errore nel setItem di HeaderSection", error);
+    }
   };
 
   const theme = createTheme({
     typography: {
-      fontFamily: ["Rubik Moonrocks", "cursive"].join(",")
-    }
+      fontFamily: ["Rubik Moonrocks", "cursive"].join(","),
+    },
   });
 
   useEffect(() => {
@@ -61,7 +61,7 @@ export const Header = ({
       setItem({
         ...item,
         updateBy: user.name,
-        lastUpdate: stDate
+        lastUpdate: stDate,
       });
     }
   }, []);
@@ -81,20 +81,22 @@ export const Header = ({
           <FormControl fullWidth>
             <InputLabel id="category">Cinema</InputLabel>
             <Select
-              onChange={(e) => cinemaSelect(e)}
-              value={item.cinema || ""}
+              onChange={(e) => cinemaSelectOnChange(e)}
+              value={cinemaSelected || ""}
               labelId="cinema"
               id="cinemaSelect"
               label="cinema"
               name="cinema"
             >
-              {cinemas.map((e, key) => {
-                return (
-                  <MenuItem key={key} value={e.name}>
-                    {e.name}
-                  </MenuItem>
-                );
-              })}
+              {cinemas
+                ? cinemas.map((e, key) => {
+                    return (
+                      <MenuItem key={key} value={e.name}>
+                        {e.name}
+                      </MenuItem>
+                    );
+                  })
+                : null}
             </Select>
           </FormControl>
         ) : (
@@ -161,7 +163,7 @@ export const Header = ({
       </Grid>
       <Grid item xs={6} sm={3}>
         <TextField
-          value={user.name}
+          value={user.name || ""}
           fullWidth
           disabled
           label="last update"
@@ -170,7 +172,7 @@ export const Header = ({
       </Grid>
       <Grid item xs={6} sm={3}>
         <TextField
-          value={update ? stDate : item.lastUpdate}
+          value={stDate || ""}
           InputLabelProps={{ shrink: item.lastUpdate ? true : false }}
           fullWidth
           disabled

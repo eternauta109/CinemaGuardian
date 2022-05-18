@@ -7,7 +7,7 @@ import {
   FormLabel,
   Grid,
   FormControl,
-  Autocomplete
+  Autocomplete,
 } from "@mui/material";
 
 import moment from "moment";
@@ -30,7 +30,7 @@ export const Pegaso = ({ item, itemChange, setItem }) => {
   const onChangeSelect = (e, newValue) => {
     setItem({
       ...item,
-      competence: newValue.name
+      competence: newValue.name,
     });
   };
 
@@ -61,27 +61,6 @@ export const Pegaso = ({ item, itemChange, setItem }) => {
           }}
           renderInput={(params) => <TextField {...params} label="suppliers" />}
         />
-
-        {/*  <FormControl fullWidth>
-          <InputLabel id="category">Competence</InputLabel>
-          <Select
-            onChange={(e) => itemChange(e)}
-            value={item.competence ?? ""}
-              labelId="competence"
-              id="competenceSelect"
-            label="Competence"
-            name="competence"
-          >
-            {suppliers &&
-              suppliers.map((e, key) => {
-                return (
-                  <MenuItem key={key} value={e.name}>
-                    {e.name}
-                  </MenuItem>
-                );
-              })}
-          </Select>
-        </FormControl> */}
       </Grid>
       <Grid item xs={12} sm={6}>
         <TextField
@@ -96,6 +75,7 @@ export const Pegaso = ({ item, itemChange, setItem }) => {
 
       <Grid item xs={4} sm={4}>
         <Button
+          sx={{ height: "100%" }}
           variant="contained"
           color="success"
           fullWidth

@@ -7,13 +7,13 @@ export const Quotation = ({ itemChange, item, setItem }) => {
       ...item,
       quotation: Number(total),
       orderCost: Number(total),
-      finalCost: Number(total)
+      finalCost: Number(total),
     });
   };
   const onNumberChange = (e) => {
     setItem({
       ...item,
-      [e.target.name]: Number(e.target.value)
+      [e.target.name]: Number(e.target.value),
     });
     console.log(item);
   };
@@ -29,13 +29,13 @@ export const Quotation = ({ itemChange, item, setItem }) => {
           label="Quotation"
           type="number"
           variant="standard"
-          value={Number(item.quotation)}
+          value={Number(item.quotation) || 0}
           onChange={onNumberChange}
           name="quotation"
           id="standard-size-small"
           sx={{ m: 1 }}
           InputProps={{
-            startAdornment: <InputAdornment position="start">€</InputAdornment>
+            startAdornment: <InputAdornment position="start">€</InputAdornment>,
           }}
         />
       </Grid>
@@ -44,13 +44,13 @@ export const Quotation = ({ itemChange, item, setItem }) => {
           label="orderCost"
           type="number"
           variant="standard"
-          value={Number(item.orderCost)}
+          value={Number(item.orderCost) || 0}
           onChange={onNumberChange}
           name="orderCost"
           id="standard-size-small"
           sx={{ m: 1 }}
           InputProps={{
-            startAdornment: <InputAdornment position="start">€</InputAdornment>
+            startAdornment: <InputAdornment position="start">€</InputAdornment>,
           }}
         />
       </Grid>
@@ -59,13 +59,13 @@ export const Quotation = ({ itemChange, item, setItem }) => {
           label="finalCost"
           type="number"
           variant="standard"
-          value={Number(item.finalCost)}
+          value={Number(item.finalCost) || 0}
           onChange={finalChange}
           name="finalCost"
           id="standard-size-small"
           sx={{ m: 1 }}
           InputProps={{
-            startAdornment: <InputAdornment position="start">€</InputAdornment>
+            startAdornment: <InputAdornment position="start">€</InputAdornment>,
           }}
         />
       </Grid>

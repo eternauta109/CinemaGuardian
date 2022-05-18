@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Container, Grid } from "@mui/material";
 import LoadingButton from "@mui/lab/LoadingButton";
 
@@ -24,27 +24,31 @@ export default function InputAnomalies({
   item,
   setItem,
   handleSubmit,
-  user
+  user,
 }) {
-  const [cinemaSelected, setCinemaSelected] = useState(null);
-
-  /*  console.log(" item in anomaliesform", item); */
-
+  console.log(" item in anomaliesform", item);
+  console.log(" update in anomaliesform", update);
+  console.log(" user in anomaliesform", user);
+  console.log(" cinema in anomaliesform", cinemas);
   const itemChange = (e) => {
     setItem({
       ...item,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
 
     console.log("item in anomalies form on change", item);
   };
+
+  useEffect(() => {
+    console.log(item);
+  }, [item]);
 
   return (
     <Container
       sx={{
         borderRadius: 5,
 
-        p: 2
+        p: 2,
       }}
     >
       <Header
@@ -53,8 +57,6 @@ export default function InputAnomalies({
         setItem={setItem}
         cinemas={cinemas}
         user={user}
-        cinemaSelected={cinemaSelected}
-        setCinemaSelected={setCinemaSelected}
       />
 
       {item.cinema && (
@@ -75,12 +77,7 @@ export default function InputAnomalies({
 
           <Grid container sx={{ mt: 1 }} spacing={1} justify="center">
             <Grid item xs={12} sm={12}>
-              <SetCamera
-                user={user}
-                cinema={cinemaSelected}
-                item={item}
-                setItem={setItem}
-              />
+              <SetCamera user={user} item={item} setItem={setItem} />
             </Grid>
 
             <Grid item xs={12} sm={12}>
@@ -117,7 +114,6 @@ export default function InputAnomalies({
               <LoadingButton
                 color="secondary"
                 onClick={handleSubmit}
-                /* loading={loading} */
                 loadingPosition="start"
                 startIcon={<SaveIcon />}
                 variant="contained"

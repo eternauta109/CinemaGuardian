@@ -20,7 +20,7 @@ import {
   Label,
   XAxis,
   YAxis,
-  CartesianGrid
+  CartesianGrid,
 } from "recharts";
 import { priority } from "../config/struttura";
 
@@ -33,32 +33,56 @@ const COLORS = [
   "#40E0D0",
   "#6495ED",
   "#CCCCFF",
-  "#5F9EA0"
+  "#5F9EA0",
 ];
 
 const Charts = ({ items }) => {
   const [maxCount, setMaxCount] = useState(0);
 
-  let risultato = items.reduce((res, p) => {
-    //nel vettore res è presente la chiave con il nome?
-    if (res[p.cinema]) {
-      //si è presente aggiungo costi e spese
-      res[p.cinema].quotation += p.quotation;
-      res[p.cinema].orderCost += p.orderCost;
-      res[p.cinema].finalCost += p.finalCost;
-    } else {
-      console.log("p", p.cinema);
-      //non è presente assegno l'oggetto alla posizione col nome
-      res[p.cinema] = { ...p };
-      console.log("res", res);
-    }
-    //ritorno il vettore
-    return res;
-  }, []);
-  //il vettore risultato lo inizializzo a vettore vuoto []
-  console.log("risultato", risultato);
-  /* console.log("items in charts", items); */
+  /* console.log("items", items); */
 
+  /* let risultato = items.reduce(
+    (res, p) => {
+      //nel vettore res è presente la chiave con il nome?
+      if (res.key[p.cinema] != null) {
+        console.log(res.value[key]);
+        let key = res.key[p.cinema];
+        //si è presente aggiungo costi e spese9
+        res.value[key].quotation += p.quotation;
+        res.value[key].orderCost += p.orderCost;
+        res.value[key].finalCost += p.finalCost;
+        switch (p.priority) {
+          case "P1":
+            res.value[key].P1 += 1;
+            break;
+
+          default:
+            break;
+        }
+      } else {
+        //non è presente assegno l'oggetto alla posizione col nome
+        let key = res.value.length;
+
+        res.key[p.cinema] = key;
+        console.log("key, res", key, res.value);
+        res.value[key] = {
+          cinema: p.cinema,
+          quotation: p.quotation ? p.quotation : 0,
+          orderCost: p.orderCost ? p.orderCost : 0,
+          finalCost: p.finalCost ? p.finalCost : 0,
+          [p.priority]: 1,
+        };
+        console.log("res", res);
+      }
+      return res;
+      //ritorno il vettore
+    },
+    { key: {}, value: [] }
+  );
+
+  //il vettore risultato lo inizializzo a vettore vuoto []
+  console.log("risultato", risultato.value);
+ */
   var cinemaRes = Enumerable.from(items)
     .groupBy((g) => g.cinema)
     .select((s) => ({
@@ -74,7 +98,7 @@ const Charts = ({ items }) => {
       p5: s.count((m) => m.priority === "P5"),
       p6: s.count((m) => m.priority === "P6"),
       resoltP1: s.count((m) => m.priority === "P1" && m.closed === true),
-      resoltP2: s.count((m) => m.priority === "P2" && m.closed === true)
+      resoltP2: s.count((m) => m.priority === "P2" && m.closed === true),
       /*  orderId: s.key(),
       max: s.max((m) => m.cost),
       min: s.min((m) => m.cost),
@@ -103,7 +127,7 @@ const Charts = ({ items }) => {
       count: s.count(),
 
       resolved: s.count((m) => m.priority === s.key() && m.closed === true),
-      todo: s.count((m) => m.priority === s.key() && m.inProgress === true)
+      todo: s.count((m) => m.priority === s.key() && m.inProgress === true),
       /*  orderId: s.key(),
       max: s.max((m) => m.cost),
       min: s.min((m) => m.cost),
