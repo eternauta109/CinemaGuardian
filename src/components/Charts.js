@@ -38,6 +38,25 @@ const COLORS = [
 
 const Charts = ({ items }) => {
   const [maxCount, setMaxCount] = useState(0);
+
+  let risultato = items.reduce((res, p) => {
+    //nel vettore res è presente la chiave con il nome?
+    if (res[p.cinema]) {
+      //si è presente aggiungo costi e spese
+      res[p.cinema].quotation += p.quotation;
+      res[p.cinema].orderCost += p.orderCost;
+      res[p.cinema].finalCost += p.finalCost;
+    } else {
+      console.log("p", p.cinema);
+      //non è presente assegno l'oggetto alla posizione col nome
+      res[p.cinema] = { ...p };
+      console.log("res", res);
+    }
+    //ritorno il vettore
+    return res;
+  }, []);
+  //il vettore risultato lo inizializzo a vettore vuoto []
+  console.log("risultato", risultato);
   /* console.log("items in charts", items); */
 
   var cinemaRes = Enumerable.from(items)
