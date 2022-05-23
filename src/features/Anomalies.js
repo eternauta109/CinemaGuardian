@@ -15,12 +15,12 @@ const Anomalies = () => {
   const [item, setItem] = useState({});
 
   const handleSubmit = () => {
-    if (item.category === "" || item.priority === "") {
+    /* console.log("item in handle submit", item); */
+    if (!item.category || !item.priority) {
       return alert("devi selezionare una categoria");
+    } else {
+      return dispatch(addItem({ item, user })).then(navigate("/home"));
     }
-
-    dispatch(addItem({ item, user }));
-    navigate("/home");
   };
 
   useEffect(() => {

@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
+import Paper from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import Link from "@mui/material/Link";
@@ -19,9 +20,12 @@ function Copyright(props) {
   return (
     <Typography
       variant="body2"
-      color="text.secondary"
+      color="white"
+      marginBottom="40px"
+      borderRadius="5px"
       align="center"
       {...props}
+      sx={{ bgcolor: "gray", opacity: 0.9, width: "300px" }}
     >
       {"Dev By  "}
       <Link color="inherit" href="#">
@@ -58,16 +62,31 @@ export default function SignIn() {
 
   useEffect(() => {
     if (user.name) {
-      dispatch(getCinemas({ user })).then(navigate("/home"));
+      dispatch(getCinemas({ user })).then(navigate("/lists"));
     }
   }, [dispatch, user]);
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container
+      component="main"
+      maxWidth="xs"
+      sx={{
+        width: "100%",
+        height: "700px",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center"
+      }}
+    >
       <CssBaseline />
+
       <Box
         sx={{
-          marginTop: 8,
+          margin: "auto",
+          padding: "8px",
+          borderRadius: "5px",
+          opacity: 0.95,
+          bgcolor: "#f9fbe7",
           display: "flex",
           flexDirection: "column",
           alignItems: "center"
@@ -76,7 +95,7 @@ export default function SignIn() {
         <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
           <LockOutlinedIcon />
         </Avatar>
-        <Typography component="h1" variant="h5">
+        <Typography component="h1" variant="h5" color="primary">
           Sign in
         </Typography>
         <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
@@ -84,6 +103,7 @@ export default function SignIn() {
             margin="normal"
             required
             fullWidth
+            sx={{ input: { backgroundColor: "white" } }}
             /* defaultValue="cupertinod" */
             id="username"
             inputRef={username}
@@ -95,7 +115,7 @@ export default function SignIn() {
           <TextField
             margin="normal"
             required
-            /* defaultValue="donato" */
+            sx={{ input: { backgroundColor: "white" } }}
             fullWidth
             inputRef={password}
             name="password"

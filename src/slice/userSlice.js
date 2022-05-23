@@ -22,6 +22,7 @@ export const getUser = createAsyncThunk(
     const user = userSnap.data();
 
     return {
+      admin: user.admin ? true : false,
       email: user.email,
       name: user.name,
       area: user.area,
@@ -50,7 +51,7 @@ export const userSlice = createSlice({
       })
       .addCase(getUser.fulfilled, (state, action) => {
         state = action.payload;
-        /* console.log("stato di user", state); */
+        console.log("stato di user", state);
         return state;
       })
       .addCase(addUser.fulfilled, (state, action) => {

@@ -13,6 +13,7 @@ import {
 export const getCinemas = createAsyncThunk(
   "cinemas/getCinemas",
   async ({ user }) => {
+    /* console.log("use in get cinema", user); */
     let cinemas = [];
     let cinemasSnap;
 
@@ -65,6 +66,7 @@ export const getCinemas = createAsyncThunk(
 export const addCinema = createAsyncThunk(
   "cinema/newCinema",
   async ({ newCinema }) => {
+    console.log("add cinema", newCinema);
     const cinemaSnap = await setDoc(doc(db, "cinema", `${newCinema.name}`), {
       ...newCinema,
       rif_num: 0
@@ -85,10 +87,11 @@ export const cinemasSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getCinemas.pending, (state, action) => {
-        console.log("loading");
+        console.log("loading cinemas", action);
       })
       .addCase(getCinemas.fulfilled, (state, action) => {
         state = action.payload;
+        console.log("fullfilled cinemas", state);
         return state;
       });
   }

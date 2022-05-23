@@ -116,10 +116,11 @@ export const itemsSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getItems.pending, (state, action) => {
-        /* console.log("loading"); */
+        console.log("loading item", action);
       })
       .addCase(getItems.fulfilled, (state, action) => {
         state = action.payload;
+        console.log("get items", state);
         return state;
       })
       .addCase(addItem.pending, (state, action) => {

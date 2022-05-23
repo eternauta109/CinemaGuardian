@@ -1,13 +1,9 @@
 import {
-  Select,
   TextField,
   Button,
-  MenuItem,
-  InputLabel,
   FormLabel,
   Grid,
-  FormControl,
-  Autocomplete,
+  Autocomplete
 } from "@mui/material";
 
 import moment from "moment";
@@ -30,7 +26,7 @@ export const Pegaso = ({ item, itemChange, setItem }) => {
   const onChangeSelect = (e, newValue) => {
     setItem({
       ...item,
-      competence: newValue.name,
+      competence: newValue.name
     });
   };
 

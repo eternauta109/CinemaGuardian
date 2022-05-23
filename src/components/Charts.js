@@ -1,28 +1,29 @@
-import { ListItemSecondaryAction } from "@material-ui/core";
 import Enumerable from "linq";
 import React, { useState } from "react";
+import { Chart } from "primereact/chart";
 import {
   PieChart,
   Pie,
   Tooltip,
   Legend,
-  ResponsiveContainer,
+  /* ResponsiveContainer, */
   BarChart,
   RadarChart,
   Radar,
   PolarAngleAxis,
   PolarGrid,
   PolarRadiusAxis,
-  RadialBar,
-  RadialBarChart,
+  /*  RadialBar,
+  RadialBarChart, */
   Bar,
   Cell,
   Label,
   XAxis,
   YAxis,
-  CartesianGrid,
+  CartesianGrid
 } from "recharts";
-import { priority } from "../config/struttura";
+import { Container, Typography, Box } from "@mui/material";
+/* import { priority } from "../config/struttura"; */
 
 const COLORS = [
   "#DFFF00",
@@ -33,11 +34,11 @@ const COLORS = [
   "#40E0D0",
   "#6495ED",
   "#CCCCFF",
-  "#5F9EA0",
+  "#5F9EA0"
 ];
 
 const Charts = ({ items }) => {
-  const [maxCount, setMaxCount] = useState(0);
+  /* const [maxCount, setMaxCount] = useState(0); */
 
   /* console.log("items", items); */
 
@@ -98,7 +99,7 @@ const Charts = ({ items }) => {
       p5: s.count((m) => m.priority === "P5"),
       p6: s.count((m) => m.priority === "P6"),
       resoltP1: s.count((m) => m.priority === "P1" && m.closed === true),
-      resoltP2: s.count((m) => m.priority === "P2" && m.closed === true),
+      resoltP2: s.count((m) => m.priority === "P2" && m.closed === true)
       /*  orderId: s.key(),
       max: s.max((m) => m.cost),
       min: s.min((m) => m.cost),
@@ -107,6 +108,7 @@ const Charts = ({ items }) => {
       sum: s.sum((s) => s.cost) */
     }))
     .toArray();
+  console.log();
 
   var priorityRes = Enumerable.from(items)
     .groupBy((g) => g.priority)
@@ -127,7 +129,7 @@ const Charts = ({ items }) => {
       count: s.count(),
 
       resolved: s.count((m) => m.priority === s.key() && m.closed === true),
-      todo: s.count((m) => m.priority === s.key() && m.inProgress === true),
+      todo: s.count((m) => m.priority === s.key() && m.inProgress === true)
       /*  orderId: s.key(),
       max: s.max((m) => m.cost),
       min: s.min((m) => m.cost),
@@ -137,18 +139,38 @@ const Charts = ({ items }) => {
     }))
     .toArray();
 
-  const findTheCount = (array) => {
+  /* const findTheCount = (array) => {
     array.forEach((e) => {
       if (e.count > maxCount) {
         setMaxCount(e.count);
       }
     });
-  };
+  }; */
   /* console.log(priorityRes); */
 
+  const [lightOptions] = useState({
+    plugins: {
+      legend: {
+        labels: {
+          color: "#495057"
+        }
+      }
+    }
+  });
+
   return (
-    <div style={{ marginTop: "20px" }}>
-      <h4>total cost</h4>
+    <Container sx={{ marginTop: "40px", bgcolor: "#f9fbe7", opacity: 0.97 }}>
+      <Typography variant="h3">total cost</Typography>
+      {/* <div className="card flex justify-content-center">
+        <Chart
+          type="pie"
+          dataKey="quotation"
+          nameKey="cinema"
+          data={items}
+          options={lightOptions}
+          style={{ position: "relative", width: "40%" }}
+        />
+      </div> */}
       <PieChart width={800} height={350}>
         <h5>quotation</h5>
         <Tooltip />
@@ -186,6 +208,7 @@ const Charts = ({ items }) => {
             <Cell key={`cell-${index}`} fill={COLORS[index]} />
           ))}
         </Pie>
+
         <Pie
           data={items}
           dataKey="orderCost"
@@ -205,8 +228,10 @@ const Charts = ({ items }) => {
 
         {/*  <Pie data={data02} dataKey="value" nameKey="name" cx="50%" cy="50%" innerRadius={60} outerRadius={80} fill="#82ca9d" label /> */}
       </PieChart>
-      <div style={{ marginTop: "20px" }}>
-        <h4>cost comparation</h4>
+
+      <div style={{ marginTop: "40px" }}>
+        <Typography variant="h3">cost comparation</Typography>
+
         <BarChart width={730} height={250} data={cinemaRes}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="cinema" />
@@ -219,8 +244,8 @@ const Charts = ({ items }) => {
           <Bar dataKey="finalCost" fill="orange" />
         </BarChart>
       </div>
-      <div style={{ marginTop: "20px" }}>
-        <h4>priority analisys</h4>
+      <div style={{ marginTop: "40px" }}>
+        <Typography variant="h3">priority analisys</Typography>
         <BarChart width={730} height={250} data={cinemaRes}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="cinema" />
@@ -235,8 +260,8 @@ const Charts = ({ items }) => {
           <Bar dataKey="p6" fill="#8549ba" />
         </BarChart>
       </div>
-      <div style={{ marginTop: "20px" }}>
-        <h4>priority resolved comparation</h4>
+      <div style={{ marginTop: "40px" }}>
+        <Typography variant="h3">priority resolved comparation</Typography>
         <RadarChart
           outerRadius={90}
           width={730}
@@ -246,7 +271,7 @@ const Charts = ({ items }) => {
           <Tooltip />
           <PolarGrid />
           <PolarAngleAxis dataKey="priority" />
-          <PolarRadiusAxis angle={30} domain={[0, { maxCount }]} />
+          <PolarRadiusAxis angle={30} domain={[0, 0]} />
           <Radar
             name="resolved"
             dataKey="resolved"
@@ -265,8 +290,8 @@ const Charts = ({ items }) => {
         </RadarChart>
       </div>
 
-      <div style={{ marginTop: "20px" }}>
-        <h4>priority total cost </h4>
+      <div style={{ marginTop: "40px" }}>
+        <Typography variant="h3">priority total cost</Typography>
         <BarChart width={730} height={250} data={priorityRes}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="priority" />
@@ -279,8 +304,8 @@ const Charts = ({ items }) => {
         </BarChart>
       </div>
 
-      <div style={{ marginTop: "20px" }}>
-        <h4>priority to do cost </h4>
+      <div style={{ marginTop: "40px" }}>
+        <Typography variant="h3">priority to do cost</Typography>
         <BarChart width={730} height={250} data={priorityRes}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="priority" />
@@ -292,7 +317,7 @@ const Charts = ({ items }) => {
           <Bar dataKey="finalCostTodo" fill="orange" />
         </BarChart>
       </div>
-    </div>
+    </Container>
   );
 };
 

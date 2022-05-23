@@ -8,13 +8,13 @@ import {
   setDoc,
   collection,
   where,
-  getDocs,
+  getDocs
 } from "firebase/firestore";
 
 export const getSuppliers = createAsyncThunk(
   "suppliers/getSuppliers",
   async ({ area }) => {
-    console.log("rea", area);
+    /*  console.log("supplier slice", area); */
     let supplier = [];
 
     const q = query(collection(db, "supplier"), where("area", "==", area));
@@ -35,7 +35,7 @@ export const addSupplier = createAsyncThunk(
   async ({ newSupp }) => {
     /*   console.log(newSupp); */
     const userSnap = await setDoc(doc(db, "supplier", `${newSupp.name}`), {
-      ...newSupp,
+      ...newSupp
     });
     return userSnap;
   }
@@ -60,7 +60,7 @@ export const suppliersSlice = createSlice({
         /*    console.log("state additem", state); */
         return state;
       });
-  },
+  }
 });
 
 const { actions, reducer } = suppliersSlice;

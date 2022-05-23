@@ -108,7 +108,7 @@ const ResponsiveAppBar = () => {
         break;
 
       case "Lists":
-        navigate("/home");
+        navigate("/lists");
         break;
 
       case "DashBoard":

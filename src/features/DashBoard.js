@@ -1,9 +1,7 @@
-import { useState, useEffect } from "react";
-
-import { addItem } from "../slice/itemSlice";
-import { useNavigate } from "react-router-dom";
-
-import { useSelector, useDispatch } from "react-redux";
+import { useState } from "react";
+import { useSelector } from "react-redux";
+/* import { addItem } from "../slice/itemSlice";
+import { useNavigate } from "react-router-dom"; */
 
 import { Box, ButtonBase, Typography, styled } from "@mui/material";
 import NewUser from "./dashboardElements/NewUser";
@@ -12,11 +10,7 @@ import NewSupplier from "./dashboardElements/NewSupplier";
 
 const DashBoard = () => {
   const [param, setParam] = useState();
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
   const user = useSelector((store) => store.user);
-  const cinemas = useSelector((store) => store.cinemas);
-  /*  console.log("anomalies.js user e cinemaObj", user); */
 
   const ImageButton = styled(ButtonBase)(({ theme }) => ({
     position: "relative",
@@ -44,18 +38,18 @@ const DashBoard = () => {
       url:
         "https://upload.wikimedia.org/wikipedia/commons/1/12/User_icon_2.svg",
       title: "user",
-      width: "30%"
+      width: "33%"
     },
     {
       url:
         "https://u7.uidownload.com/vector/703/790/vector-free-theater-cinema-building-with-film-reel-vector-eps-svg.jpg",
       title: "cinema",
-      width: "30%"
+      width: "34%"
     },
     {
       url: "https://sagitterone.co.uk/wp-content/uploads/2016/11/supplier.jpg",
       title: "supplier",
-      width: "30%"
+      width: "33%"
     }
   ];
 
@@ -103,13 +97,21 @@ const DashBoard = () => {
   }));
 
   const FormSelect = () => {
-    /*  console.log(param); */
+    console.log("qqqq", user);
     switch (param) {
       case "user":
-        return <NewUser />;
+        if (user.admin) {
+          return <NewUser />;
+        } else {
+          return <Typography>Only for admin</Typography>;
+        }
 
       case "cinema":
-        return <NewCinema />;
+        if (user.admin) {
+          return <NewCinema />;
+        } else {
+          return <Typography>Only for admin</Typography>;
+        }
 
       default:
         return <NewSupplier />;
@@ -117,13 +119,23 @@ const DashBoard = () => {
   };
 
   return (
-    <Box>
-      <Typography variant="h3" component="div">
-        DASHBORAD ADMINISTRATOR
-      </Typography>
+    <Box
+      sx={{
+        bgcolor: "white",
+        opacity: 0.95,
+        width: "100%"
+      }}
+    >
       <Box
-        sx={{ display: "flex", flexWrap: "wrap", minWidth: 300, width: "100%" }}
+        sx={{ display: "flex", flexWrap: "wrap", minWidth: 200, width: "100%" }}
       >
+        <Typography
+          variant="h4"
+          component="div"
+          sx={{ flexGrow: 1, textAlign: "center" }}
+        >
+          DASHBORAD ADMINISTRATOR
+        </Typography>
         {images.map((image) => (
           <ImageButton
             focusRipple

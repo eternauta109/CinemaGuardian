@@ -62,59 +62,59 @@ const Listsprime = () => {
       global: { value: null, matchMode: FilterMatchMode.CONTAINS },
       id: {
         operator: FilterOperator.AND,
-        constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }],
+        constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }]
       },
       cinema: {
         value: null,
-        matchMode: FilterMatchMode.IN,
+        matchMode: FilterMatchMode.IN
       },
       priority: {
         value: null,
-        matchMode: FilterMatchMode.IN,
+        matchMode: FilterMatchMode.IN
       },
       area: {
         value: null,
-        matchMode: FilterMatchMode.IN,
+        matchMode: FilterMatchMode.IN
       },
       title: {
         operator: FilterOperator.AND,
-        constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }],
+        constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }]
       },
       cinemaArea: {
         operator: FilterOperator.AND,
-        constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }],
+        constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }]
       },
       problem: {
         operator: FilterOperator.AND,
-        constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }],
+        constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }]
       },
       capex: {
         value: null,
-        matchMode: FilterMatchMode.IN,
+        matchMode: FilterMatchMode.IN
       },
       category: {
         value: null,
-        matchMode: FilterMatchMode.IN,
+        matchMode: FilterMatchMode.IN
       },
       competence: {
         operator: FilterOperator.AND,
-        constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }],
+        constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }]
       },
       inProgress: { value: null, matchMode: FilterMatchMode.EQUALS },
       approved: { value: null, matchMode: FilterMatchMode.EQUALS },
       closed: { value: null, matchMode: FilterMatchMode.EQUALS },
       endDate: {
         operator: FilterOperator.AND,
-        constraints: [{ value: null, matchMode: FilterMatchMode.DATE_IS }],
+        constraints: [{ value: null, matchMode: FilterMatchMode.DATE_IS }]
       },
       stDate: {
         operator: FilterOperator.AND,
-        constraints: [{ value: null, matchMode: FilterMatchMode.DATE_IS }],
+        constraints: [{ value: null, matchMode: FilterMatchMode.DATE_IS }]
       },
       lastUpdate: {
         operator: FilterOperator.AND,
-        constraints: [{ value: null, matchMode: FilterMatchMode.DATE_IS }],
-      },
+        constraints: [{ value: null, matchMode: FilterMatchMode.DATE_IS }]
+      }
     });
     setGlobalFilterValue1("");
     setFilteredData([]);
@@ -149,7 +149,7 @@ const Listsprime = () => {
               textAlign: "center",
               backgroundColor: "red",
               color: "white",
-              borderRadius: "10px",
+              borderRadius: "10px"
             }}
           >
             {" "}
@@ -163,7 +163,7 @@ const Listsprime = () => {
               textAlign: "center",
               backgroundColor: "orange",
               color: "white",
-              borderRadius: "10px",
+              borderRadius: "10px"
             }}
           >
             {" "}
@@ -177,7 +177,7 @@ const Listsprime = () => {
               textAlign: "center",
               backgroundColor: "grey",
               color: "white",
-              borderRadius: "10px",
+              borderRadius: "10px"
             }}
           >
             {" "}
@@ -192,7 +192,7 @@ const Listsprime = () => {
               textAlign: "center",
               backgroundColor: "green",
               color: "white",
-              borderRadius: "10px",
+              borderRadius: "10px"
             }}
           >
             {" "}
@@ -365,7 +365,7 @@ const Listsprime = () => {
           color: "blue",
           fontSize: 12,
 
-          textAlign: "center",
+          textAlign: "center"
         }}
       >
         {arrayApp
@@ -395,7 +395,7 @@ const Listsprime = () => {
           color: "green",
           fontSize: 12,
 
-          textAlign: "center",
+          textAlign: "center"
         }}
       >
         {arrayApp
@@ -418,7 +418,7 @@ const Listsprime = () => {
       <i
         className={classNames("pi", {
           "true-icon pi-check-circle": rowData.inProgress,
-          "false-icon pi-times-circle": !rowData.inProgress,
+          "false-icon pi-times-circle": !rowData.inProgress
         })}
       ></i>
     );
@@ -428,7 +428,7 @@ const Listsprime = () => {
       <i
         className={classNames("pi", {
           "true-icon pi-check-circle": rowData.closed,
-          "false-icon pi-times-circle": !rowData.closed,
+          "false-icon pi-times-circle": !rowData.closed
         })}
       ></i>
     );
@@ -438,7 +438,7 @@ const Listsprime = () => {
       <i
         className={classNames("pi", {
           "true-icon pi-check-circle": rowData.approved,
-          "false-icon pi-times-circle": !rowData.approved,
+          "false-icon pi-times-circle": !rowData.approved
         })}
       ></i>
     );
@@ -478,7 +478,7 @@ const Listsprime = () => {
     return value.toLocaleDateString("it-IT", {
       day: "2-digit",
       month: "2-digit",
-      year: "numeric",
+      year: "numeric"
     });
   };
 
@@ -818,7 +818,7 @@ const Listsprime = () => {
         ...d,
         stDate: d.stDate ? getNewDataString(d.stDate) : null,
         endDate: d.endDate ? getNewDataString(d.endDate) : null,
-        lastUpdate: d.lastUpdate ? getNewDataString(d.lastUpdate) : null,
+        lastUpdate: d.lastUpdate ? getNewDataString(d.lastUpdate) : null
       };
       /* console.log(newObj); */
       return newObj;
@@ -837,14 +837,16 @@ const Listsprime = () => {
   };
 
   useEffect(() => {
-    try {
-      dispatch(getItems({ cinemas }))
-        .then((res) => {
-          setItemsForTable(parsingItems(res.payload));
-        })
-        .then(ultimateData());
-    } catch (error) {
-      alert("errore sul use effect di listPrime:", error);
+    if (cinemas.length > 0) {
+      try {
+        dispatch(getItems({ cinemas }))
+          .then((res) => {
+            setItemsForTable(parsingItems(res.payload));
+          })
+          .then(ultimateData());
+      } catch (error) {
+        alert("errore sul use effect di listPrime:", error);
+      }
     }
 
     initFilters1();
@@ -853,7 +855,7 @@ const Listsprime = () => {
   return (
     <div>
       <Tooltip target=".export-buttons>button" position="bottom" />
-      <div className="card">
+      <div className="card" style={{ opacity: "0.97", padding: "10px" }}>
         {ultimateData && (
           <DataTable
             ref={dt}
@@ -869,7 +871,7 @@ const Listsprime = () => {
               "problem",
               "title",
               "area",
-              "capex",
+              "capex"
             ]}
             header={HeaderTable({
               globalFilterValue1,
@@ -879,7 +881,7 @@ const Listsprime = () => {
               filters1,
               setSelectedColumns,
               selectedColumns,
-              ultimateData,
+              ultimateData
             })}
             emptyMessage="No items found."
             filters={filters1}

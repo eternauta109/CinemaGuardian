@@ -35,7 +35,7 @@ const NewSupplier = () => {
     <Box
       component="form"
       sx={{
-        "& > :not(style)": { m: 2, width: "25ch" }
+        "& > :not(style)": { m: 2, width: "80%" }
       }}
       noValidate
       autoComplete="off"

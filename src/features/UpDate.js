@@ -6,7 +6,7 @@ import { updateItem } from "../slice/itemSlice";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import moment from "moment";
+/* import moment from "moment"; */
 
 function UpDate() {
   const { state } = useLocation();
@@ -23,11 +23,11 @@ function UpDate() {
 
     setItem(finder);
   };
-  const momento = moment().format("DD/MM/YYYY");
-  console.log("momento", momento);
+  /* const momento = moment().format("DD/MM/YYYY"); */
+  /* console.log("momento", momento); */
 
   const handleSubmit = () => {
-    console.log("item in up dateAAAA", item);
+    /* console.log("item in up dateAAAA", item); */
     dispatch(updateItem({ item }));
     navigate("/home");
   };

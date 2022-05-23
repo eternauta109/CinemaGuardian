@@ -20,28 +20,30 @@ import { addUser } from "../../slice/userSlice";
 
 const NewUser = () => {
   const [newUser, setNewUser] = useState({});
+
   const dispatch = useDispatch();
   const cinemas = useSelector((state) => state.cinemas);
-
+  /* console.log(cinemas); */
   const handleSubmit = async (e) => {
     /* console.log(newUser); */
     dispatch(addUser({ newUser }));
   };
 
   const handleChange = (e) => {
-    /* console.log(e.target); */
+    e.preventDefault();
+    /* console.log("mmm", e.target.value); */
     if (e.target.name === "cinema") {
-      setNewUser({ ...newUser, cinema: e.target.value.name });
+      setNewUser({ ...newUser, cinema: e.target.value });
     } else {
       setNewUser({ ...newUser, [e.target.name]: e.target.value });
     }
-    /* console.log(newUser); */
+    /*  console.log(newUser); */
   };
   return (
     <Box
       component="form"
       sx={{
-        "& > :not(style)": { m: 2, width: "25ch" }
+        "& > :not(style)": { m: 2, width: "80%" }
       }}
       noValidate
       autoComplete="off"
@@ -103,14 +105,14 @@ const NewUser = () => {
         <Select
           onChange={(e) => handleChange(e)}
           labelId="cinema"
-          defaultValue="newUser.cinema || "
+          value={newUser.cinema || ""}
           id="cinemaSelect"
           label="cinema"
           name="cinema"
         >
           {cinemas.map((e, key) => {
             return (
-              <MenuItem key={key} value={e}>
+              <MenuItem key={key} value={e.name}>
                 {e.name}
               </MenuItem>
             );

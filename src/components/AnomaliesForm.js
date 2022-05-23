@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState, useEffect } from "react";
+/* import { useEffect } from "react"; */
 import { Container, Grid } from "@mui/material";
 import LoadingButton from "@mui/lab/LoadingButton";
 
@@ -24,31 +24,33 @@ export default function InputAnomalies({
   item,
   setItem,
   handleSubmit,
-  user,
+  user
 }) {
-  console.log(" item in anomaliesform", item);
+  /* console.log(" item in anomaliesform", item);
   console.log(" update in anomaliesform", update);
   console.log(" user in anomaliesform", user);
-  console.log(" cinema in anomaliesform", cinemas);
+  console.log(" cinema in anomaliesform", cinemas); */
   const itemChange = (e) => {
     setItem({
       ...item,
-      [e.target.name]: e.target.value,
+      [e.target.name]: e.target.value
     });
 
-    console.log("item in anomalies form on change", item);
+    /* console.log("item in anomalies form on change", item); */
   };
 
-  useEffect(() => {
+  /*  useEffect(() => {
     console.log(item);
-  }, [item]);
+  }, [item]); */
 
   return (
     <Container
       sx={{
         borderRadius: 5,
+        bgcolor: "#f9fbe7",
+        opacity: 0.95,
 
-        p: 2,
+        p: 2
       }}
     >
       <Header
@@ -101,7 +103,7 @@ export default function InputAnomalies({
 
           <hr />
 
-          <Quotation item={item} setItem={setItem} itemChange={itemChange} />
+          <Quotation item={item} setItem={setItem} />
 
           <hr />
 

@@ -51,15 +51,15 @@ export const HeaderTable = ({
   return (
     <div className="flex flex-column">
       <div className="flex justify-content-end">
-        <span className="p-input-icon-left">
-          <i className="pi pi-search" />
-          <InputText
-            value={globalFilterValue1}
-            onChange={onGlobalFilterChange1}
-            placeholder="Keyword Search"
-          />
-        </span>
         <div className="flex justify-content-between ml-2">
+          <span className="p-input-icon-left">
+            <i className="pi pi-search" />
+            <InputText
+              value={globalFilterValue1}
+              onChange={onGlobalFilterChange1}
+              placeholder="Keyword Search"
+            />
+          </span>
           <Button
             type="button"
             icon="pi pi-file-excel"
@@ -69,9 +69,8 @@ export const HeaderTable = ({
           />
         </div>
       </div>
-
-      <div className="flex justify-content-between mt-1">
-        <div style={{ textAlign: "left" }}>
+      <div className="flex justify-content-end">
+        <div className="flex justify-content-between ml-2">
           <MultiSelect
             value={selectedColumns}
             options={columns}
@@ -79,14 +78,15 @@ export const HeaderTable = ({
             onChange={onColumnToggle}
             style={{ width: "15em" }}
           />
+
+          <Button
+            type="button"
+            icon="pi pi-filter-slash"
+            label="Clear"
+            className="p-button-outlined"
+            onClick={clearFilter1}
+          />
         </div>
-        <Button
-          type="button"
-          icon="pi pi-filter-slash"
-          label="Clear"
-          className="p-button-outlined"
-          onClick={clearFilter1}
-        />
       </div>
     </div>
   );

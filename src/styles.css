@@ -1,11 +1,14 @@
 .App {
-  
   text-align: center;
 }
 
 button {
   display: inline-block;
   font-weight: bold;
+}
+
+body {
+  background-color: black;
 }
 
 #gridContainer {

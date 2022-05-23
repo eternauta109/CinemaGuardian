@@ -5,7 +5,7 @@ import {
   InputLabel,
   Grid,
   FormControl,
-  Typography,
+  Typography
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
@@ -21,9 +21,9 @@ export const Header = ({ update, item, cinemas, user, setItem }) => {
   const dispatch = useDispatch();
 
   const cinemaSelectOnChange = (e) => {
-    console.log("e", e.target);
+    /* console.log("e", e.target); */
     const res = cinemas.find(({ name }) => name === `${e.target.value}`);
-    console.log("res", res);
+    /* console.log("res", res); */
     setCinemaSelected(e.target.value);
     const numb = (res.rif_num + 1).toString();
     const ref_number = `${res.abbr}-${numb}`;
@@ -42,7 +42,7 @@ export const Header = ({ update, item, cinemas, user, setItem }) => {
         updateBy: user.name ? user.name : "",
         lastUpdate: stDate ? stDate : "",
         capex: "Capex",
-        inProgress: true,
+        inProgress: true
       });
     } catch (error) {
       console.log("errore nel setItem di HeaderSection", error);
@@ -51,8 +51,8 @@ export const Header = ({ update, item, cinemas, user, setItem }) => {
 
   const theme = createTheme({
     typography: {
-      fontFamily: ["Rubik Moonrocks", "cursive"].join(","),
-    },
+      fontFamily: ["Rubik Moonrocks", "cursive"].join(",")
+    }
   });
 
   useEffect(() => {
@@ -61,7 +61,7 @@ export const Header = ({ update, item, cinemas, user, setItem }) => {
       setItem({
         ...item,
         updateBy: user.name,
-        lastUpdate: stDate,
+        lastUpdate: stDate
       });
     }
   }, []);
