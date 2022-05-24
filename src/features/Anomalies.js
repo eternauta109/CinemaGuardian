@@ -11,6 +11,7 @@ const Anomalies = () => {
   const navigate = useNavigate();
   const user = useSelector((store) => store.user);
   const cinemas = useSelector((store) => store.cinemas);
+
   /*  console.log("anomalies.js user e cinemaObj", user); */
   const [item, setItem] = useState({});
 

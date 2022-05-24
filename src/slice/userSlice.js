@@ -36,7 +36,7 @@ export const getUser = createAsyncThunk(
 export const addUser = createAsyncThunk("user/newUser", async ({ newUser }) => {
   const userSnap = await setDoc(doc(db, "user", `${newUser.name}`), {
     ...newUser
-  });
+  }).then(alert(`new user ${newUser.name} recorded `));
   return userSnap;
 });
 

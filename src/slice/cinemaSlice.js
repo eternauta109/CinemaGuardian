@@ -70,7 +70,7 @@ export const addCinema = createAsyncThunk(
     const cinemaSnap = await setDoc(doc(db, "cinema", `${newCinema.name}`), {
       ...newCinema,
       rif_num: 0
-    });
+    }).then(alert(`cinema ${newCinema.name} recorded `));
     return cinemaSnap;
   }
 );

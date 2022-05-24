@@ -26,7 +26,7 @@ function RemoveItem() {
 
   return (
     <Box container sx={{ mt: 4 }} spacing={2} justifyItems="center">
-      <Typography>
+      <Typography sx={{ backgroundColor: "white", opacity: 0.9 }}>
         {" "}
         {state ? `Are you sure to delete itm  ${state.id}? ` : null}{" "}
       </Typography>

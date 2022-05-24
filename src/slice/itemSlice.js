@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { getCinemas } from "./cinemaSlice";
 import { db } from "../config/firebase_config";
+
 import {
   collection,
   getDocs,

@@ -36,7 +36,7 @@ export const addSupplier = createAsyncThunk(
     /*   console.log(newSupp); */
     const userSnap = await setDoc(doc(db, "supplier", `${newSupp.name}`), {
       ...newSupp
-    });
+    }).then(alert(`new supplier ${newSupp.name} recorded `));
     return userSnap;
   }
 );

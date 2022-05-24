@@ -62,7 +62,7 @@ export default function SignIn() {
 
   useEffect(() => {
     if (user.name) {
-      dispatch(getCinemas({ user })).then(navigate("/lists"));
+      dispatch(getCinemas({ user })).then(navigate("/home"));
     }
   }, [dispatch, user]);
 
