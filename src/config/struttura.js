@@ -4,6 +4,7 @@ export const categoryList = [
   "WATER SYSTEM",
   "SECURITY SYSTEM",
   "LIFTING SYSTEM",
+  "SEATING & FURNISHING",
   "PNEUMATIC MAIL",
   "BUILDING WORKS-ather",
   "PROCURAMENT"

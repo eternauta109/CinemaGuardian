@@ -11,7 +11,12 @@ import DashBoard from "./features/DashBoard";
 import Home from "./features/Home";
 import ScrollTop from "./features/ScrollTop";
 
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  useNavigate
+} from "react-router-dom";
 import Container from "@mui/material/Container";
 import { useSelector } from "react-redux";
 import { getAuth } from "firebase/auth";
@@ -22,14 +27,14 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 export default function App() {
   const user = useSelector((state) => state.user);
   const auth = getAuth();
-  /* const navigate = useNavigate(); */
+  const navigate = useNavigate();
 
   const theme = createTheme({
     conatainerStyle: {
       borderRadius: 5,
       width: "100%",
       p: 2,
-      backgroundImage: `url(${Image})`,
+      backgroundImage: `url(https://rawcdn.githack.com/eternauta109/CinemaGuardian/be3a9792e49c646e7c9f00d09b6f9039d63d9933/src/assets/patterncinema2.jpg)`,
       height: "100%"
     },
 
@@ -47,57 +52,55 @@ export default function App() {
     }
   });
 
-  /*  useEffect(() => {
+  useEffect(() => {
     if (!auth.currentUser) {
       navigate("/");
     }
-  }, [auth.currentUser]); */
+  }, [auth.currentUser]);
 
   console.log(auth);
   return (
     <ThemeProvider theme={theme}>
       <div className="App">
         <Container style={theme.conatainerStyle} maxWidth={false}>
-          <Router>
-            <ScrollTop>
-              {auth.currentUser && <Navbar />}
-              {!auth.currentUser && <SignIn />}
-              <Routes>
-                <Route path="/" element={<SignIn />} />
+          <ScrollTop>
+            {auth.currentUser && <Navbar />}
 
-                <Route
-                  path="anomalies"
-                  element={auth.currentUser ? <Anomalies /> : <SignIn />}
-                />
+            <Routes>
+              <Route path="/" element={<SignIn />} />
 
-                <Route
-                  path="update"
-                  element={auth.currentUser ? <Update /> : <SignIn />}
-                />
-                <Route
-                  path="removeitem"
-                  element={user.name ? <RemoveItem /> : <SignIn />}
-                />
-                {/* <Route path="lists" element={<Lists />} /> */}
-                <Route
-                  path="lists"
-                  element={user.name ? <ListsPrime /> : <SignIn />}
-                />
-                <Route
-                  path="dashboard"
-                  element={user.name ? <DashBoard /> : <SignIn />}
-                />
-                <Route
-                  path="home"
-                  element={auth.currentUser ? <Home /> : <SignIn />}
-                />
-                <Route
-                  path="anomalies"
-                  element={user ? <Anomalies /> : <SignIn />}
-                />
-              </Routes>
-            </ScrollTop>
-          </Router>
+              <Route
+                path="anomalies"
+                element={auth.currentUser ? <Anomalies /> : <SignIn />}
+              />
+
+              <Route
+                path="update"
+                element={auth.currentUser ? <Update /> : <SignIn />}
+              />
+              <Route
+                path="removeitem"
+                element={user.name ? <RemoveItem /> : <SignIn />}
+              />
+              {/* <Route path="lists" element={<Lists />} /> */}
+              <Route
+                path="lists"
+                element={user.name ? <ListsPrime /> : <SignIn />}
+              />
+              <Route
+                path="dashboard"
+                element={user.name ? <DashBoard /> : <SignIn />}
+              />
+              <Route
+                path="home"
+                element={auth.currentUser ? <Home /> : <SignIn />}
+              />
+              <Route
+                path="anomalies"
+                element={user ? <Anomalies /> : <SignIn />}
+              />
+            </Routes>
+          </ScrollTop>
         </Container>
       </div>
     </ThemeProvider>

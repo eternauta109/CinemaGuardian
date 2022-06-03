@@ -49,8 +49,8 @@ export const Pegaso = ({ item, itemChange, setItem }) => {
           id="combo-box-demo"
           options={suppliers || []}
           getOptionLabel={(option) => option.name}
-          sx={{ width: 300 }}
           value={value}
+          fullWidth
           onChange={(e, newValue) => {
             setValue(value);
             onChangeSelect(e, newValue);

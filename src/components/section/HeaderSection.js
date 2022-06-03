@@ -42,7 +42,7 @@ export const Header = ({ update, item, cinemas, user, setItem }) => {
         stDate: stDate ? stDate : "",
         updateBy: user.name ? user.name : "",
         lastUpdate: stDate ? stDate : "",
-        capex: "Capex",
+        capex: "Opex",
         inProgress: true
       });
     } catch (error) {
