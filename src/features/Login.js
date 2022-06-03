@@ -71,7 +71,7 @@ export default function SignIn() {
       maxWidth="xs"
       sx={{
         width: "100%",
-        height: "800px",
+        height: "900px",
         display: "flex",
         flexDirection: "column",
         alignItems: "center"
@@ -81,7 +81,7 @@ export default function SignIn() {
 
       <Box
         sx={{
-          margin: "auto",
+          margin: "50px",
           padding: "8px",
           borderRadius: "5px",
           opacity: 0.95,

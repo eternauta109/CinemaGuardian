@@ -7,6 +7,7 @@ export const categoryList = [
   "SEATING & FURNISHING",
   "PNEUMATIC MAIL",
   "BUILDING WORKS-ather",
+  "BUILDING WORKS-water infiltration",
   "PROCURAMENT"
 ];
 
