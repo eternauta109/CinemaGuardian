@@ -97,7 +97,7 @@ const DashBoard = () => {
   }));
 
   const FormSelect = () => {
-    console.log("qqqq", user);
+    /* console.log("qqqq", user); */
     switch (param) {
       case "user":
         if (user.admin) {

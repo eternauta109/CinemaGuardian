@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-
+import { signOut } from "firebase/auth";
+import { auth } from "../config/firebase_config";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import {
   Avatar,
@@ -17,6 +18,7 @@ import {
 } from "@mui/material";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import AddTaskIcon from "@mui/icons-material/AddTask";
+import HomeIcon from "@mui/icons-material/Home";
 import PersonIcon from "@mui/icons-material/Person";
 
 import MenuIcon from "@mui/icons-material/Menu";
@@ -41,6 +43,13 @@ const ResponsiveAppBar = () => {
   const Pages = () => {
     return (
       <>
+        <MenuItem>
+          <Tab
+            icon={<HomeIcon />}
+            label="home"
+            onClick={() => handleClick("home")}
+          />
+        </MenuItem>
         <MenuItem>
           <Tab
             icon={<AddTaskIcon />}
@@ -103,6 +112,9 @@ const ResponsiveAppBar = () => {
 
     handleCloseNavMenu();
     switch (page) {
+      case "home":
+        navigate("/home");
+        break;
       case "Add Anomaly":
         navigate("/anomalies");
         break;
@@ -188,6 +200,14 @@ const ResponsiveAppBar = () => {
 
           <MenuItem sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             <Tab
+              icon={<HomeIcon />}
+              label="home"
+              onClick={() => handleClick("home")}
+            />
+          </MenuItem>
+
+          <MenuItem sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+            <Tab
               icon={<AddTaskIcon />}
               label="add item"
               onClick={() => handleClick("Add Anomaly")}
@@ -244,7 +264,13 @@ const ResponsiveAppBar = () => {
                   label="log-out"
                   variant="outlined"
                   onClick={() => {
-                    navigate("/");
+                    signOut(auth)
+                      .then(() => {
+                        navigate("/");
+                      })
+                      .catch((error) => {
+                        alert("error in user log out:", error);
+                      });
                   }}
                 />
               </MenuItem>

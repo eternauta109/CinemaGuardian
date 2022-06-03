@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import LoadingButton from "@mui/lab/LoadingButton";
 import SaveIcon from "@mui/icons-material/Save";
+import { auth, db } from "../../config/firebase_config.js";
+import { doc, setDoc } from "firebase/firestore";
 
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import {
   TextField,
   FormControl,
@@ -16,17 +19,44 @@ import { areaSelect, roleSelect } from "../../config/struttura";
 
 import { useSelector, useDispatch } from "react-redux";
 
-import { addUser } from "../../slice/userSlice";
-
 const NewUser = () => {
   const [newUser, setNewUser] = useState({});
 
-  const dispatch = useDispatch();
   const cinemas = useSelector((state) => state.cinemas);
   /* console.log(cinemas); */
   const handleSubmit = async (e) => {
+    e.preventDefault();
     /* console.log(newUser); */
-    dispatch(addUser({ newUser }));
+    let password = newUser.password;
+    let email = newUser.email;
+
+    await createUserWithEmailAndPassword(auth, email, password)
+      .then((cred) => {
+        let userInDb = cred.user;
+        const userDocRes = doc(db, "users", `${cred.user.uid}`);
+        try {
+          setDoc(userDocRes, {
+            uid: userInDb.uid,
+            name: newUser.name,
+            area: newUser.area ? newUser.area : null,
+            cinema: newUser.cinema ? newUser.cinema : null,
+            role: newUser.role,
+            email: newUser.email,
+            notifications: []
+          })
+            .then(console.log("insert user with:", userInDb.uid))
+            .catch((error) => console.log("metadati insert error", error));
+        } catch (error) {
+          console.log("new user insert error:", error);
+        }
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log("errocode:", errorCode);
+        console.log("errormessage:", errorMessage);
+        // ..
+      });
   };
 
   const handleChange = (e) => {
@@ -123,6 +153,7 @@ const NewUser = () => {
       <TextField
         name="password"
         id="password"
+        type="password"
         label="password"
         value={newUser.password || ""}
         onChange={handleChange}

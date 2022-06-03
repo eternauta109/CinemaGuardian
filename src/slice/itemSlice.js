@@ -8,6 +8,7 @@ import {
   deleteDoc,
   query,
   where,
+  getDoc,
   doc,
   setDoc,
   updateDoc,
@@ -18,6 +19,17 @@ import moment from "moment";
 
 import { storage } from "../config/firebase_config";
 import { ref, deleteObject } from "firebase/storage";
+
+export const getSingleItem = createAsyncThunk(
+  "items/getSingleItem",
+  async ({ id }) => {
+    /* console.log(id); */
+    const docRef = doc(db, "anomalies", id);
+    const response = await getDoc(docRef);
+    /* console.log("response get single doc", response.data()); */
+    return response.data();
+  }
+);
 
 export const getItems = createAsyncThunk(
   "items/getItems",
@@ -59,15 +71,17 @@ export const deleteItem = createAsyncThunk(
         const photoRef = ref(storage, e.name);
         deleteObject(photoRef)
           .then(() => {
-            alert("file erased");
+            alert("photo delete");
           })
           .catch((error) => {
-            alert("an error is coming: ", error);
+            alert("error in deleteItem at itemSlice:", error);
           });
         return e;
       });
     }
-    const erase = await deleteDoc(doc(db, "anomalies", id));
+    const erase = await deleteDoc(doc(db, "anomalies", id)).catch((e) =>
+      alert("error in deleteItem at itemSlice: ", e)
+    );
     return erase;
   }
 );
@@ -117,11 +131,11 @@ export const itemsSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getItems.pending, (state, action) => {
-        console.log("loading item", action);
+        /* console.log("loading item", action); */
       })
       .addCase(getItems.fulfilled, (state, action) => {
         state = action.payload;
-        console.log("get items", state);
+        /* console.log("get items", state); */
         return state;
       })
       .addCase(addItem.pending, (state, action) => {
@@ -135,6 +149,12 @@ export const itemsSlice = createSlice({
       .addCase(deleteItem.fulfilled, (state, action) => {
         state = action.payload;
         /*  console.log("state additem", state); */
+        return state;
+      })
+      .addCase(getSingleItem.pending, (state, action) => {})
+      .addCase(getSingleItem.fulfilled, (state, action) => {
+        state = action.payload;
+        /* console.log("stato getSingleItem:", state); */
         return state;
       });
   }

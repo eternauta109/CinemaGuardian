@@ -40,8 +40,8 @@ function Copyright(props) {
 // main function
 
 export default function SignIn() {
-  const password = useRef(null);
-  const username = useRef(null);
+  const passwordValue = useRef(null);
+  const emailValue = useRef(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((state) => state.user);
@@ -50,19 +50,18 @@ export default function SignIn() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    const email = emailValue.current.value;
+    const password = passwordValue.current.value;
 
-    let passwordValue = password.current.value;
-    let usernameValue = username.current.value;
-
-    if (!passwordValue || !usernameValue) {
-      return alert("inserire i campi");
-    }
-    dispatch(getUser({ username: usernameValue, password: passwordValue }));
+    dispatch(getUser({ email, password }));
   };
 
   useEffect(() => {
     if (user.name) {
-      dispatch(getCinemas({ user })).then(navigate("/home"));
+      console.log("user", user);
+      dispatch(getCinemas({ user }))
+        .then(navigate("/home"))
+        .catch((e) => alert("error in useEffect at Login:", e));
     }
   }, [dispatch, user]);
 
@@ -72,7 +71,7 @@ export default function SignIn() {
       maxWidth="xs"
       sx={{
         width: "100%",
-        height: "700px",
+        height: "800px",
         display: "flex",
         flexDirection: "column",
         alignItems: "center"
@@ -105,11 +104,12 @@ export default function SignIn() {
             fullWidth
             sx={{ input: { backgroundColor: "white" } }}
             /* defaultValue="cupertinod" */
-            id="username"
-            inputRef={username}
-            label="Username"
-            name="username"
-            autoComplete="username"
+            id="email"
+            inputRef={emailValue}
+            type="email"
+            label="email"
+            name="email"
+            autoComplete="email"
             autoFocus
           />
           <TextField
@@ -117,7 +117,7 @@ export default function SignIn() {
             required
             sx={{ input: { backgroundColor: "white" } }}
             fullWidth
-            inputRef={password}
+            inputRef={passwordValue}
             name="password"
             label="Password"
             type="password"

@@ -35,7 +35,7 @@ export const getCinemas = createAsyncThunk(
         cinemasSnap = await getDocs(qam);
 
         break;
-
+      case "admin":
       case "gm": //ops manager
         cinemasSnap = await getDocs(collection(db, "cinema"));
 
@@ -87,11 +87,11 @@ export const cinemasSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getCinemas.pending, (state, action) => {
-        console.log("loading cinemas", action);
+        /* console.log("loading cinemas", action); */
       })
       .addCase(getCinemas.fulfilled, (state, action) => {
         state = action.payload;
-        console.log("fullfilled cinemas", state);
+        /* console.log("fullfilled cinemas", state); */
         return state;
       });
   }

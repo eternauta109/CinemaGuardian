@@ -1,24 +1,28 @@
 import "./styles.css";
-
+import { useEffect } from "react";
+//componets
 import SignIn from "./features/Login";
 import Navbar from "./components/Navbar";
-
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-
-import Container from "@mui/material/Container";
 import Anomalies from "./features/Anomalies";
 import ListsPrime from "./features/ListsPrime";
 import Update from "./features/UpDate";
 import RemoveItem from "./features/RemoveItem";
 import DashBoard from "./features/DashBoard";
 import Home from "./features/Home";
+import ScrollTop from "./features/ScrollTop";
+
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Container from "@mui/material/Container";
 import { useSelector } from "react-redux";
+import { getAuth } from "firebase/auth";
 import Image from "./assets/patterncinema2.jpg"; // Import using relative path
 
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 export default function App() {
   const user = useSelector((state) => state.user);
+  const auth = getAuth();
+  /* const navigate = useNavigate(); */
 
   const theme = createTheme({
     conatainerStyle: {
@@ -42,43 +46,57 @@ export default function App() {
       fontFamily: ["Josefin Sans", "cursive"].join(",")
     }
   });
+
+  /*  useEffect(() => {
+    if (!auth.currentUser) {
+      navigate("/");
+    }
+  }, [auth.currentUser]); */
+
+  console.log(auth);
   return (
     <ThemeProvider theme={theme}>
       <div className="App">
         <Container style={theme.conatainerStyle} maxWidth={false}>
           <Router>
-            {user.name && <Navbar />}
+            <ScrollTop>
+              {auth.currentUser && <Navbar />}
+              {!auth.currentUser && <SignIn />}
+              <Routes>
+                <Route path="/" element={<SignIn />} />
 
-            <Routes>
-              <Route path="/" element={<SignIn />} />
-              <Route
-                path="anomalies"
-                element={user.name ? <Anomalies /> : <SignIn />}
-              />
+                <Route
+                  path="anomalies"
+                  element={auth.currentUser ? <Anomalies /> : <SignIn />}
+                />
 
-              <Route
-                path="update"
-                element={user.name ? <Update /> : <SignIn />}
-              />
-              <Route
-                path="removeitem"
-                element={user.name ? <RemoveItem /> : <SignIn />}
-              />
-              {/* <Route path="lists" element={<Lists />} /> */}
-              <Route
-                path="lists"
-                element={user.name ? <ListsPrime /> : <SignIn />}
-              />
-              <Route
-                path="dashboard"
-                element={user.name ? <DashBoard /> : <SignIn />}
-              />
-              <Route path="home" element={user.name ? <Home /> : <SignIn />} />
-              <Route
-                path="anomalies"
-                element={user ? <Anomalies /> : <SignIn />}
-              />
-            </Routes>
+                <Route
+                  path="update"
+                  element={auth.currentUser ? <Update /> : <SignIn />}
+                />
+                <Route
+                  path="removeitem"
+                  element={user.name ? <RemoveItem /> : <SignIn />}
+                />
+                {/* <Route path="lists" element={<Lists />} /> */}
+                <Route
+                  path="lists"
+                  element={user.name ? <ListsPrime /> : <SignIn />}
+                />
+                <Route
+                  path="dashboard"
+                  element={user.name ? <DashBoard /> : <SignIn />}
+                />
+                <Route
+                  path="home"
+                  element={auth.currentUser ? <Home /> : <SignIn />}
+                />
+                <Route
+                  path="anomalies"
+                  element={user ? <Anomalies /> : <SignIn />}
+                />
+              </Routes>
+            </ScrollTop>
           </Router>
         </Container>
       </div>

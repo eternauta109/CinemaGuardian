@@ -16,7 +16,6 @@ export const getSuppliers = createAsyncThunk(
   async ({ area }) => {
     /*  console.log("supplier slice", area); */
     let supplier = [];
-
     const q = query(collection(db, "supplier"), where("area", "==", area));
     const supplierSnap = await getDocs(q);
 
@@ -36,7 +35,9 @@ export const addSupplier = createAsyncThunk(
     /*   console.log(newSupp); */
     const userSnap = await setDoc(doc(db, "supplier", `${newSupp.name}`), {
       ...newSupp
-    }).then(alert(`new supplier ${newSupp.name} recorded `));
+    })
+      .then(alert(`new supplier ${newSupp.name} recorded `))
+      .catch((e) => alert("error in addSupplier at userSlice:", e));
     return userSnap;
   }
 );

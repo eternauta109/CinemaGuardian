@@ -22,20 +22,21 @@ export const Header = ({ update, item, cinemas, user, setItem }) => {
 
   const cinemaSelectOnChange = (e) => {
     /* console.log("e", e.target); */
-    const res = cinemas.find(({ name }) => name === `${e.target.value}`);
+    const cinema = cinemas.find(({ name }) => name === `${e.target.value}`);
     /* console.log("res", res); */
     setCinemaSelected(e.target.value);
-    const numb = (res.rif_num + 1).toString();
-    const ref_number = `${res.abbr}-${numb}`;
+    const numb = (cinema.rif_num + 1).toString();
+    const ref_number = `${cinema.abbr}-${numb}`;
 
-    dispatch(getSuppliers({ area: res.area }));
+    dispatch(getSuppliers({ area: cinema.area }));
 
     try {
       setItem({
         ...item,
+        facilityArea: cinema.MaintenanceArea,
         cinema: [e.target.value][0] ? [e.target.value][0] : "",
-        screens: res.screens ? res.screens : "",
-        area: res.area ? res.area : "",
+        screens: cinema.screens ? cinema.screens : "",
+        area: cinema.area ? cinema.area : "",
         createdBy: user.name ? user.name : "",
         item_ref: ref_number ? ref_number : "",
         stDate: stDate ? stDate : "",
@@ -173,7 +174,6 @@ export const Header = ({ update, item, cinemas, user, setItem }) => {
       <Grid item xs={6} sm={3}>
         <TextField
           value={stDate || ""}
-          InputLabelProps={{ shrink: item.lastUpdate ? true : false }}
           fullWidth
           disabled
           label="date last update"
