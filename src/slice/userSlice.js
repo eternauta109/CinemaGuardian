@@ -8,6 +8,7 @@ import {
   arrayUnion,
   updateDoc,
   where,
+  arrayRemove,
   query,
   collection
 } from "firebase/firestore";
@@ -51,9 +52,9 @@ export const addUser = createAsyncThunk("user/addUser", async ({ newUser }) => {
 
 export const notificationUser = createAsyncThunk(
   "user/notificationUser",
-  async ({ item }) => {
+  async ({ item, deleted = false }) => {
     const colRef = collection(db, "users");
-    /*  console.log("userslice item e user in notificationuser", item, user); */
+    console.log("userslice item e user in notificationuser", item, deleted);
 
     const getPromiseQuery = async () => {
       const q1 = query(colRef, where("role", "==", "gm"));
@@ -91,11 +92,20 @@ export const notificationUser = createAsyncThunk(
       .then((els) =>
         els.forEach((el) => {
           if (el.data().name !== item.updateBy) {
-            const userRef = doc(db, "users", el.data().uid);
+            if (deleted) {
+              const userRef = doc(db, "users", el.data().uid);
 
-            updateDoc(userRef, {
-              notifications: arrayUnion(item)
-            });
+              console.log("userSlice deleted true:", deleted, item, el.data().name);
+              updateDoc(userRef, {
+                notifications: arrayRemove(item)
+              }).catch((e) => console.log(e));
+            } else {
+              const userRef = doc(db, "users", el.data().uid);
+              console.log("userSlice deleted false:", deleted);
+              updateDoc(userRef, {
+                notifications: arrayUnion(item)
+              });
+            }
           }
         })
       )

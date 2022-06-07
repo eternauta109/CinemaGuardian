@@ -10,7 +10,7 @@ import { storage } from "../config/firebase_config";
 import { ref, deleteObject } from "firebase/storage";
 
 function Slider({ item, setItem }) {
-  /* console.log("item in proiva", item.photos); */
+  console.log("item in proiva", item.photos);
 
   const removePhoto = (e, k) => {
     /* console.log("e", e); */

@@ -30,7 +30,7 @@ import { priority, areaSelect, capex, categoryList } from "../config/struttura";
 //FUNCTION
 
 const Listsprime = () => {
-  /*  const items = useSelector((state) => state.items); */
+  /* const items = useSelector((state) => state.items); */
 
   const cinemas = useSelector((state) => state.cinemas);
 
@@ -376,6 +376,7 @@ const Listsprime = () => {
                   href={arrayApp[k].url}
                   target={arrayApp[k].name}
                   rel="noreferrer"
+                  style={{ marginLeft: 2 }}
                 >
                   <i className="pi pi-image" />
                 </a>
@@ -401,7 +402,13 @@ const Listsprime = () => {
         {arrayApp
           ? arrayApp.map((e, k) => {
               return (
-                <a key={k} href={arrayApp[k]} target="_blank" rel="noreferrer">
+                <a
+                  key={k}
+                  href={arrayApp[k]}
+                  target="_blank"
+                  rel="noreferrer"
+                  style={{ marginLeft: 2 }}
+                >
                   <i className="pi pi-external-link" />;
                 </a>
               );
@@ -565,7 +572,7 @@ const Listsprime = () => {
       /* console.log(id.row); */
 
       setTimeout(() => {
-        navigate("/removeitem", { state: { ...el } });
+        navigate("/removeitem", { state: { el } });
       });
     },
     []

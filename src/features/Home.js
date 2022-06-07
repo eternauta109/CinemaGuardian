@@ -76,16 +76,22 @@ const Home = () => {
       >
         {listNotes && (
           <Box
-            sx={{ backgroundColor: "white", opacity: 0.97, padding: 1, mb: 2 }}
+            sx={{
+              backgroundColor: "white",
+              opacity: 0.97,
+              padding: 1,
+              mb: 2,
+              height: 800
+            }}
           >
             <Typography>{`LAST ITEM INSERT or UPDATE (${listNotes.length})`}</Typography>
             <List
               dense
               sx={{
-                maxHeight: 400,
                 position: "relative",
                 overflow: "auto",
                 width: "100%",
+                height: "100%",
                 maxWidth: 360,
                 opacity: 0.95,
                 bgcolor: "background.paper"

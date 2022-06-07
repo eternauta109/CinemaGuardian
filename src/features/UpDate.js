@@ -22,10 +22,13 @@ function UpDate() {
   const getItemFromLists = async () => {
     const finder = await dispatch(getSingleItem({ id: state.id }))
       .then((res) => {
-        console.log("item", res.payload);
+        console.log("item in getItemFromList in UpDate", res.payload);
+        if (!res.payload) {
+          alert("not item found. it can be deleted");
+        }
         setItem(res.payload);
       })
-      .catch((e) => alert(e));
+      .catch((e) => alert("error in getItemFromList in UpDate(f):", e));
   };
   /* const momento = moment().format("DD/MM/YYYY"); */
   /* console.log("momento", momento); */

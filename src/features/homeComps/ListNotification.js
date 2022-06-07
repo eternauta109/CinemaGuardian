@@ -27,7 +27,14 @@ export default function ListNotification({ element, user }) {
   };
 
   return (
-    <Card sx={{ minWidth: 275, width: "100%", backgroundColor: "yellow" }}>
+    <Card
+      sx={{
+        minWidth: 275,
+        width: "100%",
+
+        backgroundColor: "yellow"
+      }}
+    >
       <CardContent>
         <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
           {`${element.updateBy} had update item: ${element.item_ref}`}

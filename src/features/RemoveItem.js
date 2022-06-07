@@ -13,10 +13,12 @@ function RemoveItem() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  /* console.log("state", state); */
+  console.log("state", state);
 
   const onDelete = async () => {
-    dispatch(deleteItem({ id: state.id, photos: state.photos }));
+    dispatch(deleteItem({ id: state.el.id, photos: state.el.photos }))
+      .then(console.log("item delete:", state.el.id))
+      .catch((e) => alert("error on onDelete in removeItem:", e));
     navigate("/home");
   };
 

@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { getCinemas } from "./cinemaSlice";
 import { db } from "../config/firebase_config";
+import { notificationUser } from "./userSlice";
 
 import {
   collection,
@@ -23,9 +24,11 @@ import { ref, deleteObject } from "firebase/storage";
 export const getSingleItem = createAsyncThunk(
   "items/getSingleItem",
   async ({ id }) => {
-    /* console.log(id); */
+    console.log("id in getSingleItem", id);
     const docRef = doc(db, "anomalies", id);
-    const response = await getDoc(docRef);
+    const response = await getDoc(docRef).catch((e) =>
+      alert("error in getSingleItem on itemSlice:", e)
+    );
     /* console.log("response get single doc", response.data()); */
     return response.data();
   }
@@ -64,7 +67,7 @@ export const getItems = createAsyncThunk(
 
 export const deleteItem = createAsyncThunk(
   "items/removeItem",
-  async ({ id, photos }) => {
+  async ({ id, photos }, { dispatch }) => {
     console.log("id delete", id);
     if (photos) {
       photos.map((e) => {
@@ -79,10 +82,15 @@ export const deleteItem = createAsyncThunk(
         return e;
       });
     }
-    const erase = await deleteDoc(doc(db, "anomalies", id)).catch((e) =>
-      alert("error in deleteItem at itemSlice: ", e)
+
+    const docToDeleteRef = doc(db, "anomalies", id);
+    const result = getDoc(docToDeleteRef).then((res) =>
+      dispatch(notificationUser({ item: res.data(), deleted: true })).then(
+        deleteDoc(docToDeleteRef)
+      )
     );
-    return erase;
+
+    return result;
   }
 );
 

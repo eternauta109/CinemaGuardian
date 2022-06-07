@@ -16,7 +16,7 @@ function SetCamera({ user, item, setItem }) {
   const [open, setOpen] = useState(false);
   const [images, setImages] = useState([]);
 
-  /* console.log("photo", user, cinema); */
+  console.log("user & item in SetCamera", user, item);
 
   const onTakePhotoHandler = async (photoUri) => {
     //metto la foto in array locale per visulizzarle
@@ -62,6 +62,7 @@ function SetCamera({ user, item, setItem }) {
         author: `${user.name}`
       }
     };
+
     const uploadTask = uploadBytesResumable(imageRef, blob, metadata);
     await uploadTask.on(
       "state_changed",
