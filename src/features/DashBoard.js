@@ -47,7 +47,8 @@ const DashBoard = () => {
       width: "34%"
     },
     {
-      url: "https://sagitterone.co.uk/wp-content/uploads/2016/11/supplier.jpg",
+      url:
+        "https://img.freepik.com/free-photo/rag-doll-with-wheelbarrow-checklist_1156-222.jpg?t=st=1654880360~exp=1654880960~hmac=a504bbf5049d952bf428c94a9f4ec869c101711fe874d11a911363568d2ce30e&w=826",
       title: "supplier",
       width: "33%"
     }

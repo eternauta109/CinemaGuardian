@@ -11,7 +11,7 @@ const headerExcel = [
   "stDate",
   "endDate",
   "dayWorks",
-  "qutation",
+  "quotation",
   "orderCost",
   "finalCost",
   "inProgress",

@@ -6,7 +6,7 @@ import {
   Pie,
   Tooltip,
   Legend,
-  /* ResponsiveContainer, */
+  ResponsiveContainer,
   BarChart,
   RadarChart,
   Radar,
@@ -22,68 +22,10 @@ import {
   YAxis,
   CartesianGrid
 } from "recharts";
-import { Container, Typography, Box } from "@mui/material";
+import { Container, Typography, Box, Stack } from "@mui/material";
 /* import { priority } from "../config/struttura"; */
 
-const COLORS = [
-  "#DFFF00",
-  "#FFBF00",
-  "#FF7F50",
-  "#DE3163",
-  "#9FE2BF",
-  "#40E0D0",
-  "#6495ED",
-  "#CCCCFF",
-  "#5F9EA0"
-];
-
 const Charts = ({ items }) => {
-  /* const [maxCount, setMaxCount] = useState(0); */
-
-  /* console.log("items", items); */
-
-  /* let risultato = items.reduce(
-    (res, p) => {
-      //nel vettore res è presente la chiave con il nome?
-      if (res.key[p.cinema] != null) {
-        console.log(res.value[key]);
-        let key = res.key[p.cinema];
-        //si è presente aggiungo costi e spese9
-        res.value[key].quotation += p.quotation;
-        res.value[key].orderCost += p.orderCost;
-        res.value[key].finalCost += p.finalCost;
-        switch (p.priority) {
-          case "P1":
-            res.value[key].P1 += 1;
-            break;
-
-          default:
-            break;
-        }
-      } else {
-        //non è presente assegno l'oggetto alla posizione col nome
-        let key = res.value.length;
-
-        res.key[p.cinema] = key;
-        console.log("key, res", key, res.value);
-        res.value[key] = {
-          cinema: p.cinema,
-          quotation: p.quotation ? p.quotation : 0,
-          orderCost: p.orderCost ? p.orderCost : 0,
-          finalCost: p.finalCost ? p.finalCost : 0,
-          [p.priority]: 1,
-        };
-        console.log("res", res);
-      }
-      return res;
-      //ritorno il vettore
-    },
-    { key: {}, value: [] }
-  );
-
-  //il vettore risultato lo inizializzo a vettore vuoto []
-  console.log("risultato", risultato.value);
- */
   var cinemaRes = Enumerable.from(items)
     .groupBy((g) => g.cinema)
     .select((s) => ({
@@ -157,10 +99,19 @@ const Charts = ({ items }) => {
       }
     }
   });
+  function getRandomColor() {
+    var letters = "0123456789ABCDEF";
+    var color = "#";
+    for (var i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+  }
 
   return (
     <Container sx={{ marginTop: "40px", bgcolor: "#f9fbe7", opacity: 0.97 }}>
       <Typography variant="h3">total cost</Typography>
+
       {/* <div className="card flex justify-content-center">
         <Chart
           type="pie"
@@ -171,67 +122,70 @@ const Charts = ({ items }) => {
           style={{ position: "relative", width: "40%" }}
         />
       </div> */}
-      <PieChart width={800} height={350}>
-        <h5>quotation</h5>
-        <Tooltip />
+      <ResponsiveContainer width="100%" height={500}>
+        <PieChart width="100%" height="100%">
+          <h5>quotation</h5>
+          <Tooltip />
 
-        <Pie
-          data={items}
-          dataKey="quotation"
-          nameKey="cinema"
-          cx="20%"
-          cy="50%"
-          innerRadius={60}
-          outerRadius={80}
-          fill="#8884d8"
-          label
-        >
-          <Label value="quotation" offset={0} position="center" />
-          {items.map((entry, index) => (
-            <Cell key={`cell-${index}`} fill={COLORS[index]} />
-          ))}
-        </Pie>
+          <Pie
+            data={items}
+            dataKey="quotation"
+            nameKey="cinema"
+            cx="20%"
+            cy="50%"
+            innerRadius={60}
+            outerRadius={80}
+            fill="#8884d8"
+            label
+          >
+            <Label value="quotation" offset={0} position="center" />
+            {items.map((entry, index) => (
+              <Cell key={`cell-${index}`} fill={getRandomColor()} />
+            ))}
+          </Pie>
 
-        <Pie
-          data={items}
-          dataKey="finalCost"
-          nameKey="cinema"
-          cx="50%"
-          cy="50%"
-          innerRadius={60}
-          outerRadius={80}
-          fill="#8884d8"
-          label
-        >
-          <Label value="final cost" offset={0} position="center" />
-          {items.map((entry, index) => (
-            <Cell key={`cell-${index}`} fill={COLORS[index]} />
-          ))}
-        </Pie>
+          <Pie
+            data={items}
+            dataKey="finalCost"
+            nameKey="cinema"
+            cx="50%"
+            cy="50%"
+            innerRadius={60}
+            outerRadius={80}
+            fill="#8884d8"
+            label
+          >
+            <Label value="final cost" offset={0} position="center" />
+            {items.map((entry, index) => (
+              <Cell key={`cell-${index}`} fill={getRandomColor()} />
+            ))}
+          </Pie>
 
-        <Pie
-          data={items}
-          dataKey="orderCost"
-          nameKey="cinema"
-          cx="80%"
-          cy="50%"
-          innerRadius={60}
-          outerRadius={80}
-          fill="#82ca9d"
-          label
-        >
-          <Label value="order cost" offset={0} position="center" />
-          {items.map((entry, index) => (
-            <Cell key={`cell-${index}`} fill={COLORS[index]} />
-          ))}
-        </Pie>
+          <Pie
+            data={items}
+            dataKey="orderCost"
+            nameKey="cinema"
+            cx="80%"
+            cy="50%"
+            innerRadius={60}
+            outerRadius={80}
+            fill="#82ca9d"
+            label
+          >
+            <Label value="order cost" offset={0} position="center" />
+            {items.map((entry, index) => (
+              <Cell key={`cell-${index}`} fill={getRandomColor()} />
+            ))}
+          </Pie>
 
-        {/*  <Pie data={data02} dataKey="value" nameKey="name" cx="50%" cy="50%" innerRadius={60} outerRadius={80} fill="#82ca9d" label /> */}
-      </PieChart>
+          {/*  <Pie data={data02} dataKey="value" nameKey="name" cx="50%" cy="50%" innerRadius={60} outerRadius={80} fill="#82ca9d" label /> */}
+        </PieChart>
+      </ResponsiveContainer>
 
-      <div style={{ marginTop: "40px" }}>
-        <Typography variant="h3">cost comparation</Typography>
-
+      <Typography style={{ marginTop: "40px" }} variant="h3">
+        cost comparation
+      </Typography>
+      <ResponsiveContainer width="100%" height={500}>
         <BarChart width={730} height={250} data={cinemaRes}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="cinema" />
@@ -243,9 +197,12 @@ const Charts = ({ items }) => {
           <Bar dataKey="orderCost" fill="#82ca9d" />
           <Bar dataKey="finalCost" fill="orange" />
         </BarChart>
-      </div>
-      <div style={{ marginTop: "40px" }}>
-        <Typography variant="h3">priority analisys</Typography>
+      </ResponsiveContainer>
+
+      <Typography style={{ marginTop: "40px" }} variant="h3">
+        priority analisys
+      </Typography>
+      <ResponsiveContainer width="100%" height={500}>
         <BarChart width={730} height={250} data={cinemaRes}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="cinema" />
@@ -259,9 +216,11 @@ const Charts = ({ items }) => {
           <Bar dataKey="p5" fill="#58595b" />
           <Bar dataKey="p6" fill="#8549ba" />
         </BarChart>
-      </div>
-      <div style={{ marginTop: "40px" }}>
-        <Typography variant="h3">priority resolved comparation</Typography>
+      </ResponsiveContainer>
+      <Typography style={{ marginTop: "40px" }} variant="h3">
+        priority resolved comparation
+      </Typography>
+      <ResponsiveContainer width="100%" height={500}>
         <RadarChart
           outerRadius={90}
           width={730}
@@ -288,10 +247,12 @@ const Charts = ({ items }) => {
           />
           <Legend />
         </RadarChart>
-      </div>
+      </ResponsiveContainer>
 
-      <div style={{ marginTop: "40px" }}>
-        <Typography variant="h3">priority total cost</Typography>
+      <Typography style={{ marginTop: "40px" }} variant="h3">
+        priority total cost
+      </Typography>
+      <ResponsiveContainer width="100%" height={500}>
         <BarChart width={730} height={250} data={priorityRes}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="priority" />
@@ -302,10 +263,12 @@ const Charts = ({ items }) => {
           <Bar dataKey="orderCost" fill="#82ca9d" />
           <Bar dataKey="finalCost" fill="orange" />
         </BarChart>
-      </div>
+      </ResponsiveContainer>
 
-      <div style={{ marginTop: "40px" }}>
-        <Typography variant="h3">priority to do cost</Typography>
+      <Typography style={{ marginTop: "40px" }} variant="h3">
+        priority to do cost
+      </Typography>
+      <ResponsiveContainer width="100%" height={500}>
         <BarChart width={730} height={250} data={priorityRes}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="priority" />
@@ -316,7 +279,7 @@ const Charts = ({ items }) => {
           <Bar dataKey="orderCostTodo" fill="#82ca9d" />
           <Bar dataKey="finalCostTodo" fill="orange" />
         </BarChart>
-      </div>
+      </ResponsiveContainer>
     </Container>
   );
 };

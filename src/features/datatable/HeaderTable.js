@@ -58,6 +58,7 @@ export const HeaderTable = ({
               value={globalFilterValue1}
               onChange={onGlobalFilterChange1}
               placeholder="Keyword Search"
+              style={{ width: "7em" }}
             />
           </span>
           <Button
@@ -76,7 +77,7 @@ export const HeaderTable = ({
             options={columns}
             optionLabel="header"
             onChange={onColumnToggle}
-            style={{ width: "15em" }}
+            style={{ width: "7em" }}
           />
 
           <Button

@@ -615,7 +615,7 @@ const Listsprime = () => {
             body={cinemaBodyTemplate}
             filterField="cinema"
             filterMenuStyle={{ width: "14rem" }}
-            style={{ minWidth: "14rem" }}
+            style={{ minWidth: "10rem" }}
             showFilterMatchModes={false}
             filter
             filterElement={cinemaFilterTemplate}
@@ -630,7 +630,7 @@ const Listsprime = () => {
             field="priority"
             body={priorityBodyTemplate}
             filterField="priority"
-            filterMenuStyle={{ width: "14rem" }}
+            filterMenuStyle={{ width: "10rem" }}
             style={{ minWidth: "7rem" }}
             showFilterMatchModes={false}
             filter

@@ -69,7 +69,7 @@ export default function SignIn() {
 
   useEffect(() => {
     if (user.name) {
-      console.log("user", user);
+      /* console.log("user", user); */
       dispatch(getCinemas({ user }))
         .then(navigate("/home"))
         .catch((e) => alert("error in useEffect at Login:", e));

@@ -91,7 +91,7 @@ const Home = () => {
                 position: "relative",
                 overflow: "auto",
                 width: "100%",
-                height: "100%",
+                height: "95%",
                 maxWidth: 360,
                 opacity: 0.95,
                 bgcolor: "background.paper"

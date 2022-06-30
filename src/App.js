@@ -11,16 +11,10 @@ import DashBoard from "./features/DashBoard";
 import Home from "./features/Home";
 import ScrollTop from "./features/ScrollTop";
 
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
-  useNavigate
-} from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import Container from "@mui/material/Container";
 import { useSelector } from "react-redux";
 import { getAuth } from "firebase/auth";
-import Image from "./assets/patterncinema2.jpg"; // Import using relative path
 
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
@@ -58,7 +52,6 @@ export default function App() {
     }
   }, [auth.currentUser]);
 
-  console.log(auth);
   return (
     <ThemeProvider theme={theme}>
       <div className="App">
