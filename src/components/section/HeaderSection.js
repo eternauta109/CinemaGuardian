@@ -43,7 +43,8 @@ export const Header = ({ update, item, cinemas, user, setItem }) => {
         updateBy: user.name ? user.name : "",
         lastUpdate: stDate ? stDate : "",
         capex: "Opex",
-        inProgress: true
+        inProgress: true,
+        competence: { name: "The Space" }
       });
     } catch (error) {
       console.log("errore nel setItem di HeaderSection", error);

@@ -10,6 +10,8 @@ import {
   where,
   getDocs
 } from "firebase/firestore";
+const procurament = { name: "procurament" };
+const theSpace = { name: "The Space" };
 
 export const getSuppliers = createAsyncThunk(
   "suppliers/getSuppliers",
@@ -24,6 +26,7 @@ export const getSuppliers = createAsyncThunk(
       const newElement = { ...e.data() };
       supplier = [...supplier, newElement];
     });
+    supplier.unshift(theSpace, procurament);
     /*  console.log(supplier); */
     return supplier;
   }

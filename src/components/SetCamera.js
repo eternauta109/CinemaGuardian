@@ -16,7 +16,7 @@ function SetCamera({ user, item, setItem }) {
   const [open, setOpen] = useState(false);
   const [images, setImages] = useState([]);
 
-  console.log("user & item in SetCamera", user, item);
+  /* console.log("user & item in SetCamera", user, item); */
 
   const onTakePhotoHandler = async (photoUri) => {
     //metto la foto in array locale per visulizzarle

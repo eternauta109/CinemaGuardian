@@ -36,7 +36,7 @@ export default function InputAnomalies({
       [e.target.name]: e.target.value
     });
 
-    /* console.log("item in anomalies form on change", item); */
+    console.log("item in anomalies form on change", item);
   };
 
   /*  useEffect(() => {
@@ -99,7 +99,12 @@ export default function InputAnomalies({
 
           <hr />
 
-          <Pegaso item={item} itemChange={itemChange} setItem={setItem} />
+          <Pegaso
+            update={update}
+            item={item}
+            itemChange={itemChange}
+            setItem={setItem}
+          />
 
           <hr />
 

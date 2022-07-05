@@ -68,6 +68,10 @@ const Listsprime = () => {
         value: null,
         matchMode: FilterMatchMode.IN
       },
+      competence: {
+        value: null,
+        matchMode: FilterMatchMode.IN
+      },
       priority: {
         value: null,
         matchMode: FilterMatchMode.IN
@@ -133,6 +137,19 @@ const Listsprime = () => {
         </Button>
       </div>
     );
+  };
+
+  //COMPETENCE
+  const competenceTemplate = (rowData) => {
+    /* console.log("rowdata", rowData); */
+    let stringComp = null;
+    let typeOfCompetence = typeof rowData.competence;
+    if (typeOfCompetence === "object") {
+      stringComp = rowData.competence.name;
+    } else {
+      stringComp = rowData.competence;
+    }
+    return <p>{stringComp}</p>;
   };
 
   //PRIORITY
@@ -600,6 +617,18 @@ const Listsprime = () => {
             field="problem"
             body={problemTemplate}
             tooltipOptions={{ className: "blue-tooltip", position: "top" }}
+            sortable
+            filter
+            style={{ maxWidth: "7rem" }}
+          />
+        );
+      case "competence":
+        return (
+          <Column
+            header="competence"
+            key={col.field}
+            field="competence"
+            body={competenceTemplate}
             sortable
             filter
             style={{ maxWidth: "7rem" }}

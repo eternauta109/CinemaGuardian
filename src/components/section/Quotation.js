@@ -13,12 +13,12 @@ export const Quotation = ({ item, setItem }) => {
   const onNumberChange = (e) => {
     e.preventDefault();
 
-    console.log(e.target);
+    /* console.log(e.target); */
     setItem({
       ...item,
       [e.target.name]: Number(e.target.value)
     });
-    console.log(item);
+    /* console.log(item); */
   };
 
   return (

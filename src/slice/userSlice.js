@@ -54,10 +54,14 @@ export const notificationUser = createAsyncThunk(
   "user/notificationUser",
   async ({ item, deleted = false }) => {
     const colRef = collection(db, "users");
-    console.log("userslice item e user in notificationuser", item, deleted);
+    /* console.log("userslice item e user in notificationuser", item, deleted); */
 
     const getPromiseQuery = async () => {
-      const q1 = query(colRef, where("role", "==", "gm"));
+      const q1 = query(
+        colRef,
+        where("role", "==", "gm"),
+        where("role", "==", "admin")
+      );
       const q2 = query(
         colRef,
         where("role", "==", "fm"),
@@ -95,13 +99,19 @@ export const notificationUser = createAsyncThunk(
             if (deleted) {
               const userRef = doc(db, "users", el.data().uid);
 
-              console.log("userSlice deleted true:", deleted, item, el.data().name);
+              console.log(
+                "userSlice deleted true:",
+                deleted,
+                item,
+                el.data().name
+              );
               updateDoc(userRef, {
                 notifications: arrayRemove(item)
               }).catch((e) => console.log(e));
             } else {
               const userRef = doc(db, "users", el.data().uid);
-              console.log("userSlice deleted false:", deleted);
+              /* console.log("userSlice deleted false:", deleted, item); */
+
               updateDoc(userRef, {
                 notifications: arrayUnion(item)
               });
