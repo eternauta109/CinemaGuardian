@@ -30,11 +30,11 @@ import { priority, areaSelect, capex, categoryList } from "../config/struttura";
 //FUNCTION
 
 const Listsprime = () => {
-  /* const items = useSelector((state) => state.items); */
+  const suppliers = useSelector((state) => state.suppliers);
 
   const cinemas = useSelector((state) => state.cinemas);
 
-  /*  console.log("items in listprim", items); */
+  /* console.log("suppliers in listprim", suppliers); */
   /* console.log("cinema in listprim", cinemas); */
 
   /*  const cinemas = [
@@ -100,10 +100,7 @@ const Listsprime = () => {
         value: null,
         matchMode: FilterMatchMode.IN
       },
-      competence: {
-        operator: FilterOperator.AND,
-        constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }]
-      },
+
       inProgress: { value: null, matchMode: FilterMatchMode.EQUALS },
       approved: { value: null, matchMode: FilterMatchMode.EQUALS },
       closed: { value: null, matchMode: FilterMatchMode.EQUALS },
@@ -150,6 +147,71 @@ const Listsprime = () => {
       stringComp = rowData.competence;
     }
     return <p>{stringComp}</p>;
+  };
+  /* const cinemaBodyTemplate = (rowData) => {
+     
+      return <span className="image-text">{rowData.cinema}</span>;
+    }; */
+
+  const competenceFilterTemplate = (options) => {
+    return (
+      <MultiSelect
+        value={options.value}
+        filter
+        options={suppliers.map((e) => {
+          return e;
+        })}
+        itemTemplate={competenceItemTemplate}
+        onChange={(e) => {
+          options.filterApplyCallback(e.value);
+        }}
+        optionLabel="name"
+        placeholder="Any"
+      />
+    );
+  };
+
+  const competenceItemTemplate = (option) => {
+    /* console.log("opt cit", option); */
+    return (
+      <div className="p-multiselect-representative-option">
+        <span className="image-text">{option.name}</span>
+      </div>
+    );
+  };
+
+  //CINEMA
+
+  const cinemaBodyTemplate = (rowData) => {
+    /* console.log("cinemabody row data", rowData); */
+    return <span className="image-text">{rowData.cinema}</span>;
+  };
+
+  const cinemaFilterTemplate = (options) => {
+    return (
+      <MultiSelect
+        value={options.value}
+        filter
+        options={cinemas.map((e) => {
+          return e.name;
+        })}
+        itemTemplate={cinemaItemTemplate}
+        onChange={(e) => {
+          options.filterApplyCallback(e.value);
+        }}
+        optionLabel="name"
+        placeholder="Any"
+      />
+    );
+  };
+
+  const cinemaItemTemplate = (option) => {
+    /* console.log("opt cit", option); */
+    return (
+      <div className="p-multiselect-representative-option">
+        <span className="image-text">{option}</span>
+      </div>
+    );
   };
 
   //PRIORITY
@@ -239,40 +301,6 @@ const Listsprime = () => {
   const priorityItemTemplate = (option) => {
     /* console.log("opt cit", option); */
     return <span className="image-text">{option}</span>;
-  };
-
-  //CINEMA
-
-  const cinemaBodyTemplate = (rowData) => {
-    /* console.log("cinemabody row data", rowData); */
-    return <span className="image-text">{rowData.cinema}</span>;
-  };
-
-  const cinemaFilterTemplate = (options) => {
-    return (
-      <MultiSelect
-        value={options.value}
-        filter
-        options={cinemas.map((e) => {
-          return e.name;
-        })}
-        itemTemplate={cinemaItemTemplate}
-        onChange={(e) => {
-          options.filterApplyCallback(e.value);
-        }}
-        optionLabel="name"
-        placeholder="Any"
-      />
-    );
-  };
-
-  const cinemaItemTemplate = (option) => {
-    /* console.log("opt cit", option); */
-    return (
-      <div className="p-multiselect-representative-option">
-        <span className="image-text">{option}</span>
-      </div>
-    );
   };
 
   //AREA
@@ -631,7 +659,8 @@ const Listsprime = () => {
             body={competenceTemplate}
             sortable
             filter
-            style={{ maxWidth: "7rem" }}
+            filterElement={competenceFilterTemplate}
+            style={{ minWidth: "7rem" }}
           />
         );
       case "cinema":

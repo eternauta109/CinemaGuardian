@@ -23,6 +23,7 @@ import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import { useDispatch, useSelector } from "react-redux";
 import { getUser } from "../slice/userSlice";
 import { getCinemas } from "../slice/cinemaSlice";
+import { getSuppliers } from "../slice/supplierSlice";
 
 function Copyright(props) {
   return (
@@ -71,7 +72,9 @@ export default function SignIn() {
     if (user.name) {
       /* console.log("user", user); */
       dispatch(getCinemas({ user }))
-        .then(navigate("/home"))
+        .then(
+          dispatch(getSuppliers({ area: user.area })).then(navigate("/home"))
+        )
         .catch((e) => alert("error in useEffect at Login:", e));
     }
   }, [dispatch, user]);
